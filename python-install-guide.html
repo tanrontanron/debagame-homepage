@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pythonインストールガイド - プロダクトサイト</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', 'Noto Sans JP', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+        .main-content { margin-left: 0; transition: margin-left 0.3s ease; }
+        @media (min-width: 1024px) {
+            .main-content { margin-left: 0; }
+        }
+        .step-number { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
+        .code-block { background: #1f2937; color: #f9fafb; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Sidebar -->
+    <div id="sidebar-container"></div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fab fa-python text-3xl"></i>
+            </div>
+            <h1 class="text-4xl font-bold mb-2">Pythonインストールガイド</h1>
+            <p class="text-xl text-yellow-100">タイムライン機能を使用するためにPythonをインストールしましょう</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto">
+            <!-- Overview -->
+            <div class="bg-white rounded-xl p-8 shadow-lg mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-info-circle text-blue-500 mr-3"></i>
+                    概要
+                </h2>
+                <p class="text-gray-600 mb-4">
+                    タイムライン機能はFlaskというPythonフレームワークで作成されています。
+                    この機能を使用するには、まずPythonをインストールする必要があります。
+                </p>
+                <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
+                    <p class="text-blue-800">
+                        <strong>注意：</strong> ブラウザから直接Pythonをインストールすることはできません。
+                        以下の手順に従って、お使いのOSに適した方法でインストールしてください。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Installation Methods -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Windows -->
+                <div class="bg-white rounded-xl p-6 shadow-lg card-hover">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fab fa-windows text-blue-500 mr-3"></i>
+                        Windows
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <span class="step-number text-white text-sm font-bold px-3 py-1 rounded-full mr-3 mt-1">1</span>
+                            <div>
+                                <p class="font-semibold text-gray-700">Python公式サイトからダウンロード</p>
+                                <p class="text-sm text-gray-600">https://www.python.org/downloads/ にアクセス</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="step-number text-white text-sm font-bold px-3 py-1 rounded-full mr-3 mt-1">2</span>
+                            <div>
+                                <p class="font-semibold text-gray-700">インストーラーを実行</p>
+                                <p class="text-sm text-gray-600">「Add Python to PATH」にチェックを入れる</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="step-number text-white text-sm font-bold px-3 py-1 rounded-full mr-3 mt-1">3</span>
+                            <div>
+                                <p class="font-semibold text-gray-700">インストール完了</p>
+                                <p class="text-sm text-gray-600">コマンドプロンプトで「python --version」で確認</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- macOS -->
+                <div class="bg-white rounded-xl p-6 shadow-lg card-hover">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fab fa-apple text-gray-600 mr-3"></i>
+                        macOS
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <span class="step-number text-white text-sm font-bold px-3 py-1 rounded-full mr-3 mt-1">1</span>
+                            <div>
+                                <p class="font-semibold text-gray-700">Homebrewを使用（推奨）</p>
+                                <div class="code-block p-2 rounded text-xs mt-1">
+                                    brew install python
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="step-number text-white text-sm font-bold px-3 py-1 rounded-full mr-3 mt-1">2</span>
+                            <div>
+                                <p class="font-semibold text-gray-700">または公式サイトから</p>
+                                <p class="text-sm text-gray-600">https://www.python.org/downloads/ からダウンロード</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="step-number text-white text-sm font-bold px-3 py-1 rounded-full mr-3 mt-1">3</span>
+                            <div>
+                                <p class="font-semibold text-gray-700">インストール確認</p>
+                                <div class="code-block p-2 rounded text-xs mt-1">
+                                    python3 --version
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- After Installation -->
+            <div class="bg-white rounded-xl p-8 shadow-lg mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-cogs text-green-500 mr-3"></i>
+                    インストール後の設定
+                </h2>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-700 mb-3">1. 必要なパッケージのインストール</h3>
+                        <p class="text-gray-600 mb-3">タイムライン機能に必要なFlaskとその他のパッケージをインストールします：</p>
+                        <div class="code-block p-4 rounded-lg">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-gray-400">コマンドプロンプト / ターミナル</span>
+                                <button onclick="copyToClipboard('pip install flask')" class="text-blue-400 hover:text-blue-300 text-sm">
+                                    <i class="fas fa-copy mr-1"></i>コピー
+                                </button>
+                            </div>
+                            <code>pip install flask</code>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-700 mb-3">2. タイムラインアプリの起動</h3>
+                        <p class="text-gray-600 mb-3">以下のコマンドでタイムラインアプリを起動できます：</p>
+                        <div class="code-block p-4 rounded-lg">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-gray-400">コマンドプロンプト / ターミナル</span>
+                                <button onclick="copyToClipboard('cd site/Python/timeline\npython app.py')" class="text-blue-400 hover:text-blue-300 text-sm">
+                                    <i class="fas fa-copy mr-1"></i>コピー
+                                </button>
+                            </div>
+                            <code>cd site/Python/timeline<br>python app.py</code>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-700 mb-3">3. ブラウザでアクセス</h3>
+                        <p class="text-gray-600 mb-3">アプリが起動したら、以下のURLにアクセス：</p>
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                            <p class="text-green-800 font-mono">http://localhost:5000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Troubleshooting -->
+            <div class="bg-white rounded-xl p-8 shadow-lg mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-wrench text-red-500 mr-3"></i>
+                    トラブルシューティング
+                </h2>
+                
+                <div class="space-y-4">
+                    <div class="border-l-4 border-yellow-400 bg-yellow-50 p-4">
+                        <h4 class="font-semibold text-yellow-800 mb-2">「python」コマンドが見つからない</h4>
+                        <p class="text-yellow-700 text-sm">Windowsの場合、「py」コマンドを試してください。macOSの場合、「python3」コマンドを試してください。</p>
+                    </div>
+                    
+                    <div class="border-l-4 border-red-400 bg-red-50 p-4">
+                        <h4 class="font-semibold text-red-800 mb-2">「pip」コマンドが見つからない</h4>
+                        <p class="text-red-700 text-sm">Pythonのインストール時に「Add Python to PATH」にチェックを入れ忘れた可能性があります。Pythonを再インストールしてください。</p>
+                    </div>
+                    
+                    <div class="border-l-4 border-blue-400 bg-blue-50 p-4">
+                        <h4 class="font-semibold text-blue-800 mb-2">ポート5000が使用中</h4>
+                        <p class="text-blue-700 text-sm">他のアプリケーションがポート5000を使用している可能性があります。タスクマネージャーでプロセスを確認するか、別のポートを使用してください。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back to Timeline -->
+            <div class="text-center">
+                <a href="timeline.html" class="inline-flex items-center px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    タイムラインページに戻る
+                </a>
+            </div>
+        </div>
+    </main>
+    </div> <!-- End main-content -->
+
+    <!-- Load Sidebar -->
+    <script>
+        // Load sidebar component
+        fetch('components/sidebar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('sidebar-container').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading sidebar:', error));
+    </script>
+
+    <script>
+        // Copy to clipboard function
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                // Show success message
+                const button = event.target.closest('button');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check mr-1"></i>コピー完了';
+                button.classList.add('text-green-400');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('text-green-400');
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>

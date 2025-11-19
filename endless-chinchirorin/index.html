@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Endless Chinchirorin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      /* Custom Die Dot Positioning - Standard 3x3 Grid */
+      .die-face {
+        display: grid;
+        grid-template-areas:
+          "tl . tr"
+          "ml cc mr"
+          "bl . br";
+        flex: 0 0 auto;
+        margin: 4px;
+        padding: 8px;
+        width: 64px;
+        height: 64px;
+        background-color: #e7e5e4; /* stone-200 */
+        box-shadow: inset 0 5px white, inset 0 -5px #bbb, inset 5px 0 #d7d7d7, inset -5px 0 #bbb;
+        border-radius: 12px;
+      }
+      .dot {
+        display: block;
+        align-self: center;
+        justify-self: center;
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background-color: #1c1917; /* stone-900 */
+        box-shadow: inset 0 2px #000;
+      }
+      .dot-red {
+        background-color: #dc2626; /* red-600 */
+        box-shadow: inset 0 2px #991b1b;
+        width: 14px; /* 1の目は少し大きく */
+        height: 14px;
+      }
+
+      /* Grid areas for standard pips */
+      .dot-tl { grid-area: tl; }
+      .dot-tr { grid-area: tr; }
+      .dot-ml { grid-area: ml; }
+      .dot-mr { grid-area: mr; }
+      .dot-bl { grid-area: bl; }
+      .dot-br { grid-area: br; }
+      .dot-cc { grid-area: cc; }
+
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "uuid": "https://aistudiocdn.com/uuid@^13.0.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="./index.css">
+</head>
+  <body class="bg-stone-900 text-stone-100 antialiased">
+    <!-- Sidebar Component -->
+    <nav id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-gray-900 text-white transform -translate-x-full transition-transform duration-300 ease-in-out z-50">
+        <div class="flex items-center justify-between p-4 border-b border-gray-700">
+            <h2 class="text-lg font-semibold">メニュー</h2>
+            <button id="sidebar-close" class="text-gray-400 hover:text-white">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <div class="p-4">
+            <ul class="space-y-2">
+                <li><a href="../index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-home mr-3"></i>トップページ</a></li>
+                <li><a href="../Interactive_worldmap/worldmap.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-globe mr-3"></i>世界地図</a></li>
+                <li><a href="../timeline.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-timeline mr-3"></i>タイムライン</a></li>
+                <li><a href="../bear/index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-chart-line mr-3"></i>熊被害状況</a></li>
+                <li><a href="../numberplate/numberplate.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-car-side mr-3"></i>ナンバープレート</a></li>
+                <li><a href="../size/size.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-ruler-combined mr-3"></i>サイズ検討</a></li>
+                <li><a href="./index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-dice mr-3"></i>エンドレスチンチロリン</a></li>
+            </ul>
+        </div>
+        <div class="absolute bottom-4 left-4 right-4"><div class="text-xs text-gray-400 text-center"><p>&copy; 2024 プロダクトサイト</p></div></div>
+    </nav>
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+    <button id="sidebar-toggle" class="fixed top-4 left-4 z-30 bg-gray-900 text-white p-3 rounded-lg shadow-lg hover:bg-gray-800 transition-colors"><i class="fas fa-bars"></i></button>
+
+    <main class="main-content">
+      <div id="root"></div>
+    </main>
+
+    <script type="module" src="./index.tsx"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Sidebar Logic ---
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebarClose = document.getElementById('sidebar-close');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        
+        function openSidebar() {
+            if (!sidebar || !sidebarOverlay) return;
+            sidebar.classList.remove('-translate-x-full');
+            sidebarOverlay.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+        
+        function closeSidebar() {
+            if (!sidebar || !sidebarOverlay) return;
+            sidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', openSidebar);
+        if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+        if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+        
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+
+        // --- Active Page Highlight Logic ---
+        try {
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('#sidebar a').forEach(link => {
+                const linkHref = link.getAttribute('href');
+                const linkUrl = new URL(linkHref, window.location.href);
+                if (linkUrl.pathname === currentPath) {
+                    link.classList.add('bg-blue-600', 'text-white');
+                    link.classList.remove('hover:bg-gray-700');
+                }
+            });
+        } catch (e) {
+            console.error("Error highlighting current page:", e);
+        }
+    });
+    </script>
+  </body>
+</html>

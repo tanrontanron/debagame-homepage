@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>インタラクティブ世界地図 (再構築・最終修正版)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- D3.js & TopoJSON -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/topojson.v3.min.js"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', 'Noto Sans JP', sans-serif; }
+        .country { stroke: #6b7280; stroke-width: 0.5px; transition: fill 0.3s ease; cursor: pointer; }
+        .country:hover { stroke-width: 1.5px; filter: brightness(0.9); }
+        .selected-map { stroke: #0ea5e9; stroke-width: 2px !important; filter: brightness(1.1); }
+        .country-label { pointer-events: none; font-weight: 500; fill: #1e293b; text-shadow: 0 0 2px white, 0 0 2px white, 0 0 2px white; }
+        #info-table th { cursor: pointer; user-select: none; }
+        #info-table th:hover { background-color: #f1f5f9; }
+        .highlight-row { background-color: #e0f2fe !important; }
+        .zoom-btn { transition: background-color 0.2s; }
+        .zoom-btn:hover { background-color: #d1d5db; }
+        .main-content { margin-left: 0; transition: margin-left 0.3s ease; }
+        @media (min-width: 1024px) {
+            .main-content { margin-left: 0; }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+
+    <!-- Sidebar Component -->
+    <nav id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-gray-900 text-white transform -translate-x-full transition-transform duration-300 ease-in-out z-50">
+        <div class="flex items-center justify-between p-4 border-b border-gray-700">
+            <h2 class="text-lg font-semibold">メニュー</h2>
+            <button id="sidebar-close" class="text-gray-400 hover:text-white">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <div class="p-4">
+            <ul class="space-y-2">
+                <li><a href="../index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-home mr-3"></i>トップページ</a></li>
+                <li><a href="./worldmap.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-globe mr-3"></i>世界地図</a></li>
+                <li><a href="../timeline.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-timeline mr-3"></i>タイムライン</a></li>
+                <li><a href="../bear/index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-chart-line mr-3"></i>熊被害状況</a></li>
+                <li><a href="../numberplate/numberplate.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-car-side mr-3"></i>ナンバープレート</a></li>
+            </ul>
+        </div>
+        <div class="absolute bottom-4 left-4 right-4"><div class="text-xs text-gray-400 text-center"><p>&copy; 2024 プロダクトサイト</p></div></div>
+    </nav>
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+    <button id="sidebar-toggle" class="fixed top-4 left-4 z-30 bg-gray-900 text-white p-3 rounded-lg shadow-lg hover:bg-gray-800 transition-colors"><i class="fas fa-bars"></i></button>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+    <div class="p-2 md:p-4">
+        <header class="text-center mb-6">
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-900">インタラクティブ世界地図</h1>
+            <p class="text-slate-600 mt-2">国をクリックして2024年の人口データを確認しよう。</p>
+        </header>
+
+        <div class="flex flex-col lg:flex-row gap-6">
+            <!-- Left: Map and Controls -->
+            <main class="w-full lg:w-2/3 bg-white p-4 rounded-xl shadow-lg flex flex-col">
+                <div id="map-container" class="relative w-full flex-grow aspect-[16/9] overflow-hidden rounded-md border border-slate-200 bg-slate-200">
+                    <svg id="world-map"></svg>
+                    <div id="zoom-controls" class="absolute top-2 right-2 flex flex-col gap-1">
+                        <button id="zoom-in" class="zoom-btn w-8 h-8 bg-white/80 rounded-md flex items-center justify-center shadow"><i class="fas fa-plus"></i></button>
+                        <button id="zoom-out" class="zoom-btn w-8 h-8 bg-white/80 rounded-md flex items-center justify-center shadow"><i class="fas fa-minus"></i></button>
+                         <button id="zoom-reset" class="zoom-btn w-8 h-8 bg-white/80 rounded-md flex items-center justify-center shadow"><i class="fas fa-compress"></i></button>
+                    </div>
+                </div>
+                 <div id="legend-container" class="pt-3 text-xs"></div>
+            </main>
+
+            <!-- Right: Info Table -->
+            <aside class="w-full lg:w-1/3 bg-white p-4 rounded-xl shadow-lg">
+                <div class="h-[75vh] overflow-y-auto">
+                    <table id="info-table" class="w-full text-sm text-left text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0">
+                            <tr>
+                                <th scope="col" class="p-3" data-sort="rank">No.</th>
+                                <th scope="col" class="p-1"></th> <!-- Flag column -->
+                                <th scope="col" class="p-3" data-sort="name">国名</th>
+                                <th scope="col" class="p-3" data-sort="value">人口</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Rows will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </aside>
+        </div>
+    </div>
+    </div> <!-- End main-content -->
+
+    <script>
+        // --- Data Definitions ---
+        const countryData = { "004": { population: 43372950 }, "008": { population: 2832439 }, "012": { population: 46278751 }, "020": { population: 80341 }, "024": { population: 37804634 }, "028": { population: 94812 }, "032": { population: 46057866 }, "036": { population: 26699482 }, "040": { population: 9066710 }, "031": { population: 10462904 }, "044": { population: 415234 }, "048": { population: 1498121 }, "050": { population: 174701211 }, "051": { population: 2777979 }, "052": { population: 282039 }, "112": { population: 9498238 }, "056": { population: 11715774 }, "084": { population: 416656 }, "204": { population: 14080072 }, "064": { population: 787941 }, "068": { population: 12567336 }, "070": { population: 3210847 }, "072": { population: 2719694 }, "076": { population: 217637297 }, "096": { population: 455728 }, "100": { population: 6687717 }, "854": { population: 23840247 }, "108": { population: 13589991 }, "116": { population: 17121847 }, "120": { population: 29394433 }, "124": { population: 39107046 }, "132": { population: 604086 }, "140": { population: 5915627 }, "148": { population: 18847358 }, "152": { population: 19658839 }, "156": { population: 1425178782 }, "170": { population: 52340774 }, "174": { population: 867623 }, "178": { population: 6244645 }, "180": { population: 105249495 }, "184": { population: 17075 }, "188": { population: 5246714 }, "384": { population: 29603381 }, "191": { population: 3986627 }, "192": { population: 11194449 }, "196": { population: 1268467 }, "203": { population: 10503734 }, "208": { population: 5910913 }, "262": { population: 1152329 }, "212": { population: 73368 }, "214": { population: 11434005 }, "218": { population: 18377367 }, "818": { population: 114484252 }, "222": { population: 6396289 }, "226": { population: 1754993 }, "232": { population: 3817651 }, "233": { population: 1322765 }, "748": { population: 1222095 }, "231": { population: 129719631 }, "242": { population: 943639 }, "246": { population: 5549886 }, "250": { population: 64881830 }, "266": { population: 2484994 }, "270": { population: 2841803 }, "268": { population: 3728573 }, "276": { population: 83294633 }, "288": { population: 34777522 }, "300": { population: 10302720 }, "308": { population: 126887 }, "320": { population: 18358430 }, "324": { population: 14479921 }, "624": { population: 2195343 }, "328": { population: 819594 }, "332": { population: 11867033 }, "336": { population: 526 }, "340": { population: 10759406 }, "348": { population: 9994993 }, "352": { population: 377474 }, "356": { population: 1441719852 }, "360": { population: 279798049 }, "364": { population: 89809781 }, "368": { population: 46523657 }, "372": { population: 5089478 }, "376": { population: 9311652 }, "380": { population: 58705511 }, "388": { population: 2825544 }, "392": { population: 122933000 }, "400": { population: 11384939 }, "398": { population: 19828163 }, "404": { population: 56203030 }, "296": { population: 135763 }, "408": { population: 26244583 }, "410": { population: 51784059 }, "414": { population: 4349380 }, "417": { population: 6801338 }, "418": { population: 7736681 }, "428": { population: 1797034 }, "422": { population: 5296814 }, "426": { population: 2356083 }, "430": { population: 5536949 }, "434": { population: 6964197 }, "438": { population: 39822 }, "440": { population: 2692799 }, "442": { population: 672050 }, "450": { population: 31056610 }, "454": { population: 21473637 }, "458": { population: 34671019 }, "462": { population: 521021 }, "466": { population: 24015799 }, "470": { population: 536740 }, "584": { population: 42415 }, "478": { population: 4993922 }, "480": { population: 1301978 }, "484": { population: 129388467 }, "583": { population: 116488 }, "498": { population: 3272996 }, "492": { population: 36157 }, "496": { population: 3493693 }, "499": { population: 626102 }, "504": { population: 38211459 }, "508": { population: 34858402 }, "104": { population: 54964694 }, "516": { population: 2645805 }, "520": { population: 12884 }, "524": { population: 31240315 }, "528": { population: 17671125 }, "554": { population: 5269939 }, "558": { population: 7142529 }, "562": { population: 28238972 }, "566": { population: 229152217 }, "570": { population: 1935 }, "807": { population: 2085679 }, "578": { population: 5514477 }, "512": { population: 4741474 }, "586": { population: 245209815 }, "585": { population: 18058 }, "591": { population: 4527961 }, "598": { population: 10515788 }, "600": { population: 6947270 }, "604": { population: 34683445 }, "608": { population: 119106224 }, "616": { population: 41026067 }, "620": { population: 10223349 }, "634": { population: 2737061 }, "642": { population: 19892812 }, "643": { population: 143957079 }, "646": { population: 14414910 }, "659": { population: 47847 }, "662": { population: 180805 }, "670": { population: 103698 }, "882": { population: 228966 }, "674": { population: 33614 }, "678": { population: 236382 }, "682": { population: 37473929 }, "686": { population: 18221567 }, "688": { population: 7149077 }, "690": { population: 108263 }, "694": { population: 8977972 }, "702": { population: 6052709 }, "703": { population: 5795199 }, "705": { population: 2118965 }, "090": { population: 756673 }, "706": { population: 18706922 }, "710": { population: 61020221 }, "728": { population: 11277092 }, "724": { population: 47473373 }, "144": { population: 21944577 }, "729": { population: 49357648 }, "740": { population: 628784 }, "752": { population: 10673669 }, "756": { population: 8851431 }, "760": { population: 24348053 }, "762": { population: 10332491 }, "834": { population: 69018987 }, "764": { population: 71843103 }, "626": { population: 1387149 }, "768": { population: 9260833 }, "776": { population: 108649 }, "780": { population: 1541037 }, "788": { population: 12564689 }, "792": { population: 86260417 }, "795": { population: 6598071 }, "798": { population: 11478 }, "800": { population: 49924252 }, "804": { population: 33200000 }, "784": { population: 9591853 }, "826": { population: 67961439 }, "840": { population: 341814420 }, "858": { population: 3423316 }, "860": { population: 35672323 }, "548": { population: 342337 }, "862": { population: 29395334 }, "704": { population: 99497680 }, "887": { population: 35219853 }, "894": { population: 21134747 }, "716": { population: 17020321 }, "796": { population: 23950214 }, "275": { population: 5494963 } };
+        const countryNameJp = { "004": "アフガニスタン", "008": "アルバニア", "012": "アルジェリア", "020": "アンドラ", "024": "アンゴラ", "028": "アンティグア・バーブーダ", "032": "アルゼンチン", "036": "オーストラリア", "040": "オーストリア", "031": "アゼルバイジャン", "044": "バハマ", "048": "バーレーン", "050": "バングラデシュ", "051": "アルメニア", "052": "バルバドス", "112": "ベラルーシ", "056": "ベルギー", "084": "ベリーズ", "204": "ベナン", "064": "ブータン", "068": "ボリビア", "070": "ボスニア・ヘルツェゴビナ", "072": "ボツワナ", "076": "ブラジル", "096": "ブルネイ", "100": "ブルガリア", "854": "ブルキナファソ", "108": "ブルンジ", "116": "カンボジア", "120": "カメルーン", "124": "カナダ", "132": "カーボベルデ", "140": "中央アフリカ共和国", "148": "チャド", "152": "チリ", "156": "中国", "170": "コロンビア", "174": "コモロ", "178": "コンゴ共和国", "180": "コンゴ民主共和国", "184": "クック諸島", "188": "コスタリカ", "384": "コートジボワール", "191": "クロアチア", "192": "キューバ", "196": "キプロス", "203": "チェコ", "208": "デンマーク", "262": "ジブチ", "212": "ドミニカ国", "214": "ドミニカ共和国", "218": "エクアドル", "818": "エジプト", "222": "エルサルバドル", "226": "赤道ギニア", "232": "エリトリア", "233": "エストニア", "748": "エスワティニ", "231": "エチオピア", "242": "フィジー", "246": "フィンランド", "250": "フランス", "266": "ガボン", "270": "ガンビア", "268": "ジョージア", "276": "ドイツ", "288": "ガーナ", "300": "ギリシャ", "308": "グレナダ", "320": "グアテマラ", "324": "ギニア", "624": "ギニアビサウ", "328": "ガイアナ", "332": "ハイチ", "336": "バチカン", "340": "ホンジュラス", "348": "ハンガリー", "352": "アイスランド", "356": "インド", "360": "インドネシア", "364": "イラン", "368": "イラク", "372": "アイルランド", "376": "イスラエル", "380": "イタリア", "388": "ジャマイカ", "392": "日本", "400": "ヨルダン", "398": "カザフスタン", "404": "ケニア", "296": "キリバス", "408": "北朝鮮", "410": "韓国", "414": "クウェート", "417": "キルギス", "418": "ラオス", "428": "ラトビア", "422": "レバノン", "426": "レソト", "430": "リベリア", "434": "リビア", "438": "リヒテンシュタイン", "440": "リトアニア", "442": "ルクセンブルク", "450": "マダガスカル", "454": "マラウイ", "458": "マレーシア", "462": "モルディブ", "466": "マリ", "470": "マルタ", "584": "マーシャル諸島", "478": "モーリタニア", "480": "モーリシャス", "484": "メキシコ", "583": "ミクロネシア連邦", "498": "モルドバ", "492": "モナコ", "496": "モンゴル", "499": "モンテネグロ", "504": "モロッコ", "508": "モザンビーク", "104": "ミャンマー", "516": "ナミビア", "520": "ナウル", "524": "ネパール", "528": "オランダ", "554": "ニュージーランド", "558": "ニカラグア", "562": "ニジェール", "566": "ナイジェリア", "570": "ニウエ", "807": "北マケドニア", "578": "ノルウェー", "512": "オマーン", "586": "パキスタン", "585": "パラオ", "591": "パナマ", "598": "パプアニューギニア", "600": "パラグアイ", "604": "ペルー", "608": "フィリピン", "616": "ポーランド", "620": "ポルトガル", "634": "カタール", "642": "ルーマニア", "643": "ロシア", "646": "ルワンダ", "659": "セントクリストファー・ネイビス", "662": "セントルシア", "670": "セントビンセント・グレナディーン", "882": "サモア", "674": "サンマリノ", "678": "サントメ・プリンシペ", "682": "サウジアラビア", "686": "セネガル", "688": "セルビア", "690": "セーシェル", "694": "シエラレオネ", "702": "シンガポール", "703": "スロバキア", "705": "スロベニア", "090": "ソロモン諸島", "706": "ソマリア", "710": "南アフリカ", "728": "南スーダン", "724": "スペイン", "144": "スリランカ", "729": "スーダン", "740": "スリナム", "752": "スウェーデン", "756": "スイス", "760": "シリア", "762": "タジキスタン", "834": "タンザニア", "764": "タイ", "626": "東ティモール", "768": "トーゴ", "776": "トンガ", "780": "トリニダード・トバゴ", "788": "チュニジア", "792": "トルコ", "795": "トルクメニスタン", "798": "ツバル", "800": "ウガンダ", "804": "ウクライナ", "784": "アラブ首長国連邦", "826": "イギリス", "840": "アメリカ合衆国", "858": "ウルグアイ", "860": "ウズベキスタン", "548": "バヌアツ", "862": "ベネズエラ", "704": "ベトナム", "887": "イエメン", "894": "ザンビア", "716": "ジンバブエ", "796": "台湾", "275": "パレスチナ" };
+        const countryCodeMap = { "004": "af", "008": "al", "012": "dz", "020": "ad", "024": "ao", "028": "ag", "032": "ar", "036": "au", "040": "at", "031": "az", "044": "bs", "048": "bh", "050": "bd", "051": "am", "052": "bb", "112": "by", "056": "be", "084": "bz", "204": "bj", "064": "bt", "068": "bo", "070": "ba", "072": "bw", "076": "br", "096": "bn", "100": "bg", "854": "bf", "108": "bi", "116": "kh", "120": "cm", "124": "ca", "132": "cv", "140": "cf", "148": "td", "152": "cl", "156": "cn", "170": "co", "174": "km", "178": "cg", "180": "cd", "184": "ck", "188": "cr", "384": "ci", "191": "hr", "192": "cu", "196": "cy", "203": "cz", "208": "dk", "262": "dj", "212": "dm", "214": "do", "218": "ec", "818": "eg", "222": "sv", "226": "gq", "232": "er", "233": "ee", "748": "sz", "231": "et", "242": "fj", "246": "fi", "250": "fr", "266": "ga", "270": "gm", "268": "ge", "276": "de", "288": "gh", "300": "gr", "308": "gd", "320": "gt", "324": "gn", "624": "gw", "328": "gy", "332": "ht", "336": "va", "340": "hn", "348": "hu", "352": "is", "356": "in", "360": "id", "364": "ir", "368": "iq", "372": "ie", "376": "il", "380": "it", "388": "jm", "392": "jp", "400": "jo", "398": "kz", "404": "ke", "296": "ki", "408": "kp", "410": "kr", "414": "kw", "417": "kg", "418": "la", "428": "lv", "422": "lb", "426": "ls", "430": "lr", "434": "ly", "438": "li", "440": "lt", "442": "lu", "450": "mg", "454": "mw", "458": "my", "462": "mv", "466": "ml", "470": "mt", "584": "mh", "478": "mr", "480": "mu", "484": "mx", "583": "fm", "498": "md", "492": "mc", "496": "mn", "499": "me", "504": "ma", "508": "mz", "104": "mm", "516": "na", "520": "nr", "524": "np", "528": "nl", "554": "nz", "558": "ni", "562": "ne", "566": "ng", "570": "nu", "807": "mk", "578": "no", "512": "om", "586": "pk", "585": "pw", "591": "pa", "598": "pg", "600": "py", "604": "pe", "608": "ph", "616": "pl", "620": "pt", "634": "qa", "642": "ro", "643": "ru", "646": "rw", "659": "kn", "662": "lc", "670": "vc", "882": "ws", "674": "sm", "678": "st", "682": "sa", "686": "sn", "688": "rs", "690": "sc", "694": "sl", "702": "sg", "703": "sk", "705": "si", "090": "sb", "706": "so", "710": "za", "728": "ss", "724": "es", "144": "lk", "729": "sd", "740": "sr", "752": "se", "756": "ch", "760": "sy", "762": "tj", "834": "tz", "764": "th", "626": "tl", "768": "tg", "776": "to", "780": "tt", "788": "tn", "792": "tr", "795": "tm", "798": "tv", "800": "ug", "804": "ua", "784": "ae", "826": "gb", "840": "us", "858": "uy", "860": "uz", "548": "vu", "862": "ve", "704": "vn", "887": "ye", "894": "zm", "716": "zw", "796": "tw", "275": "ps" };
+
+        // --- Global State ---
+        let sortState = { key: 'name', order: 'asc' };
+        let allCountryFeatures = [];
+        let zoom;
+
+        // --- DOM Elements ---
+        const mapContainer = d3.select('#map-container');
+        const svg = d3.select("#world-map");
+        const g = svg.append("g");
+        const legendContainer = d3.select("#legend-container");
+        const tableBody = d3.select('#info-table tbody');
+
+        // --- Map Setup ---
+        const projection = d3.geoMercator();
+        const path = d3.geoPath().projection(projection);
+
+        // --- Color Scales ---
+        const colorScales = {
+            population: d3.scaleThreshold().domain([1e6, 10e6, 50e6, 100e6, 500e6]).range(d3.schemeBlues[6]),
+        };
+
+        // --- Helper Functions ---
+        function getFlagEmoji(countryCode) {
+            if (!countryCode || countryCode.length !== 2) {
+                return '';
+            }
+            const codePoints = countryCode
+                .toUpperCase()
+                .split('')
+                .map(char => 0x1F1E6 + char.charCodeAt(0) - 65);
+            return String.fromCodePoint(...codePoints);
+        }
+
+        // --- Main Function ---
+        async function initialize() {
+            const world = await d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json");
+            const allFeatures = topojson.feature(world, world.objects.countries).features;
+            
+            const validCountryCodes = new Set(Object.keys(countryNameJp));
+            allCountryFeatures = allFeatures.filter(d => validCountryCodes.has(d.id));
+
+            setupZoom();
+            handleResize();
+            
+            g.selectAll("path.country")
+                .data(allCountryFeatures, d => d.id)
+                .enter().append("path")
+                .attr("class", "country")
+                .attr("d", path)
+                .attr("data-id", d => d.id)
+                .on("click", (event, d) => handleCountryClick(d));
+            
+            g.append("g").attr("class", "labels");
+
+            setupControls();
+            updateAllViews();
+        }
+
+        // --- Setup Functions ---
+        function setupControls() {
+            d3.selectAll('#info-table th[data-sort]').on('click', function() {
+                const newSortKey = d3.select(this).attr('data-sort');
+                if (sortState.key === newSortKey) {
+                    sortState.order = sortState.order === 'asc' ? 'desc' : 'asc';
+                } else {
+                    sortState.key = newSortKey;
+                    sortState.order = 'asc';
+                }
+                updateTable();
+            });
+            d3.select('#zoom-in').on('click', () => zoom.scaleBy(svg.transition().duration(250), 1.2));
+            d3.select('#zoom-out').on('click', () => zoom.scaleBy(svg.transition().duration(250), 1 / 1.2));
+            d3.select('#zoom-reset').on('click', () => resetZoom());
+        }
+        
+        function setupZoom() {
+            zoom = d3.zoom().scaleExtent([1, 12]).on("zoom", (event) => {
+                g.attr("transform", event.transform);
+                updateMapLabelsStyle(event.transform.k);
+            });
+            svg.call(zoom);
+        }
+
+        // --- Update Functions ---
+        function updateAllViews() {
+            updateMapColors();
+            updateMapLabels();
+            updateLegend();
+            updateTable();
+        }
+        
+        function updateMapLabelsStyle(currentScale) {
+            g.selectAll(".country-label")
+                .style("font-size", `${10 / currentScale}px`)
+                .attr("display", function(d) {
+                    const bounds = path.bounds(d);
+                    const width = bounds[1][0] - bounds[0][0];
+                    const height = bounds[1][1] - bounds[0][1];
+                    const area = width * height;
+                    return area * currentScale > 50 ? "block" : "none";
+                });
+        }
+
+        function updateMapColors() {
+            const colorScale = colorScales.population;
+            g.selectAll(".country").transition().duration(200).attr("fill", d => {
+                const data = countryData[d.id];
+                if (data && data.population != null) return colorScale(data.population);
+                return "#e2e8f0";
+            });
+        }
+
+        function updateMapLabels() {
+            const labels = g.select(".labels").selectAll("text").data(allCountryFeatures, d => d.id);
+            labels.enter().append("text")
+                .attr("class", "country-label")
+                .attr("text-anchor", "middle")
+                .attr("dy", "0.35em")
+                .merge(labels)
+                .attr("transform", d => `translate(${path.centroid(d)})`)
+                .text(d => {
+                    const data = countryData[d.id];
+                    if (data && data.population != null) {
+                        return d3.format(".2s")(data.population).replace('G', 'B');
+                    }
+                    return '';
+                });
+            updateMapLabelsStyle(d3.zoomTransform(svg.node()).k);
+        }
+
+        function updateTable() {
+            let tableData = allCountryFeatures.map(d => {
+                const data = countryData[d.id];
+                const name = countryNameJp[d.id] || "N/A";
+                const displayValue = data?.population ?? 'N/A';
+                let sortValue = (displayValue === 'N/A') ? null : displayValue;
+                
+                return { id: d.id, name, value: displayValue, sortValue, feature: d };
+            });
+
+            // Sorting Logic
+            tableData.sort((a, b) => {
+                const key = sortState.key;
+                const order = sortState.order === 'asc' ? 1 : -1;
+
+                let valA, valB;
+                if (key === 'name') {
+                    valA = a.name;
+                    valB = b.name;
+                } else { // 'value' or 'rank'
+                    valA = a.sortValue;
+                    valB = b.sortValue;
+                }
+                
+                const aHasValue = valA !== null;
+                const bHasValue = valB !== null;
+
+                if (aHasValue && !bHasValue) return -1;
+                if (!aHasValue && bHasValue) return 1;
+                if (!aHasValue && !bHasValue) return a.name.localeCompare(b.name, 'ja');
+
+                let comparison = 0;
+                if (typeof valA === 'number' && typeof valB === 'number') {
+                    comparison = valA - valB;
+                } else {
+                    comparison = String(valA).localeCompare(String(valB), 'ja');
+                }
+                
+                return comparison * order;
+            });
+            
+            if (sortState.key === 'rank') {
+                 tableData.sort((a,b) => (a.name.localeCompare(b.name, 'ja')) * (sortState.order === 'asc' ? 1 : -1));
+            }
+            
+            tableData.forEach((d, i) => d.rank = i + 1);
+
+            d3.selectAll('#info-table th[data-sort]').each(function() {
+                const th = d3.select(this);
+                const sortKey = th.attr('data-sort');
+                let icon = '';
+                if (sortState.key === sortKey) icon = sortState.order === 'asc' ? ' <i class="fas fa-sort-up"></i>' : ' <i class="fas fa-sort-down"></i>';
+                
+                let text = '';
+                if (sortKey === 'name') text = '国名';
+                else if (sortKey === 'value') text = '人口';
+                else if (sortKey === 'rank') text = 'No.';
+                th.html(text + icon);
+            });
+
+            const rows = tableBody.selectAll('tr').data(tableData, d => d.id);
+            rows.exit().remove();
+            
+            const rowsEnter = rows.enter().append('tr')
+                .attr('class', 'bg-white border-b hover:bg-gray-50 cursor-pointer')
+                .attr('data-id', d => d.id)
+                .on('click', (event, d) => handleCountryClick(d.feature));
+
+            rowsEnter.append('td').attr('class', 'px-3 py-2 text-center');
+            rowsEnter.append('td').attr('class', 'p-1 text-center text-xl'); // Centered emoji
+            rowsEnter.append('td').attr('class', 'px-3 py-2 font-medium text-gray-900 whitespace-nowrap');
+            rowsEnter.append('td').attr('class', 'px-3 py-2');
+            
+            const allRows = rowsEnter.merge(rows);
+            allRows.order();
+
+            allRows.select('td:nth-child(1)').text(d => d.rank);
+            allRows.select('td:nth-child(2)').text(d => {
+                const alpha2 = countryCodeMap[d.id];
+                return getFlagEmoji(alpha2);
+            });
+            allRows.select('td:nth-child(3)').text(d => d.name);
+            allRows.select('td:nth-child(4)').text(d => (typeof d.value === 'number') ? d3.format(",")(d.value) : d.value);
+        }
+
+        function updateLegend() {
+            legendContainer.html('');
+            const colorScale = colorScales.population;
+
+            const title = '人口';
+            legendContainer.append('h4').attr('class', 'font-bold mb-1').text(title);
+            const items = legendContainer.selectAll('.legend-item').data(colorScale.range()).enter()
+                .append('div').attr('class', 'legend-item flex items-center');
+            items.append('div').style('width', '15px').style('height', '15px').style('background-color', d => d);
+            items.append('span').attr('class', 'ml-2').text((d, i) => {
+                const domain = colorScale.domain();
+                if (i === 0) return `< ${d3.format(".2s")(domain[0])}`;
+                return `${d3.format(".2s")(domain[i-1])} - ${d3.format(".2s")(domain[i] || '')}`;
+            });
+        }
+
+        // --- Event Handlers ---
+        function handleCountryClick(d) {
+            g.selectAll('.country').classed('selected-map', p => p.id === d.id);
+            tableBody.selectAll('tr').classed('highlight-row', r => r.id === d.id);
+            const rowElement = tableBody.select(`tr[data-id="${d.id}"]`).node();
+            if (rowElement) rowElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            zoomToCountry(d);
+        }
+
+        function zoomToCountry(d) {
+            const [[x0, y0], [x1, y1]] = path.bounds(d);
+            const dx = x1 - x0;
+            const dy = y1 - y0;
+            const x = (x0 + x1) / 2;
+            const y = (y0 + y1) / 2;
+            const { width, height } = mapContainer.node().getBoundingClientRect();
+            const scale = Math.min(8, 0.9 / Math.max(dx / width, dy / height));
+            const translate = [width / 2 - scale * x, height / 2 - scale * y];
+            svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale));
+        }
+        
+        function resetZoom() {
+             svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+        }
+
+        function handleResize() {
+            const { width, height } = mapContainer.node().getBoundingClientRect();
+            svg.attr('width', width).attr('height', height);
+            projection.fitSize([width, height], {type: "FeatureCollection", features: allCountryFeatures});
+            g.selectAll('path').attr('d', path);
+            updateMapLabels();
+        }
+
+        // --- Initialization ---
+        window.addEventListener('resize', handleResize);
+        initialize();
+
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Sidebar Logic ---
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebarClose = document.getElementById('sidebar-close');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        
+        function openSidebar() {
+            if (!sidebar || !sidebarOverlay) return;
+            sidebar.classList.remove('-translate-x-full');
+            sidebarOverlay.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+        
+        function closeSidebar() {
+            if (!sidebar || !sidebarOverlay) return;
+            sidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', openSidebar);
+        if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+        if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+        
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+
+        // --- Active Page Highlight Logic ---
+        try {
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('#sidebar a').forEach(link => {
+                const linkHref = link.getAttribute('href');
+                const linkUrl = new URL(linkHref, window.location.href);
+                if (linkUrl.pathname === currentPath) {
+                    link.classList.add('bg-blue-600', 'text-white');
+                    link.classList.remove('hover:bg-gray-700');
+                }
+            });
+        } catch (e) {
+            console.error("Error highlighting current page:", e);
+        }
+    });
+    </script>
+
+</body>
+</html>
