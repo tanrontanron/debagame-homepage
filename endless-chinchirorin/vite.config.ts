@@ -12,7 +12,12 @@ export default defineConfig(({ mode }) => {
       plugins: [react()],
       base: './',
       build: {
-        emptyOutDir: true
+        emptyOutDir: true,
+        terserOptions: {
+            format: {
+                ascii_only: true
+            }
+        }
       },
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
