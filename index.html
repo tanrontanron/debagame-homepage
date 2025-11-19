@@ -231,7 +231,7 @@
         });
 
         // Add loading animation for external links
-        document.querySelectorAll('a[href*="http"], a[href*="timeline"]').forEach(link => {
+        document.querySelectorAll('a[href*="http"]').forEach(link => {
             link.addEventListener('click', function() {
                 this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>読み込み中...';
             });
