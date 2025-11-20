@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>健康診断結果ダッシュボード</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #334155;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .btn {
+            background-color: #4a90e2;
+            color: white;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .btn:hover {
+            background-color: #357ABD;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+        }
+
+        .table-container {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        th,
+        td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        thead th {
+            background-color: #f1f5f9;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body class="p-6">
+    <!-- Sidebar Component -->
+    <nav id="sidebar"
+        class="fixed left-0 top-0 h-full w-64 bg-gray-900 text-white transform -translate-x-full transition-transform duration-300 ease-in-out z-50">
+        <div class="flex items-center justify-between p-4 border-b border-gray-700">
+            <h2 class="text-lg font-semibold">メニュー</h2>
+            <button id="sidebar-close" class="text-gray-400 hover:text-white">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <div class="p-4">
+            <ul class="space-y-2">
+                <li><a href="../index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-home mr-3"></i>トップページ</a></li>
+                <li><a href="../Interactive_worldmap/worldmap.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-globe mr-3"></i>世界地図</a></li>
+                <li><a href="../bear/index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-chart-line mr-3"></i>熊被害状況</a></li>
+                <li><a href="../numberplate/numberplate.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-car-side mr-3"></i>ナンバープレート</a></li>
+                <li><a href="../size/size.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-ruler-combined mr-3"></i>サイズ検討</a></li>
+                <li><a href="../endless-chinchirorin/dist/index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-dice mr-3"></i>無限チンチロ</a></li>
+                <li><a href="../ai-timeline/index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-brain mr-3"></i>AI年表</a></li>
+                <li><a href="./index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-heartbeat mr-3"></i>健康診断</a></li>
+            </ul>
+        </div>
+        <div class="absolute bottom-4 left-4 right-4">
+            <div class="text-xs text-gray-400 text-center">
+                <p>&copy; 2025 でばがめのほめぱげ</p>
+            </div>
+        </div>
+    </nav>
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+    <button id="sidebar-toggle"
+        class="fixed top-4 left-4 z-30 bg-gray-900 text-white p-3 rounded-lg shadow-lg hover:bg-gray-800 transition-colors"><i
+            class="fas fa-bars"></i></button>
+
+    <div class="container mx-auto">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">健康診断結果ダッシュボード</h1>
+            <p class="text-lg text-gray-600">あなたの健康指標の推移をグラフで確認できます</p>
+        </header>
+
+        <main>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+                <div class="card p-6 col-span-1 lg:col-span-3" style="height: 250px;">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">総合判定の推移</h2>
+                    <div class="chart-container">
+                        <canvas id="gradeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                <div class="card p-6">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">体重とBMI</h2>
+                    <div class="chart-container">
+                        <canvas id="weightBmiChart"></canvas>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="font-bold">解説:</h3>
+                        <p>体重とBMIは肥満度を測る指標です。</p>
+                        <h3 class="font-bold mt-2">基準値: BMI 18.5 ~ 24.9 kg/m²</h3>
+                        <h3 class="font-bold mt-2">傾向と対策：</h3>
+                        <p>体重とBMIは上昇傾向です。内臓脂肪の蓄積を防ぐため、食事内容を見直して適度な運動を心がけましょう。</p>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">腹囲 (cm)</h2>
+                    <div class="chart-container">
+                        <canvas id="waistChart"></canvas>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="font-bold">解説:</h3>
+                        <p>腹囲は内臓脂肪の蓄積を測る指標です。</p>
+                        <h3 class="font-bold mt-2">基準値: 85cm未満</h3>
+                        <h3 class="font-bold mt-2">傾向と対策：</h3>
+                        <p>基準値は下回っていますが、近年増加傾向です。適度な運動を取り入れ、腹部の脂肪を減らすことを意識しましょう。</p>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">血圧</h2>
+                    <div class="chart-container">
+                        <canvas id="bloodPressureChart"></canvas>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="font-bold">解説:</h3>
+                        <p>血圧は心臓や血管にかかる負担を示す指標です。</p>
+                        <h3 class="font-bold mt-2">基準値: 収縮期〜129mmHg, 拡張期〜84mmHg</h3>
+                        <h3 class="font-bold mt-2">傾向と対策：</h3>
+                        <p>最高・最低血圧ともに変動が見られます。塩分摂取を控え、有酸素運動を習慣づけましょう。</p>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">AST (GOT)</h2>
+                    <div class="chart-container">
+                        <canvas id="astChart"></canvas>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="font-bold">解説:</h3>
+                        <p>ASTは主に心臓や肝臓に多く含まれる酵素です。</p>
+                        <h3 class="font-bold mt-2">基準値: 10〜40 U/L</h3>
+                        <h3 class="font-bold mt-2">傾向と対策：</h3>
+                        <p>大きな変動はなく、基準範囲内で推移しています。良好な状態です。</p>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">ALT (GPT)</h2>
+                    <div class="chart-container">
+                        <canvas id="altChart"></canvas>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="font-bold">解説:</h3>
+                        <p>ALTは主に肝臓に含まれる酵素で、肝機能の状態を示します。</p>
+                        <h3 class="font-bold mt-2">基準値: 5〜45 U/L</h3>
+                        <h3 class="font-bold mt-2">傾向と対策：</h3>
+                        <p>2022年に一時的に上昇しましたが、改善傾向にあります。アルコールの摂取量を適切に管理しましょう。</p>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">γ-GTP</h2>
+                    <div class="chart-container">
+                        <canvas id="gtpChart"></canvas>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="font-bold">解説:</h3>
+                        <p>γ-GTPは肝臓や胆道に異常がある場合に高値を示します。</p>
+                        <h3 class="font-bold mt-2">基準値: 0〜50 U/L</h3>
+                        <h3 class="font-bold mt-2">傾向と対策：</h3>
+                        <p>概ね基準範囲内で安定しています。良好な状態です。</p>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">LDLコレステロール</h2>
+                    <div class="chart-container">
+                        <canvas id="ldlChart"></canvas>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="font-bold">解説:</h3>
+                        <p>LDLコレステロールは「悪玉」コレステロールとも呼ばれ、動脈硬化の原因になります。</p>
+                        <h3 class="font-bold mt-2">基準値: 60-119 mg/dL</h3>
+                        <h3 class="font-bold mt-2">傾向と対策：</h3>
+                        <p>前回、今回と基準値を大きく上回る高値が続いています。脂質の多い食事を控え、食物繊維を積極的に摂りましょう。</p>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">HDLコレステロール</h2>
+                    <div class="chart-container">
+                        <canvas id="hdlChart"></canvas>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="font-bold">解説:</h3>
+                        <p>HDLコレステロールは「善玉」コレステロールとも呼ばれ、動脈硬化を抑制します。</p>
+                        <h3 class="font-bold mt-2">基準値: 40mg/dL以上</h3>
+                        <h3 class="font-bold mt-2">傾向と対策：</h3>
+                        <p>基準値内で安定しています。良好な状態を維持できています。</p>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">中性脂肪</h2>
+                    <div class="chart-container">
+                        <canvas id="tgChart"></canvas>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="font-bold">解説:</h3>
+                        <p>中性脂肪は体脂肪の大部分を占める物質で、高値だと動脈硬化のリスクが高まります。</p>
+                        <h3 class="font-bold mt-2">基準値: 30-149 mg/dL</h3>
+                        <h3 class="font-bold mt-2">傾向と対策：</h3>
+                        <p>以前高値になったことがありますが、現在は基準範囲内で安定しています。糖質やアルコールの摂取を控えめにしましょう。</p>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">空腹時血糖</h2>
+                    <div class="chart-container">
+                        <canvas id="fbsChart"></canvas>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="font-bold">解説:</h3>
+                        <p>糖尿病の可能性を判断する上で重要な指標です。</p>
+                        <h3 class="font-bold mt-2">基準値: 〜99 mg/dL</h3>
+                        <h3 class="font-bold mt-2">傾向と対策：</h3>
+                        <p>基準範囲内で安定しています。この状態を維持するため、バランスの取れた食生活を続けましょう。</p>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">HbA1c</h2>
+                    <div class="chart-container">
+                        <canvas id="hba1cChart"></canvas>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="font-bold">解説:</h3>
+                        <p>過去1〜2ヶ月間の血糖コントロール状態を示します。</p>
+                        <h3 class="font-bold mt-2">基準値: 0.0〜5.5 %</h3>
+                        <h3 class="font-bold mt-2">傾向と対策：</h3>
+                        <p>基準範囲内で安定しています。良好な状態が続いています。</p>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">尿酸 <span class="text-red-600 font-bold">(NEW!
+                            基準値超過)</span></h2>
+                    <div class="chart-container">
+                        <canvas id="uricAcidChart"></canvas>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="font-bold">解説:</h3>
+                        <p>尿酸値が高いと、痛風のリスクが高まります。**今回、基準値を上回りました。**</p>
+                        <h3 class="font-bold mt-2">基準値: 2.1〜7.0 mg/dL</h3>
+                        <h3 class="font-bold mt-2">傾向と対策：</h3>
+                        <p class="text-red-600 font-bold">前回から大幅に上昇し、基準値を上回りました（$7.5
+                            \text{mg/dL}$）。水分を多めに摂り、プリン体の過剰摂取（ビール、レバー、魚卵など）を厳しく控えてください。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 元データテーブルの追加 -->
+            <div class="card p-6 mt-10">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">元データテーブル</h2>
+                <div class="table-container">
+                    <table class="w-full">
+                        <thead>
+                            <tr>
+                                <th>日付</th>
+                                <th>総合判定</th>
+                                <th>身長 (cm)</th>
+                                <th>体重 (kg)</th>
+                                <th>BMI</th>
+                                <th>腹囲 (cm)</th>
+                                <th>最高血圧 (mmHg)</th>
+                                <th>最低血圧 (mmHg)</th>
+                                <th>AST</th>
+                                <th>ALT</th>
+                                <th>γ-GTP</th>
+                                <th>LDL-C (mg/dL)</th>
+                                <th>HDL-C (mg/dL)</th>
+                                <th>中性脂肪 (mg/dL)</th>
+                                <th>空腹時血糖</th>
+                                <th>HbA1c</th>
+                                <th>尿酸 (mg/dL)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTableBody">
+                            <!-- データはJavaScriptで挿入 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        window.onload = function () {
+            // ユーザーから提供されたデータ
+            const healthData = [
+                {
+                    date: '2012-05-14',
+                    generalGrade: 'B',
+                    physical: {
+                        height: 170.5,
+                        weight: 66.3,
+                        bmi: 22.8,
+                        waist: 77.5
+                    },
+                    bloodPressure: {
+                        systolic: 104,
+                        diastolic: 60
+                    },
+                    liver: {
+                        ast: 23,
+                        alt: 16,
+                        gtp: 30
+                    },
+                    lipid: {
+                        ldl: 112,
+                        hdl: 66,
+                        tg: 106
+                    },
+                    glucose: {
+                        fbs: 97,
+                        hba1c: 5.0
+                    },
+                    uricAcid: 6.7
+                },
+                {
+                    date: '2013-05-13',
+                    generalGrade: 'B',
+                    physical: {
+                        height: 170.1,
+                        weight: 64.0,
+                        bmi: 22.1,
+                        waist: 78.0
+                    },
+                    bloodPressure: {
+                        systolic: 122,
+                        diastolic: 78
+                    },
+                    liver: {
+                        ast: 20,
+                        alt: 17,
+                        gtp: 30
+                    },
+                    lipid: {
+                        ldl: 137,
+                        hdl: 69,
+                        tg: 116
+                    },
+                    glucose: {
+                        fbs: 90,
+                        hba1c: 5.6
+                    },
+                    uricAcid: 6.7
+                },
+                {
+                    date: '2013-10-30',
+                    generalGrade: 'B',
+                    physical: {
+                        height: 170.9,
+                        weight: 63.6,
+                        bmi: 21.8,
+                        waist: 78.0
+                    },
+                    bloodPressure: {
+                        systolic: 111,
+                        diastolic: 70
+                    },
+                    liver: {
+                        ast: 14,
+                        alt: 9,
+                        gtp: 22
+                    },
+                    lipid: {
+                        ldl: 108,
+                        hdl: 57,
+                        tg: 146
+                    },
+                    glucose: {
+                        fbs: 74,
+                        hba1c: 5.1
+                    },
+                    uricAcid: 7.1
+                },
+                {
+                    date: '2014-11-10',
+                    generalGrade: 'B',
+                    physical: {
+                        height: 171.1,
+                        weight: 67.1,
+                        bmi: 22.9,
+                        waist: null
+                    },
+                    bloodPressure: {
+                        systolic: 118,
+                        diastolic: 68
+                    },
+                    liver: {
+                        ast: 25,
+                        alt: 18,
+                        gtp: 32
+                    },
+                    lipid: {
+                        ldl: 117,
+                        hdl: 61,
+                        tg: 93
+                    },
+                    glucose: {
+                        fbs: 76,
+                        hba1c: 5.4
+                    },
+                    uricAcid: 7.1
+                },
+                {
+                    date: '2015-11-05',
+                    generalGrade: 'D',
+                    physical: {
+                        height: 171.2,
+                        weight: 67.2,
+                        bmi: 22.9,
+                        waist: null
+                    },
+                    bloodPressure: {
+                        systolic: 113,
+                        diastolic: 73
+                    },
+                    liver: {
+                        ast: 27,
+                        alt: 24,
+                        gtp: 28
+                    },
+                    lipid: {
+                        ldl: null,
+                        hdl: 50,
+                        tg: 321
+                    },
+                    glucose: {
+                        fbs: 72,
+                        hba1c: 5.2
+                    },
+                    uricAcid: 6.1
+                },
+                {
+                    date: '2016-02-18',
+                    generalGrade: null, // 総合判定の記載なし
+                    physical: {
+                        height: null,
+                        weight: null,
+                        bmi: null,
+                        waist: null
+                    },
+                    bloodPressure: null,
+                    liver: null,
+                    lipid: {
+                        ldl: 110,
+                        hdl: 54,
+                        tg: 121
+                    },
+                    glucose: {
+                        fbs: 70,
+                        hba1c: 5.2
+                    },
+                    uricAcid: 6.7
+                },
+                {
+                    date: '2016-09-15',
+                    generalGrade: 'A',
+                    physical: {
+                        height: 170.2,
+                        weight: 62.6,
+                        bmi: 21.6,
+                        waist: null
+                    },
+                    bloodPressure: {
+                        systolic: 119,
+                        diastolic: 65
+                    },
+                    liver: {
+                        ast: 22,
+                        alt: 22,
+                        gtp: 27
+                    },
+                    lipid: {
+                        ldl: 113,
+                        hdl: 61,
+                        tg: 40
+                    },
+                    glucose: {
+                        fbs: 86,
+                        hba1c: 5.2
+                    },
+                    uricAcid: 6.7
+                },
+                {
+                    date: '2017-10-13',
+                    generalGrade: 'C12',
+                    physical: {
+                        height: 169.6,
+                        weight: 66.0,
+                        bmi: 22.9,
+                        waist: null
+                    },
+                    bloodPressure: {
+                        systolic: 107,
+                        diastolic: 71
+                    },
+                    liver: {
+                        ast: 37,
+                        alt: 29,
+                        gtp: 42
+                    },
+                    lipid: {
+                        ldl: 126,
+                        hdl: 62,
+                        tg: 73
+                    },
+                    glucose: {
+                        fbs: 84,
+                        hba1c: 5.2
+                    },
+                    uricAcid: 6.7
+                },
+                {
+                    date: '2018-08-09',
+                    generalGrade: 'C',
+                    physical: {
+                        height: 170.3,
+                        weight: 65.7,
+                        bmi: 22.7,
+                        waist: 81.0
+                    },
+                    bloodPressure: {
+                        systolic: 116,
+                        diastolic: 76
+                    },
+                    liver: {
+                        ast: 23,
+                        alt: 21,
+                        gtp: 37
+                    },
+                    lipid: {
+                        ldl: null,
+                        hdl: 66,
+                        tg: 65
+                    },
+                    glucose: {
+                        fbs: 80,
+                        hba1c: 5.4
+                    },
+                    uricAcid: 6.1
+                },
+                {
+                    date: '2019-10-02',
+                    generalGrade: 'D2',
+                    physical: {
+                        height: 170.3,
+                        weight: 66.3,
+                        bmi: 22.9,
+                        waist: 81.0
+                    },
+                    bloodPressure: {
+                        systolic: 115,
+                        diastolic: 76
+                    },
+                    liver: {
+                        ast: 22,
+                        alt: 29,
+                        gtp: 27
+                    },
+                    lipid: {
+                        ldl: 109,
+                        hdl: 45,
+                        tg: 442
+                    },
+                    glucose: {
+                        fbs: 95,
+                        hba1c: 5.6
+                    },
+                    uricAcid: 6.4
+                },
+                {
+                    date: '2019-12-04',
+                    generalGrade: null,
+                    physical: {
+                        height: null,
+                        weight: null,
+                        bmi: null,
+                        waist: null
+                    },
+                    bloodPressure: null,
+                    liver: null,
+                    lipid: {
+                        ldl: 110,
+                        hdl: 54,
+                        tg: 89
+                    },
+                    glucose: null,
+                    uricAcid: null
+                },
+                {
+                    date: '2020-10-07',
+                    generalGrade: 'C',
+                    physical: {
+                        height: 169.8,
+                        weight: 63.6,
+                        bmi: 22.1,
+                        waist: 80.5
+                    },
+                    bloodPressure: {
+                        systolic: 126,
+                        diastolic: 70
+                    },
+                    liver: {
+                        ast: 21,
+                        alt: 21,
+                        gtp: 26
+                    },
+                    lipid: {
+                        ldl: 100,
+                        hdl: 56,
+                        tg: 128
+                    },
+                    glucose: {
+                        fbs: 86,
+                        hba1c: 5.6
+                    },
+                    uricAcid: 5.9
+                },
+                {
+                    date: '2021-07-05',
+                    generalGrade: 'B',
+                    physical: {
+                        height: 169.7,
+                        weight: 63.4,
+                        bmi: 22.8,
+                        waist: 81.0
+                    },
+                    bloodPressure: {
+                        systolic: 122,
+                        diastolic: 71
+                    },
+                    liver: {
+                        ast: 19,
+                        alt: 27,
+                        gtp: 27
+                    },
+                    lipid: {
+                        ldl: 123,
+                        hdl: 59,
+                        tg: 136
+                    },
+                    glucose: {
+                        fbs: 80,
+                        hba1c: 5.2
+                    },
+                    uricAcid: 5.8
+                },
+                {
+                    date: '2022-07-13',
+                    generalGrade: 'B',
+                    physical: {
+                        height: 169.7,
+                        weight: 67.5,
+                        bmi: 23.4,
+                        waist: 84.5
+                    },
+                    bloodPressure: {
+                        systolic: 123,
+                        diastolic: 78
+                    },
+                    liver: {
+                        ast: 35,
+                        alt: 45,
+                        gtp: 39
+                    },
+                    lipid: {
+                        ldl: 131,
+                        hdl: 51,
+                        tg: 143
+                    },
+                    glucose: {
+                        fbs: 74,
+                        hba1c: 5.1
+                    },
+                    uricAcid: 6.8
+                },
+                {
+                    date: '2023-10-02',
+                    generalGrade: 'D',
+                    physical: {
+                        height: 169.8,
+                        weight: 64.0,
+                        bmi: 22.2,
+                        waist: 78.4
+                    },
+                    bloodPressure: {
+                        systolic: 114,
+                        diastolic: 86
+                    },
+                    liver: {
+                        ast: 22,
+                        alt: 22,
+                        gtp: 25
+                    },
+                    lipid: {
+                        ldl: 111,
+                        hdl: 58,
+                        tg: 126
+                    },
+                    glucose: {
+                        fbs: 81,
+                        hba1c: 5.5
+                    },
+                    uricAcid: 6.4
+                },
+                {
+                    date: '2024-11-19',
+                    generalGrade: 'C1',
+                    physical: {
+                        height: 170.5,
+                        weight: 68.5,
+                        bmi: 23.6,
+                        waist: 81.0
+                    },
+                    bloodPressure: {
+                        systolic: 125,
+                        diastolic: 88
+                    },
+                    liver: {
+                        ast: 25,
+                        alt: 30,
+                        gtp: 27
+                    },
+                    lipid: {
+                        ldl: 154,
+                        hdl: 58,
+                        tg: 53
+                    },
+                    glucose: {
+                        fbs: 93,
+                        hba1c: 5.6
+                    },
+                    uricAcid: 6.3
+                },
+                // --- 最新データ (2025/09/04) ---
+                {
+                    date: '2025-09-04',
+                    generalGrade: 'D2',
+                    physical: {
+                        height: 170.5,
+                        weight: 68.7,
+                        bmi: 23.6,
+                        waist: 83.0
+                    },
+                    bloodPressure: {
+                        systolic: 100,
+                        diastolic: 77
+                    },
+                    liver: {
+                        ast: 28,
+                        alt: 35,
+                        gtp: 31
+                    },
+                    lipid: {
+                        ldl: 146,
+                        hdl: 54,
+                        tg: 79
+                    },
+                    glucose: {
+                        fbs: 93,
+                        hba1c: 5.5
+                    },
+                    uricAcid: 7.5 // H
+                }
+            ];
+
+            // データの抽出と初期化
+            const dates = healthData.map(d => d.date);
+
+            // グラフ描画用の汎用関数
+            function createChart(ctx, type, data, options) {
+                return new Chart(ctx, {
+                    type: type,
+                    data: data,
+                    options: options
+                });
+            }
+
+            // 総合判定グラフ
+            const gradeMap = {
+                'A': 1, 'B': 2, 'C': 3, 'C1': 3, 'C2': 4, 'C3': 5, 'C6': 6, 'C12': 7, 'D': 8, 'D1': 8, 'D2': 9, 'D3': 10, 'E': 11, 'E1': 11, 'E2': 12, 'F': 13, 'G': 14
+            };
+            // 判定ランクの説明に合わせてラベルを再定義
+            const orderedGradeLabels = [
+                'A', 'B', 'C1', 'C2', 'D1', 'D2', 'D3', 'E1', 'E2', 'C', 'C12', 'F', 'G' // 頻出しないものもカバーするため、マッピングの値を調整
+            ];
+            const gradeValues = healthData.map(d => {
+                const grade = d.generalGrade;
+                if (grade === 'A') return 1;
+                if (grade === 'B') return 2;
+                if (grade === 'C1') return 3;
+                if (grade === 'C2') return 4;
+                if (grade === 'D1') return 5;
+                if (grade === 'D2') return 6;
+                // 他の複合判定や不明な値は、プロットされないようnullにするか、最も悪い値に設定する
+                return 6; // D2にプロット
+            });
+            const gradeChartCtx = document.getElementById('gradeChart').getContext('2d');
+            const gradeChart = createChart(gradeChartCtx, 'line', {
+                labels: dates,
+                datasets: [{
+                    label: '総合判定 (良:1 → 悪:6)',
+                    data: gradeValues,
+                    borderColor: '#4a90e2',
+                    tension: 0.3,
+                    fill: false
+                }]
+            }, {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: function (value) {
+                                if (value === 1) return 'A (異常なし)';
+                                if (value === 2) return 'B (軽度異常)';
+                                if (value === 3) return 'C1 (生活改善)';
+                                if (value === 4) return 'C2 (要経過観察)';
+                                if (value === 5) return 'D1 (要治療)';
+                                if (value === 6) return 'D2 (要精密検査)';
+                                return null;
+                            }
+                        },
+                        min: 1,
+                        max: 6,
+                        reverse: true, // Aが上、Dが下になるように
+                        title: {
+                            display: true,
+                            text: '判定'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '日付'
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                const label = context.dataset.label || '';
+                                const value = context.parsed.y;
+                                let gradeText;
+                                if (value === 1) gradeText = 'A';
+                                else if (value === 2) gradeText = 'B';
+                                else if (value === 3) gradeText = 'C1';
+                                else if (value === 4) gradeText = 'C2';
+                                else if (value === 5) gradeText = 'D1';
+                                else if (value === 6) gradeText = 'D2';
+                                return `${label}: ${gradeText || 'N/A'}`;
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 体重とBMIを統合したグラフ
+            const weightBmiChartCtx = document.getElementById('weightBmiChart').getContext('2d');
+            const weightBmiChart = createChart(weightBmiChartCtx, 'line', {
+                labels: dates,
+                datasets: [
+                    {
+                        label: '体重 (kg)',
+                        data: healthData.map(d => d.physical.weight),
+                        borderColor: '#38b2ac',
+                        tension: 0.3,
+                        fill: false,
+                        yAxisID: 'y-weight'
+                    },
+                    {
+                        label: 'BMI',
+                        data: healthData.map(d => d.physical.bmi),
+                        borderColor: '#f56565',
+                        tension: 0.3,
+                        fill: false,
+                        yAxisID: 'y-bmi'
+                    },
+                    {
+                        label: 'BMI基準範囲下限',
+                        data: dates.map(() => 18.5),
+                        borderColor: 'rgba(56, 178, 172, 0.5)',
+                        borderDash: [5, 5],
+                        pointStyle: false,
+                        spanGaps: true,
+                        yAxisID: 'y-bmi',
+                        hidden: true
+                    },
+                    {
+                        label: 'BMI基準範囲上限',
+                        data: dates.map(() => 24.9),
+                        borderColor: 'rgba(245, 101, 101, 0.5)',
+                        borderDash: [5, 5],
+                        fill: '-1',
+                        backgroundColor: 'rgba(245, 101, 101, 0.1)',
+                        pointStyle: false,
+                        spanGaps: true,
+                        yAxisID: 'y-bmi',
+                        hidden: true
+                    }
+                ]
+            }, {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    'y-weight': {
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: '体重 (kg)'
+                        }
+                    },
+                    'y-bmi': {
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: 'BMI'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '日付'
+                        }
+                    }
+                }
+            });
+
+            // 腹囲グラフ
+            const waistChartCtx = document.getElementById('waistChart').getContext('2d');
+            const waistChart = createChart(waistChartCtx, 'line', {
+                labels: dates,
+                datasets: [
+                    {
+                        label: '腹囲',
+                        data: healthData.map(d => d.physical.waist),
+                        borderColor: '#4299e1',
+                        tension: 0.3,
+                        fill: false
+                    },
+                    {
+                        label: '基準値上限 (85cm)',
+                        data: dates.map(() => 85),
+                        borderColor: 'rgba(245, 101, 101, 0.5)',
+                        borderDash: [5, 5],
+                        pointStyle: false,
+                        spanGaps: true
+                    }
+                ]
+            }, {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: '腹囲 (cm)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '日付'
+                        }
+                    }
+                }
+            });
+
+            // 血圧グラフ
+            const bloodPressureChartCtx = document.getElementById('bloodPressureChart').getContext('2d');
+            const bloodPressureChart = createChart(bloodPressureChartCtx, 'line', {
+                labels: dates,
+                datasets: [
+                    {
+                        label: '収縮期血圧 (最高)',
+                        data: healthData.map(d => d.bloodPressure?.systolic),
+                        borderColor: '#f56565',
+                        tension: 0.3,
+                        fill: false
+                    },
+                    {
+                        label: '拡張期血圧 (最低)',
+                        data: healthData.map(d => d.bloodPressure?.diastolic),
+                        borderColor: '#4299e1',
+                        tension: 0.3,
+                        fill: false
+                    },
+                    {
+                        label: '最高血圧基準値 (129)',
+                        data: dates.map(() => 129),
+                        borderColor: 'rgba(245, 101, 101, 0.5)',
+                        borderDash: [5, 5],
+                        pointStyle: false,
+                        spanGaps: true,
+                        hidden: true
+                    },
+                    {
+                        label: '最低血圧基準値 (84)',
+                        data: dates.map(() => 84),
+                        borderColor: 'rgba(66, 153, 225, 0.5)',
+                        borderDash: [5, 5],
+                        pointStyle: false,
+                        spanGaps: true,
+                        hidden: true
+                    }
+                ]
+            }, {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: '血圧 (mmHg)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '日付'
+                        }
+                    }
+                }
+            });
+
+            // ASTグラフ
+            const astChartCtx = document.getElementById('astChart').getContext('2d');
+            const astChart = createChart(astChartCtx, 'line', {
+                labels: dates,
+                datasets: [
+                    {
+                        label: 'AST (GOT)',
+                        data: healthData.map(d => d.liver?.ast),
+                        borderColor: '#68d391',
+                        tension: 0.3,
+                        fill: false
+                    },
+                    {
+                        label: '基準範囲上限 (40)',
+                        data: dates.map(() => 40),
+                        borderColor: 'rgba(104, 211, 145, 0.5)',
+                        borderDash: [5, 5],
+                        pointStyle: false,
+                        spanGaps: true,
+                        fill: '-1',
+                        backgroundColor: 'rgba(104, 211, 145, 0.1)',
+                        hidden: true
+                    }
+                ]
+            }, {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: '値 (U/L)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '日付'
+                        }
+                    }
+                }
+            });
+
+            // ALTグラフ
+            const altChartCtx = document.getElementById('altChart').getContext('2d');
+            const altChart = createChart(altChartCtx, 'line', {
+                labels: dates,
+                datasets: [
+                    {
+                        label: 'ALT (GPT)',
+                        data: healthData.map(d => d.liver?.alt),
+                        borderColor: '#4fd1c5',
+                        tension: 0.3,
+                        fill: false
+                    },
+                    {
+                        label: '基準範囲上限 (45)',
+                        data: dates.map(() => 45),
+                        borderColor: 'rgba(79, 209, 197, 0.5)',
+                        borderDash: [5, 5],
+                        pointStyle: false,
+                        spanGaps: true,
+                        fill: '-1',
+                        backgroundColor: 'rgba(79, 209, 197, 0.1)',
+                        hidden: true
+                    }
+                ]
+            }, {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: '値 (U/L)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '日付'
+                        }
+                    }
+                }
+            });
+
+            // γ-GTPグラフ
+            const gtpChartCtx = document.getElementById('gtpChart').getContext('2d');
+            const gtpChart = createChart(gtpChartCtx, 'line', {
+                labels: dates,
+                datasets: [
+                    {
+                        label: 'γ-GTP',
+                        data: healthData.map(d => d.liver?.gtp),
+                        borderColor: '#9f7aea',
+                        tension: 0.3,
+                        fill: false
+                    },
+                    {
+                        label: '基準範囲上限 (50)',
+                        data: dates.map(() => 50),
+                        borderColor: 'rgba(245, 101, 101, 0.5)',
+                        borderDash: [5, 5],
+                        pointStyle: false,
+                        spanGaps: true,
+                        hidden: true
+                    }
+                ]
+            }, {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: '値 (U/L)'
+                        }
+                    }
+                }
+            });
+
+            // LDLグラフ
+            const ldlChartCtx = document.getElementById('ldlChart').getContext('2d');
+            const ldlChart = createChart(ldlChartCtx, 'line', {
+                labels: dates,
+                datasets: [
+                    {
+                        label: 'LDLコレステロール',
+                        data: healthData.map(d => d.lipid?.ldl),
+                        borderColor: '#ff8a80',
+                        tension: 0.3,
+                        fill: false
+                    },
+                    {
+                        label: '基準範囲上限 (119)',
+                        data: dates.map(() => 119),
+                        borderColor: 'rgba(255, 99, 132, 0.5)',
+                        borderDash: [5, 5],
+                        pointStyle: false,
+                        spanGaps: true,
+                        fill: '-1',
+                        backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                        hidden: true
+                    }
+                ]
+            }, {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: '値 (mg/dL)'
+                        }
+                    }
+                }
+            });
+
+            // HDLグラフ
+            const hdlChartCtx = document.getElementById('hdlChart').getContext('2d');
+            const hdlChart = createChart(hdlChartCtx, 'line', {
+                labels: dates,
+                datasets: [
+                    {
+                        label: 'HDLコレステロール',
+                        data: healthData.map(d => d.lipid?.hdl),
+                        borderColor: '#4fc3f7',
+                        tension: 0.3,
+                        fill: false
+                    },
+                    {
+                        label: '基準値下限 (40)',
+                        data: dates.map(() => 40),
+                        borderColor: 'rgba(255, 99, 132, 0.5)',
+                        borderDash: [5, 5],
+                        pointStyle: false,
+                        spanGaps: true,
+                        hidden: true
+                    }
+                ]
+            }, {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: '値 (mg/dL)'
+                        }
+                    }
+                }
+            });
+
+            // 中性脂肪グラフ
+            const tgChartCtx = document.getElementById('tgChart').getContext('2d');
+            const tgChart = createChart(tgChartCtx, 'line', {
+                labels: dates,
+                datasets: [
+                    {
+                        label: '中性脂肪',
+                        data: healthData.map(d => d.lipid?.tg),
+                        borderColor: '#ffd54f',
+                        tension: 0.3,
+                        fill: false
+                    },
+                    {
+                        label: '基準範囲上限 (149)',
+                        data: dates.map(() => 149),
+                        borderColor: 'rgba(255, 99, 132, 0.5)',
+                        borderDash: [5, 5],
+                        pointStyle: false,
+                        spanGaps: true,
+                        fill: '-1',
+                        backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                        hidden: true
+                    }
+                ]
+            }, {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: '値 (mg/dL)'
+                        }
+                    }
+                }
+            });
+
+            // 空腹時血糖グラフ
+            const fbsChartCtx = document.getElementById('fbsChart').getContext('2d');
+            const fbsChart = createChart(fbsChartCtx, 'line', {
+                labels: dates,
+                datasets: [
+                    {
+                        label: '空腹時血糖',
+                        data: healthData.map(d => d.glucose?.fbs),
+                        borderColor: '#4299e1',
+                        tension: 0.3,
+                        fill: false
+                    },
+                    {
+                        label: '基準値上限 (99)',
+                        data: dates.map(() => 99),
+                        borderColor: 'rgba(245, 101, 101, 0.5)',
+                        borderDash: [5, 5],
+                        pointStyle: false,
+                        spanGaps: true,
+                        hidden: true
+                    }
+                ]
+            }, {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: '値 (mg/dL)'
+                        }
+                    }
+                }
+            });
+
+            // HbA1cグラフ
+            const hba1cChartCtx = document.getElementById('hba1cChart').getContext('2d');
+            const hba1cChart = createChart(hba1cChartCtx, 'line', {
+                labels: dates,
+                datasets: [
+                    {
+                        label: 'HbA1c',
+                        data: healthData.map(d => d.glucose?.hba1c),
+                        borderColor: '#f6ad55',
+                        tension: 0.3,
+                        fill: false
+                    },
+                    {
+                        label: '基準値上限 (5.5)',
+                        data: dates.map(() => 5.5),
+                        borderColor: 'rgba(245, 101, 101, 0.5)',
+                        borderDash: [5, 5],
+                        pointStyle: false,
+                        spanGaps: true,
+                        hidden: true
+                    }
+                ]
+            }, {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: '値 (%)'
+                        }
+                    }
+                }
+            });
+
+
+            // 尿酸グラフ
+            const uricAcidChartCtx = document.getElementById('uricAcidChart').getContext('2d');
+            const uricAcidChart = createChart(uricAcidChartCtx, 'line', {
+                labels: dates,
+                datasets: [{
+                    label: '尿酸',
+                    data: healthData.map(d => d.uricAcid),
+                    borderColor: '#ed8936',
+                    tension: 0.3,
+                    fill: false
+                },
+                {
+                    label: '基準範囲上限 (7.0)',
+                    data: dates.map(() => 7.0),
+                    borderColor: 'rgba(245, 101, 101, 0.5)',
+                    borderDash: [5, 5],
+                    pointStyle: false,
+                    spanGaps: true,
+                    fill: '-1',
+                    backgroundColor: 'rgba(245, 101, 101, 0.1)'
+                }]
+            }, {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: '値 (mg/dL)'
+                        }
+                    }
+                }
+            });
+
+            // テーブルにデータを挿入
+            const tableBody = document.getElementById('dataTableBody');
+            tableBody.innerHTML = ''; // テーブルをクリア
+            healthData.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.date}</td>
+                    <td>${item.generalGrade || '-'}</td>
+                    <td>${item.physical.height || '-'}</td>
+                    <td>${item.physical.weight || '-'}</td>
+                    <td>${item.physical.bmi || '-'}</td>
+                    <td>${item.physical.waist || '-'}</td>
+                    <td>${item.bloodPressure?.systolic || '-'}</td>
+                    <td>${item.bloodPressure?.diastolic || '-'}</td>
+                    <td>${item.liver?.ast || '-'}</td>
+                    <td>${item.liver?.alt || '-'}</td>
+                    <td>${item.liver?.gtp || '-'}</td>
+                    <td>${item.lipid?.ldl || '-'}</td>
+                    <td>${item.lipid?.hdl || '-'}</td>
+                    <td>${item.lipid?.tg || '-'}</td>
+                    <td>${item.glucose?.fbs || '-'}</td>
+                    <td>${item.glucose?.hba1c || '-'}</td>
+                    <td>${item.uricAcid || '-'}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        };
+
+        // --- Sidebar Logic ---
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebarClose = document.getElementById('sidebar-close');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+        function openSidebar() {
+            if (!sidebar || !sidebarOverlay) return;
+            sidebar.classList.remove('-translate-x-full');
+            sidebarOverlay.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeSidebar() {
+            if (!sidebar || !sidebarOverlay) return;
+            sidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', openSidebar);
+        if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+        if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+
+        // --- Active Page Highlight Logic ---
+        try {
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('#sidebar a').forEach(link => {
+                const linkHref = link.getAttribute('href');
+                const linkUrl = new URL(linkHref, window.location.href);
+                if (linkUrl.pathname === currentPath) {
+                    link.classList.add('bg-blue-600', 'text-white');
+                    link.classList.remove('hover:bg-gray-700');
+                }
+            });
+        } catch (e) {
+            console.error("Error highlighting current page:", e);
+        }
+    </script>
+</body>
+
+</html>
