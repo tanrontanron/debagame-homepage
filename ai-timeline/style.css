@@ -6,14 +6,13 @@
         }
 
         .slide-container {
-            /* 16:9 aspect ratio */
-            max-width: 1200px;
-            aspect-ratio: 16 / 9;
-            margin: auto;
+            /* No longer a slide, remove fixed aspect ratio and max-width */
+            width: 100%; /* Use full width */
+            margin: auto; /* Still center it if space allows */
             display: flex;
-            /* JavaScriptで hidden を�Eり替えて表示 */
+            /* Handled by JS if needed, but no longer for slides */
             margin-bottom: 2rem;
-            /* 吁E��ライドコンチE��間�Eスペ�Eス */
+            /* Spacing between sections */
         }
 
         .slide-page {
@@ -24,8 +23,7 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            /* スライド�Eのはみ出しを防止 */
+            /* Allow content to flow */
         }
 
         .era-title {
@@ -36,15 +34,15 @@
             margin-bottom: 1.5rem;
             padding-bottom: 1.5rem;
             border-bottom: 2px solid #e2e8f0;
-            /* 仕�Eり緁E*/
+            /* 仕切り線 */
             flex-shrink: 0;
-            /* タイトルが縮まなぁE��ぁE�� */
+            /* タイトルが縮まないように */
         }
 
         /* --- タイムライン共通スタイル --- */
         .timeline-wrapper {
             position: relative;
-            /* z-index の基溁E*/
+            /* z-index の基準 */
             width: 100%;
             height: 100%;
         }
@@ -91,9 +89,9 @@
             /* 年表示 */
             position: absolute;
             background-color: white;
-            /* ☁E背景色白 */
+            /* ★ 背景色白 */
             padding: 0 8px;
-            /* 左右のパディングで線を隠ぁE*/
+            /* 左右のパディングで線を隠す */
             font-weight: 700;
             color: #e2e8f0;
             font-size: 1.75rem;
@@ -136,7 +134,7 @@
         }
 
         .event-box {
-            /* 上�EチE��ス */
+            /* 上ボックス */
             position: absolute;
             bottom: calc(50% + 40px);
             padding: 0.5rem;
@@ -173,7 +171,7 @@
         }
 
         .event-box-bottom {
-            /* 下�EチE��ス */
+            /* 下ボックス */
             position: absolute;
             top: calc(50% + 40px);
             width: 150px;
@@ -210,7 +208,7 @@
         }
 
 
-        /* 色刁E�� */
+        /* 色分け */
         .event-color-gpt {
             background-color: #d1fae5;
         }
@@ -267,7 +265,7 @@
             color: white;
         }
 
-        /* 年マ�Eカー */
+        /* 年マーカー */
         .year-marker {
             width: 100px;
             height: 100%;
@@ -320,7 +318,7 @@
             flex-grow: 1;
             scrollbar-color: #a0aec0 #edf2f7;
             scrollbar-width: thin;
-            height: 200px; /* Added fixed height */
+            height: 400px; /* Increased fixed height */
         }
 
         .scrollable-timeline::-webkit-scrollbar {
@@ -337,7 +335,7 @@
             border-radius: 4px;
         }
 
-        /* --- 老E��スライド�E送E--- */
+        /* --- 老EスライドE送E--- */
         .insight-content {
             flex-grow: 1;
             padding: 0 1rem;
@@ -480,7 +478,7 @@
             margin-bottom: 1.5rem;
         }
 
-        /* --- ライト�EチE��ス --- */
+        /* --- ライトEチEス --- */
         #lightbox-overlay {
             position: fixed;
             top: 0;
@@ -521,7 +519,7 @@
             line-height: 1;
         }
 
-        /* --- AI比輁E�� --- */
+        /* --- AI比輁E --- */
         .comparison-table {
             width: 100%;
             border-collapse: collapse;
@@ -568,7 +566,7 @@
             width: 120px;
         }
 
-        /* ☁E修正: 比輁E��の色刁E��クラス */
+        /* ☁E修正: 比輁Eの色刁Eクラス */
         .bg-dark-green-100 {
             background-color: #a7f3d0;
         }
@@ -594,7 +592,7 @@
         }
 
         /* N/A */
-        /* ☁E追加: 比輁E��結合セル用 */
+        /* ☁E追加: 比輁E結合セル用 */
         .merged-cell {
             text-align: center;
             font-weight: bold;
