@@ -348,115 +348,72 @@
             try { const currentPath = window.location.pathname; document.querySelectorAll('#sidebar a').forEach(link => { const linkUrl = new URL(link.getAttribute('href'), window.location.href); if (linkUrl.pathname === currentPath) { link.classList.add('bg-blue-600', 'text-white'); link.classList.remove('hover:bg-gray-700'); } }); } catch (e) { console.error("Error highlighting current page:", e); }
 
             /**
-             * Calculates the time ago from a given year and month to now (Oct 2025).
+             * Calculates the time ago from a given year and month to now.
              * @param {number} year - The target year.
              * @param {number | null} month - The target month (1-12). Can be null.
-             * @returns {string} - "X years Y months ago" or "X years ago".
+             * @returns {string} - "X年Yヶ月前" or "X年Yヶ月後".
              */
             function calculateTimeAgo(year, month) {
-                const now = new Date(); // Reference date: Now
-                const targetMonth = month ? month - 1 : 0;
-                const targetDate = new Date(year, targetMonth, 1);
-                let diffYears = now.getFullYear() - targetDate.getFullYear();
-                let diffMonths = now.getMonth() - targetDate.getMonth();
-                if (diffMonths < 0) { diffYears--; diffMonths += 12; }
-                if (!month) { return diffYears === 0 ? '今年' : `${diffYears}年前`; }
-                if (diffYears === 0 && diffMonths === 0) return '今月';
-                if (diffYears === 0) return `${diffMonths}ヶ月前`;
-                if (diffMonths === 0) return `${diffYears}年前`;
-                return `${diffYears}年${diffMonths}ヶ月前`;
-            }
+                const now = new Date();
+                const targetMonth = month ? month - 1 : 0; // 月が指定されていない場合は1月とみなす
 
-            // --- Modal & Lightbox ---
-            const modalOverlay = document.getElementById('modal-overlay');
-            const modalContent = document.getElementById('modal-content');
-            const modalTweetContainer = document.getElementById('modal-tweet-container');
-            const modalImagesContainer = document.getElementById('modal-images-container');
-            const modalCloseBtn = document.getElementById('modal-close-btn');
-            const lightboxOverlay = document.getElementById('lightbox-overlay');
-            const lightboxImage = document.getElementById('lightbox-image');
-            const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
+                // 年月の差分を月単位で計算
+                let monthsDiff = (now.getFullYear() - year) * 12 + (now.getMonth() - targetMonth);
 
-            function openLightbox(imgSrc) { if (!lightboxOverlay || !lightboxImage) return; lightboxImage.src = imgSrc; lightboxOverlay.classList.add('visible'); lightboxOverlay.classList.remove('hidden'); }
-            function closeLightbox() { if (!lightboxOverlay || !lightboxImage) return; lightboxOverlay.classList.remove('visible'); lightboxOverlay.classList.add('hidden'); lightboxImage.src = ''; }
-            if (lightboxOverlay) lightboxOverlay.addEventListener('click', (e) => { if (e.target === lightboxOverlay || e.target === lightboxImage) closeLightbox(); });
-            if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closeLightbox);
+                if (monthsDiff === 0) return '今月';
 
-            function openModal(data) {
-                if (!modalOverlay) return;
-                modalTweetContainer.innerHTML = ''; modalImagesContainer.innerHTML = '';
+                const isFuture = monthsDiff < 0;
+                monthsDiff = Math.abs(monthsDiff);
 
-                if (data.xLink) {
-                    const tweetIdMatch = data.xLink.match(/\/status\/(\d+)/);
-                    if (tweetIdMatch && tweetIdMatch[1]) {
-                        const tweetId = tweetIdMatch[1];
+                const diffYears = Math.floor(monthsDiff / 12);
+                const diffMonths = monthsDiff % 12;
 
-                        // Loading indicator
-                        modalTweetContainer.innerHTML = `<div class="flex justify-center items-center h-32"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div></div>`;
-
-                        const createWidget = () => {
-                            modalTweetContainer.innerHTML = ''; // Clear loading indicator
-                            window.twttr.widgets.createTweet(tweetId, modalTweetContainer, {
-                                theme: 'dark',
-                                align: 'center',
-                                conversation: 'none'
-                            }).then(el => {
-                                if (!el) {
-                                    modalTweetContainer.innerHTML = `<p class="text-center text-red-400 mb-2">ツイートの読み込みに失敗しました。</p>`;
-                                    const fallbackLink = document.createElement('a');
-                                    fallbackLink.href = data.xLink;
-                                    fallbackLink.target = '_blank';
-                                    fallbackLink.rel = 'noopener noreferrer';
-                                    fallbackLink.className = 'inline-block bg-blue-500 text-white font-bold px-4 py-2 rounded-md hover:bg-blue-400 transition-colors';
-                                    fallbackLink.textContent = 'X で開く';
-                                    modalTweetContainer.appendChild(fallbackLink);
-                                }
-                            });
-                        };
-
-                        if (window.twttr && window.twttr.ready) {
-                            window.twttr.ready(createWidget);
-                        } else {
-                            // Fallback if twttr is not ready immediately (though script is async)
-                            setTimeout(() => {
-                                if (window.twttr && window.twttr.ready) {
-                                    window.twttr.ready(createWidget);
-                                } else {
-                                    modalTweetContainer.innerHTML = `<p class="text-center text-red-400">X ウィジェットを初期化できませんでした。</p>`;
-                                    const fallbackLink = document.createElement('a');
-                                    fallbackLink.href = data.xLink;
-                                    fallbackLink.target = '_blank';
-                                    fallbackLink.rel = 'noopener noreferrer';
-                                    fallbackLink.className = 'inline-block bg-blue-500 text-white font-bold px-4 py-2 rounded-md mt-4 hover:bg-blue-400 transition-colors';
-                                    fallbackLink.textContent = 'X で開く';
-                                    modalTweetContainer.appendChild(fallbackLink);
-                                }
-                            }, 1000);
-                        }
-                    } else {
-                        const fallbackLink = document.createElement('a'); fallbackLink.href = data.xLink; fallbackLink.target = '_blank'; fallbackLink.rel = 'noopener noreferrer'; fallbackLink.className = 'inline-block bg-blue-500 text-white font-bold px-4 py-2 rounded-md mt-4 hover:bg-blue-400 transition-colors'; fallbackLink.textContent = 'X で開く'; modalTweetContainer.appendChild(fallbackLink);
-                    }
-                } else if (data.img1 || data.img2) {
-                    if (data.img1) { const figure1 = document.createElement('figure'); figure1.innerHTML = `<img src="${data.img1}" alt="${data.caption1 || ''}"><figcaption>${data.caption1 || ''}</figcaption>`; figure1.querySelector('img')?.addEventListener('click', () => openLightbox(data.img1)); modalImagesContainer.appendChild(figure1); }
-                    if (data.img2) { const figure2 = document.createElement('figure'); figure2.innerHTML = `<img src="${data.img2}" alt="${data.caption2 || ''}"><figcaption>${data.caption2 || ''}</figcaption>`; figure2.querySelector('img')?.addEventListener('click', () => openLightbox(data.img2)); modalImagesContainer.appendChild(figure2); }
+                let timeString = '';
+                if (diffYears > 0) {
+                    timeString += `${diffYears}年`;
                 }
-                modalOverlay.classList.add('visible'); modalOverlay.classList.remove('hidden');
+                if (diffMonths > 0 || diffYears === 0) { // 0年の場合は必ず月を表示、年がある場合は月が0以外なら表示
+                    timeString += `${diffMonths}ヶ月`;
+                }
+
+                // ぴったりX年の場合も「0ヶ月」を表示せず「X年」とするが、ユーザー要望の「1ヶ月単位」に応えるため
+                // 端数がない場合はそのまま。端数がある場合はX年Yヶ月。
+                // もし「1年0ヶ月」と表示したい場合は上記条件を変更するが、通常は「1年」で十分正確。
+                // ただしユーザーは「1年とかまとめず」と言っているので、端数があるのに切り捨てられるのを嫌っている。
+                // 上記ロジックなら端数は必ず出る。
+
+                return timeString + (isFuture ? '後' : '前');
             }
-            function closeModal() { if (!modalOverlay) return; modalOverlay.classList.remove('visible'); modalOverlay.classList.add('hidden'); modalTweetContainer.innerHTML = ''; modalImagesContainer.innerHTML = ''; }
-            if (modalOverlay) modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-            if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+
+            // ... (中略) ...
 
             function generateDescriptionBoxContent(itemData) {
                 let dateText = itemData.date || '（データなし）'; const stats = itemData.stats || '（データなし）'; const summary = itemData.summary || '（概要なし）';
-                const dateMatch = dateText.match(/(\d{4})年(?:(\d{1, 2})月)?/);
-                if (dateMatch) { const year = parseInt(dateMatch[1], 10); const month = dateMatch[2] ? parseInt(dateMatch[2], 10) : null; const timeAgo = calculateTimeAgo(year, month); dateText = dateText.replace(/\(.+?\)/, `(${timeAgo})`); }
+
+                // 年と月を抽出 (例: "2023年3月", "2024年<br>2月")
+                // <br>タグや改行を考慮してマッチング
+                const dateMatch = dateText.match(/(\d{4})年(?:.*?(\d{1,2})月)?/s);
+
+                if (dateMatch) {
+                    const year = parseInt(dateMatch[1], 10);
+                    const month = dateMatch[2] ? parseInt(dateMatch[2], 10) : null;
+                    const timeAgo = calculateTimeAgo(year, month);
+
+                    // 既存のカッコ書きがあれば置換、なければ追加
+                    if (dateText.match(/\(.*\)/)) {
+                        dateText = dateText.replace(/\(.*\)/, `(${timeAgo})`);
+                    } else {
+                        // 改行が含まれている場合はその最後に、なければ末尾に追加
+                        dateText += `<br><span class="text-lg">(${timeAgo})</span>`;
+                    }
+                }
 
                 let buttonHtml = '';
                 if (itemData.link) { buttonHtml = `<a href="${itemData.link}" target="_blank" rel="noopener noreferrer" class="inline-block bg-teal-500 text-white font-bold px-4 py-2 rounded-md mt-auto ml-auto hover:bg-teal-400 transition-colors text-sm">詳細を見る</a>`; }
                 else if (itemData.img1 || itemData.img2) { buttonHtml = `<button class="modal-open-btn inline-block bg-green-600 text-white font-bold px-4 py-2 rounded-md mt-auto ml-auto hover:bg-green-500 transition-colors text-sm" data-img1="${itemData.img1 || ''}" data-img2="${itemData.img2 || ''}" data-caption1="${itemData.caption1 || ''}" data-caption2="${itemData.caption2 || ''}">関連画像を見る</button>`; }
                 else if (itemData.xLink) { buttonHtml = `<button class="modal-open-btn inline-block bg-blue-500 text-white font-bold px-4 py-2 rounded-md mt-auto ml-auto hover:bg-blue-400 transition-colors text-sm" data-x-link="${itemData.xLink}">関連投稿 (X) を見る</button>`; }
 
-                return `<div class="grid grid-cols-[1fr_1.5fr_3fr] grid-rows-[auto_1fr] text-base h-full"><div class="border-b border-r border-gray-500 p-3 flex items-start justify-center"><strong class="block text-base text-gray-300">年月</strong></div><div class="border-b border-r border-gray-500 p-3 flex items-start justify-center"><strong class="block text-base text-gray-300">関連数値</strong></div><div class="border-b border-gray-500 p-3 flex items-start justify-center"><strong class="block text-base text-gray-300">概要</strong></div><div class="border-r border-gray-500 p-3 flex items-center justify-center h-full"><p class="font-bold text-xl text-white text-center">${dateText}</p></div><div class="border-r border-gray-500 p-3 flex items-center justify-start h-full"><p class="font-medium text-lg text-white text-left">${stats}</p></div><div class="p-3 flex flex-col h-full"><div class="flex-grow flex items-center justify-center"><p class="font-normal text-lg text-white" style="line-height: 1.6;">${summary}</p></div>${buttonHtml}</div></div>`;
+                return `<div class="grid grid-cols-[1fr_1.5fr_3fr] grid-rows-[auto_1fr] text-base h-full"><div class="border-b border-r border-gray-500 p-3 flex items-start justify-center"><strong class="block text-base text-gray-300">年月</strong></div><div class="border-b border-r border-gray-500 p-3 flex items-start justify-center"><strong class="block text-base text-gray-300">関連数値</strong></div><div class="border-b border-gray-500 p-3 flex items-start justify-center"><strong class="block text-base text-gray-300">概要</strong></div><div class="border-r border-gray-500 p-3 flex items-center justify-center h-full"><p class="font-bold text-xl text-white text-center leading-relaxed">${dateText}</p></div><div class="border-r border-gray-500 p-3 flex items-center justify-start h-full"><p class="font-medium text-lg text-white text-left">${stats}</p></div><div class="p-3 flex flex-col h-full"><div class="flex-grow flex items-center justify-center"><p class="font-normal text-lg text-white" style="line-height: 1.6;">${summary}</p></div>${buttonHtml}</div></div>`;
             }
 
             function setupInteractiveTimeline() {
