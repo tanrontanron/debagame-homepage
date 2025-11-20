@@ -177,7 +177,7 @@ function App() {
     <div className="min-h-screen bg-stone-950 flex flex-col items-center pb-12 font-sans">
       {/* Header */}
       <header className="w-full max-w-md bg-stone-900 p-3 sticky top-0 z-20 border-b border-stone-800 flex justify-between items-center shadow-md">
-         <h1 className="text-lg font-bold text-amber-500 tracking-wider">対戦チンチロ</h1>
+         <h1 className="text-lg font-bold text-amber-500 tracking-wider">無限チンチロ</h1>
          <div className="flex gap-4 items-center">
              <div className={`font-mono text-xl ${balance < 0 ? 'text-red-500' : 'text-emerald-400'}`}>
                   {formatYen(balance)}
