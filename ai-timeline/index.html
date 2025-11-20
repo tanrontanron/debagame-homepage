@@ -385,7 +385,84 @@
                 return timeString + (isFuture ? '後' : '前');
             }
 
-            // ... (中略) ...
+            // --- Modal & Lightbox ---
+            const modalOverlay = document.getElementById('modal-overlay');
+            const modalContent = document.getElementById('modal-content');
+            const modalTweetContainer = document.getElementById('modal-tweet-container');
+            const modalImagesContainer = document.getElementById('modal-images-container');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+            const lightboxOverlay = document.getElementById('lightbox-overlay');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
+
+            function openLightbox(imgSrc) { if (!lightboxOverlay || !lightboxImage) return; lightboxImage.src = imgSrc; lightboxOverlay.classList.add('visible'); lightboxOverlay.classList.remove('hidden'); }
+            function closeLightbox() { if (!lightboxOverlay || !lightboxImage) return; lightboxOverlay.classList.remove('visible'); lightboxOverlay.classList.add('hidden'); lightboxImage.src = ''; }
+            if (lightboxOverlay) lightboxOverlay.addEventListener('click', (e) => { if (e.target === lightboxOverlay || e.target === lightboxImage) closeLightbox(); });
+            if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closeLightbox);
+
+            function openModal(data) {
+                if (!modalOverlay) return;
+                modalTweetContainer.innerHTML = ''; modalImagesContainer.innerHTML = '';
+
+                if (data.xLink) {
+                    const tweetIdMatch = data.xLink.match(/\/status\/(\d+)/);
+                    if (tweetIdMatch && tweetIdMatch[1]) {
+                        const tweetId = tweetIdMatch[1];
+
+                        // Loading indicator
+                        modalTweetContainer.innerHTML = `<div class="flex justify-center items-center h-32"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div></div>`;
+
+                        const createWidget = () => {
+                            modalTweetContainer.innerHTML = ''; // Clear loading indicator
+                            window.twttr.widgets.createTweet(tweetId, modalTweetContainer, {
+                                theme: 'dark',
+                                align: 'center',
+                                conversation: 'none'
+                            }).then(el => {
+                                if (!el) {
+                                    modalTweetContainer.innerHTML = `<p class="text-center text-red-400 mb-2">ツイートの読み込みに失敗しました。</p>`;
+                                    const fallbackLink = document.createElement('a');
+                                    fallbackLink.href = data.xLink;
+                                    fallbackLink.target = '_blank';
+                                    fallbackLink.rel = 'noopener noreferrer';
+                                    fallbackLink.className = 'inline-block bg-blue-500 text-white font-bold px-4 py-2 rounded-md hover:bg-blue-400 transition-colors';
+                                    fallbackLink.textContent = 'X で開く';
+                                    modalTweetContainer.appendChild(fallbackLink);
+                                }
+                            });
+                        };
+
+                        if (window.twttr && window.twttr.ready) {
+                            window.twttr.ready(createWidget);
+                        } else {
+                            // Fallback if twttr is not ready immediately (though script is async)
+                            setTimeout(() => {
+                                if (window.twttr && window.twttr.ready) {
+                                    window.twttr.ready(createWidget);
+                                } else {
+                                    modalTweetContainer.innerHTML = `<p class="text-center text-red-400">X ウィジェットを初期化できませんでした。</p>`;
+                                    const fallbackLink = document.createElement('a');
+                                    fallbackLink.href = data.xLink;
+                                    fallbackLink.target = '_blank';
+                                    fallbackLink.rel = 'noopener noreferrer';
+                                    fallbackLink.className = 'inline-block bg-blue-500 text-white font-bold px-4 py-2 rounded-md mt-4 hover:bg-blue-400 transition-colors';
+                                    fallbackLink.textContent = 'X で開く';
+                                    modalTweetContainer.appendChild(fallbackLink);
+                                }
+                            }, 1000);
+                        }
+                    } else {
+                        const fallbackLink = document.createElement('a'); fallbackLink.href = data.xLink; fallbackLink.target = '_blank'; fallbackLink.rel = 'noopener noreferrer'; fallbackLink.className = 'inline-block bg-blue-500 text-white font-bold px-4 py-2 rounded-md mt-4 hover:bg-blue-400 transition-colors'; fallbackLink.textContent = 'X で開く'; modalTweetContainer.appendChild(fallbackLink);
+                    }
+                } else if (data.img1 || data.img2) {
+                    if (data.img1) { const figure1 = document.createElement('figure'); figure1.innerHTML = `<img src="${data.img1}" alt="${data.caption1 || ''}"><figcaption>${data.caption1 || ''}</figcaption>`; figure1.querySelector('img')?.addEventListener('click', () => openLightbox(data.img1)); modalImagesContainer.appendChild(figure1); }
+                    if (data.img2) { const figure2 = document.createElement('figure'); figure2.innerHTML = `<img src="${data.img2}" alt="${data.caption2 || ''}"><figcaption>${data.caption2 || ''}</figcaption>`; figure2.querySelector('img')?.addEventListener('click', () => openLightbox(data.img2)); modalImagesContainer.appendChild(figure2); }
+                }
+                modalOverlay.classList.add('visible'); modalOverlay.classList.remove('hidden');
+            }
+            function closeModal() { if (!modalOverlay) return; modalOverlay.classList.remove('visible'); modalOverlay.classList.add('hidden'); modalTweetContainer.innerHTML = ''; modalImagesContainer.innerHTML = ''; }
+            if (modalOverlay) modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+            if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
 
             function generateDescriptionBoxContent(itemData) {
                 let dateText = itemData.date || '（データなし）'; const stats = itemData.stats || '（データなし）'; const summary = itemData.summary || '（概要なし）';
