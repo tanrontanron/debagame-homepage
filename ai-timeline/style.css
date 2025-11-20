@@ -73,6 +73,7 @@ body {
     position: relative;
     height: 100%;
     flex-shrink: 0;
+    min-width: 180px;
 }
 
 .event-dot {
@@ -274,6 +275,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 120px;
 }
 
 /* カギ型コネクタ */
