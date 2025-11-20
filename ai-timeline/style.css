@@ -11,9 +11,9 @@
             aspect-ratio: 16 / 9;
             margin: auto;
             display: flex;
-            /* JavaScriptで hidden を�Eり替えて表示 */
+            /* JavaScriptで hidden を�Eり替えて表示 */
             margin-bottom: 2rem;
-            /* 吁E��ライドコンチE��間�Eスペ�Eス */
+            /* 吁E��ライドコンチE��間�Eスペ�Eス */
         }
 
         .slide-page {
@@ -25,7 +25,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            /* スライド�Eのはみ出しを防止 */
+            /* スライド�Eのはみ出しを防止 */
         }
 
         .era-title {
@@ -36,9 +36,9 @@
             margin-bottom: 1.5rem;
             padding-bottom: 1.5rem;
             border-bottom: 2px solid #e2e8f0;
-            /* 仕�Eり緁E*/
+            /* 仕�Eり緁E*/
             flex-shrink: 0;
-            /* タイトルが縮まなぁE��ぁE�� */
+            /* タイトルが縮まなぁE��ぁE�� */
         }
 
         /* --- タイムライン共通スタイル --- */
@@ -136,7 +136,7 @@
         }
 
         .event-box {
-            /* 上�EチE��ス */
+            /* 上�EチE��ス */
             position: absolute;
             bottom: calc(50% + 40px);
             padding: 0.5rem;
@@ -173,7 +173,7 @@
         }
 
         .event-box-bottom {
-            /* 下�EチE��ス */
+            /* 下�EチE��ス */
             position: absolute;
             top: calc(50% + 40px);
             width: 150px;
@@ -210,7 +210,7 @@
         }
 
 
-        /* 色刁E�� */
+        /* 色刁E�� */
         .event-color-gpt {
             background-color: #d1fae5;
         }
@@ -267,7 +267,7 @@
             color: white;
         }
 
-        /* 年マ�Eカー */
+        /* 年マ�Eカー */
         .year-marker {
             width: 100px;
             height: 100%;
@@ -314,12 +314,13 @@
         }
 
         .scrollable-timeline {
-            /* P1/P3共送E*/
+            /* P1/P3共通 */
             overflow-x: auto;
             width: 100%;
             flex-grow: 1;
             scrollbar-color: #a0aec0 #edf2f7;
             scrollbar-width: thin;
+            height: 200px; /* Added fixed height */
         }
 
         .scrollable-timeline::-webkit-scrollbar {
@@ -336,7 +337,7 @@
             border-radius: 4px;
         }
 
-        /* --- 老E��スライド�E送E--- */
+        /* --- 老E��スライド�E送E--- */
         .insight-content {
             flex-grow: 1;
             padding: 0 1rem;
@@ -479,7 +480,7 @@
             margin-bottom: 1.5rem;
         }
 
-        /* --- ライト�EチE��ス --- */
+        /* --- ライト�EチE��ス --- */
         #lightbox-overlay {
             position: fixed;
             top: 0;
@@ -520,7 +521,7 @@
             line-height: 1;
         }
 
-        /* --- AI比輁E�� --- */
+        /* --- AI比輁E�� --- */
         .comparison-table {
             width: 100%;
             border-collapse: collapse;
@@ -567,7 +568,7 @@
             width: 120px;
         }
 
-        /* ☁E修正: 比輁E��の色刁E��クラス */
+        /* ☁E修正: 比輁E��の色刁E��クラス */
         .bg-dark-green-100 {
             background-color: #a7f3d0;
         }
@@ -593,7 +594,7 @@
         }
 
         /* N/A */
-        /* ☁E追加: 比輁E��結合セル用 */
+        /* ☁E追加: 比輁E��結合セル用 */
         .merged-cell {
             text-align: center;
             font-weight: bold;
