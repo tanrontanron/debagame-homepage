@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +9,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="bg-gray-100 text-gray-800">
 
     <!-- Sidebar Component -->
-    <nav id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-gray-900 text-white transform -translate-x-full transition-transform duration-300 ease-in-out z-50">
+    <nav id="sidebar"
+        class="fixed left-0 top-0 h-full w-64 bg-gray-900 text-white transform -translate-x-full transition-transform duration-300 ease-in-out z-50">
         <div class="flex items-center justify-between p-4 border-b border-gray-700">
             <h2 class="text-lg font-semibold">メニュー</h2>
             <button id="sidebar-close" class="text-gray-400 hover:text-white">
@@ -20,19 +23,39 @@
         </div>
         <div class="p-4">
             <ul class="space-y-2">
-                <li><a href="../index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-home mr-3"></i>トップページ</a></li>
-                <li><a href="../Interactive_worldmap/worldmap.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-globe mr-3"></i>世界地図</a></li>
-                <li><a href="../bear/index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-chart-line mr-3"></i>熊被害状況</a></li>
-                <li><a href="../numberplate/numberplate.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-car-side mr-3"></i>ナンバープレート</a></li>
-                <li><a href="../size/size.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-ruler-combined mr-3"></i>サイズ検討</a></li>
-                <li><a href="../endless-chinchirorin/dist/index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-dice mr-3"></i>無限チンチロ</a></li>
-                <li><a href="./index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-brain mr-3"></i>AI年表</a></li>
+                <li><a href="../index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-home mr-3"></i>トップページ</a></li>
+                <li><a href="../Interactive_worldmap/worldmap.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-globe mr-3"></i>世界地図</a></li>
+                <li><a href="../bear/index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-chart-line mr-3"></i>熊被害状況</a></li>
+                <li><a href="../numberplate/numberplate.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-car-side mr-3"></i>ナンバープレート</a></li>
+                <li><a href="../size/size.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-ruler-combined mr-3"></i>サイズ検討</a></li>
+                <li><a href="../endless-chinchirorin/dist/index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-dice mr-3"></i>無限チンチロ</a></li>
+                <li><a href="./index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-brain mr-3"></i>AI年表</a></li>
             </ul>
         </div>
-        <div class="absolute bottom-4 left-4 right-4"><div class="text-xs text-gray-400 text-center"><p>&copy; 2025 でばがめのほめぱげ</p></div></div>
+        <div class="absolute bottom-4 left-4 right-4">
+            <div class="text-xs text-gray-400 text-center">
+                <p>&copy; 2025 でばがめのほめぱげ</p>
+            </div>
+        </div>
     </nav>
     <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
-    <button id="sidebar-toggle" class="fixed top-4 left-4 z-30 bg-gray-900 text-white p-3 rounded-lg shadow-lg hover:bg-gray-800 transition-colors"><i class="fas fa-bars"></i></button>
+    <button id="sidebar-toggle"
+        class="fixed top-4 left-4 z-30 bg-gray-900 text-white p-3 rounded-lg shadow-lg hover:bg-gray-800 transition-colors"><i
+            class="fas fa-bars"></i></button>
 
     <!-- Main Content -->
     <div class="main-content p-4 md:p-8">
@@ -43,233 +66,380 @@
                     <div class="timeline-axis"></div>
                     <div class="timeline-events pl-8 pr-12">
                         <!-- Events from Phase 1 -->
-                        <div class="timeline-item year-marker"><div class="event-date">1950</div></div>
-                        <div class="timeline-item">
-                            <div class="event-box event-color-history" data-title="チューリングテスト" data-date="1950年<br>(75年前)" data-stats="提唱者: Alan Turing<br>概念: 機械の知能判定" data-summary="・機械が人間と区別できないほど自然に対話できれば「知的」とみなせる、というテスト。<br>・AIの目標設定に大きな影響を与えた。"><h3>チューリング<br>テスト</h3></div>
-                            <div class="event-connector"></div><div class="event-dot"></div><div class="event-month">--</div>
+                        <div class="timeline-item year-marker">
+                            <div class="event-date">1950</div>
                         </div>
-                        <div class="timeline-item year-marker"><div class="event-date">1956</div></div>
                         <div class="timeline-item">
-                             <div class="event-box event-color-history" data-title="「人工知能」命名" data-date="1956年<br>(69年前)" data-stats="提唱者: John McCarthy<br>会議: ダートマス会議" data-summary="・ダートマス会議で初めて「Artificial Intelligence」という用語が使われた。<br>・AI研究分野の正式な始まりとされる。"><h3>「人工知能」<br>命名</h3></div>
-                            <div class="event-connector"></div><div class="event-dot"></div><div class="event-month">--</div>
+                            <div class="event-box event-color-history" data-title="チューリングテスト"
+                                data-date="1950年<br>(75年前)" data-stats="提唱者: Alan Turing<br>概念: 機械の知能判定"
+                                data-summary="・機械が人間と区別できないほど自然に対話できれば「知的」とみなせる、というテスト。<br>・AIの目標設定に大きな影響を与えた。">
+                                <h3>チューリング<br>テスト</h3>
+                            </div>
+                            <div class="event-connector"></div>
+                            <div class="event-dot"></div>
+                            <div class="event-month">--</div>
                         </div>
-                        <div class="timeline-item year-marker"><div class="event-date">1966</div></div>
-                        <div class="timeline-item">
-                            <div class="event-box event-color-history" data-title="ELIZA (イライザ)" data-date="1966年<br>(59年前)" data-stats="開発者: J. Weizenbaum<br>技術: パターンマッチング" data-summary="・MITで開発された初期の自然言語処理プログラム。<br>・特定のパターンに反応して定型文を返すことで、セラピストを模倣する対話を行った。<br>・人間が機械に知性を見出してしまう「ELIZA効果」を示した。"><h3>ELIZA<br>登場</h3></div>
-                            <div class="event-connector"></div><div class="event-dot"></div><div class="event-month">--</div>
+                        <div class="timeline-item year-marker">
+                            <div class="event-date">1956</div>
                         </div>
-                        <div class="timeline-item year-marker"><div class="event-date">1983</div></div>
                         <div class="timeline-item">
-                            <div class="event-box-bottom" data-date="1983年5月<br>(42年前)" data-stats="場所: 埼玉県<br>その他: 特記事項なし" data-summary="このプレゼンテーションの作成者が誕生しました。"><h3>私が誕生</h3></div>
-                            <div class="event-connector-bottom"></div><div class="event-dot" style="background-color: #38b2ac;"></div><div class="event-month">5月</div>
+                            <div class="event-box event-color-history" data-title="「人工知能」命名" data-date="1956年<br>(69年前)"
+                                data-stats="提唱者: John McCarthy<br>会議: ダートマス会議"
+                                data-summary="・ダートマス会議で初めて「Artificial Intelligence」という用語が使われた。<br>・AI研究分野の正式な始まりとされる。">
+                                <h3>「人工知能」<br>命名</h3>
+                            </div>
+                            <div class="event-connector"></div>
+                            <div class="event-dot"></div>
+                            <div class="event-month">--</div>
                         </div>
-                        <div class="timeline-item year-marker"><div class="event-date">1990</div></div>
-                        <div class="timeline-item">
-                            <div class="event-box" style="background-color: #c6f6d5;" data-title="ドラゴンクエストIV 導かれし者たち" data-date="1990年2月<br>(35年8ヶ月前)" data-stats="容量: 512KB (4Mbit)<br>価格: 8,500円<br>販売: 310万本 (国内)" data-summary="・戦闘中、仲間がAIで行動する「さくせん」システムを導入。<br>・AIが仲間を操作する体験を一般に広めた。<br>・ただし、AIは事前に設定された行動パターンを実行するもので、学習機能はなく、現在のAIとは根本的に異なる。" data-img1="https://i.gyazo.com/6ed3b34af929090c5c34e5ab4a5107a2.png" data-caption1="ファミコン版" data-img2="https://i.gyazo.com/7d5d12d945aecfff4f3e481811923e85.jpg" data-caption2="25年後にスピンオフ作品でネタにされる"><h3>ドラクエIV<br>A.I.戦闘</h3></div>
-                            <div class="event-connector"></div><div class="event-dot"></div><div class="event-month">2月</div>
+                        <div class="timeline-item year-marker">
+                            <div class="event-date">1966</div>
                         </div>
-                        <div class="timeline-item year-marker"><div class="event-date">2014</div></div>
                         <div class="timeline-item">
-                            <div class="event-box event-color-misc" data-title="GAN (敵対的生成ネットワーク)" data-date="2014年<br>(11年前)" data-stats="発表者: Ian Goodfellowら<br>技術: 敵対的学習" data-summary="・「生成者」と「識別者」という2つのネットワークを競わせることで、非常にリアルな偽のデータを生成する技術。<br>・今日の画像・動画生成AIの発展における重要なブレークスルーとなった。"><h3>GAN<br>発表</h3></div>
-                            <div class="event-connector"></div><div class="event-dot"></div><div class="event-month">--</div>
+                            <div class="event-box event-color-history" data-title="ELIZA (イライザ)"
+                                data-date="1966年<br>(59年前)" data-stats="開発者: J. Weizenbaum<br>技術: パターンマッチング"
+                                data-summary="・MITで開発された初期の自然言語処理プログラム。<br>・特定のパターンに反応して定型文を返すことで、セラピストを模倣する対話を行った。<br>・人間が機械に知性を見出してしまう「ELIZA効果」を示した。">
+                                <h3>ELIZA<br>登場</h3>
+                            </div>
+                            <div class="event-connector"></div>
+                            <div class="event-dot"></div>
+                            <div class="event-month">--</div>
                         </div>
-                        <div class="timeline-item year-marker"><div class="event-date">2017</div></div>
+                        <div class="timeline-item year-marker">
+                            <div class="event-date">1983</div>
+                        </div>
                         <div class="timeline-item">
-                            <div class="event-box event-color-misc" data-title="Transformer (トランスフォーマー)" data-date="2017年<br>(8年前)" data-stats="論文: Attention Is All You Need<br>主要技術: Self-Attention" data-summary="・Google Brainチームが発表したアーキテクチャ。<br>・「Self-Attention」機構のみを使用し、並列処理性能と長距離の依存関係の学習に優れる。<br>・現在のLLM（GPT, BERT等）の基礎となっている。"><h3>Transformer<br>発表</h3></div>
-                            <div class="event-connector"></div><div class="event-dot"></div><div class="event-month">--</div>
+                            <div class="event-box-bottom" data-date="1983年5月<br>(42年前)"
+                                data-stats="場所: 埼玉県<br>その他: 特記事項なし" data-summary="このプレゼンテーションの作成者が誕生しました。">
+                                <h3>私が誕生</h3>
+                            </div>
+                            <div class="event-connector-bottom"></div>
+                            <div class="event-dot" style="background-color: #38b2ac;"></div>
+                            <div class="event-month">5月</div>
+                        </div>
+                        <div class="timeline-item year-marker">
+                            <div class="event-date">1990</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="event-box" style="background-color: #c6f6d5;" data-title="ドラゴンクエストIV 導かれし者たち"
+                                data-date="1990年2月<br>(35年8ヶ月前)"
+                                data-stats="容量: 512KB (4Mbit)<br>価格: 8,500円<br>販売: 310万本 (国内)"
+                                data-summary="・戦闘中、仲間がAIで行動する「さくせん」システムを導入。<br>・AIが仲間を操作する体験を一般に広めた。<br>・ただし、AIは事前に設定された行動パターンを実行するもので、学習機能はなく、現在のAIとは根本的に異なる。"
+                                data-img1="https://i.gyazo.com/6ed3b34af929090c5c34e5ab4a5107a2.png"
+                                data-caption1="ファミコン版"
+                                data-img2="https://i.gyazo.com/7d5d12d945aecfff4f3e481811923e85.jpg"
+                                data-caption2="25年後にスピンオフ作品でネタにされる">
+                                <h3>ドラクエIV<br>A.I.戦闘</h3>
+                            </div>
+                            <div class="event-connector"></div>
+                            <div class="event-dot"></div>
+                            <div class="event-month">2月</div>
+                        </div>
+                        <div class="timeline-item year-marker">
+                            <div class="event-date">2014</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="event-box event-color-misc" data-title="GAN (敵対的生成ネットワーク)"
+                                data-date="2014年<br>(11年前)" data-stats="発表者: Ian Goodfellowら<br>技術: 敵対的学習"
+                                data-summary="・「生成者」と「識別者」という2つのネットワークを競わせることで、非常にリアルな偽のデータを生成する技術。<br>・今日の画像・動画生成AIの発展における重要なブレークスルーとなった。">
+                                <h3>GAN<br>発表</h3>
+                            </div>
+                            <div class="event-connector"></div>
+                            <div class="event-dot"></div>
+                            <div class="event-month">--</div>
+                        </div>
+                        <div class="timeline-item year-marker">
+                            <div class="event-date">2017</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="event-box event-color-misc" data-title="Transformer (トランスフォーマー)"
+                                data-date="2017年<br>(8年前)"
+                                data-stats="論文: Attention Is All You Need<br>主要技術: Self-Attention"
+                                data-summary="・Google Brainチームが発表したアーキテクチャ。<br>・「Self-Attention」機構のみを使用し、並列処理性能と長距離の依存関係の学習に優れる。<br>・現在のLLM（GPT, BERT等）の基礎となっている。">
+                                <h3>Transformer<br>発表</h3>
+                            </div>
+                            <div class="event-connector"></div>
+                            <div class="event-dot"></div>
+                            <div class="event-month">--</div>
                         </div>
 
                         <!-- Spacer -->
                         <div class="timeline-item" style="width: 150px;"></div>
 
                         <!-- Events from Phase 2 -->
-                        <div class="timeline-item year-marker"><div class="event-date">2022</div></div>
-                        <div class="timeline-item">
-                            <div class="event-box event-color-gpt" data-title="ChatGPT" data-date="2022年11月<br>(約3年前)" data-stats="ユーザー数: 1億人 (公開後2ヶ月)" data-summary="・OpenAIが公開した対話型AI。<br>・GPT-3.5を基にRLHF（人間のフィードバックによる強化学習）で訓練。<br>・その自然な対話能力と汎用性で世界的な生成AIブームを引き起こした。"><h3>ChatGPT<br>公開</h3></div>
-                            <div class="event-connector"></div><div class="event-dot"></div><div class="event-month">11月</div>
-                        </div>
-                        <div class="timeline-item year-marker"><div class="event-date">2023</div></div>
-                        <div class="timeline-item" style="width: 250px;">
-                            <div class="event-box event-color-will" data-title="ウィル・スミス ひどいAI & GPT-4" data-date="2023年3月<br>(約2.5年前)" data-stats="AI動画: ModelScope<br>LLM: GPT-4 (OpenAI)" data-summary="・AI(ModelScope)で生成された「スパゲッティを食べるウィル・スミス」動画が話題に。当時のAI動画生成技術の限界を示したが、同時にOpenAIからテキストに加え画像入力も可能なマルチモーダルAI「GPT-4」がリリースされ、推論能力や専門知識が飛躍的に向上した時期でもある。" data-x-link="https://x.com/okiireiji/status/1911948461580423582"><h3>ウィル・スミス<br>ひどいAI<br>& GPT-4</h3></div>
-                            <div class="event-connector"></div><div class="event-dot"></div><div class="event-month">3月</div>
+                        <div class="timeline-item year-marker">
+                            <div class="event-date">2022</div>
                         </div>
                         <div class="timeline-item">
-                            <div class="event-box event-color-gemini" data-title="Gemini (ジェミニ)" data-date="2023年12月<br>(約2年前)" data-stats="モデルサイズ: Ultra, Pro, Nano" data-summary="・Googleが発表したマルチモーダルAIモデル群。<br>・テキスト、画像、音声、動画などをネイティブに統合処理するよう設計。<br>・当初BardにProが搭載され、後にGeminiへリブランド。"><h3>Gemini<br>発表</h3></div>
-                            <div class="event-connector"></div><div class="event-dot"></div><div class="event-month">12月</div>
+                            <div class="event-box event-color-gpt" data-title="ChatGPT" data-date="2022年11月<br>(約3年前)"
+                                data-stats="ユーザー数: 1億人 (公開後2ヶ月)"
+                                data-summary="・OpenAIが公開した対話型AI。<br>・GPT-3.5を基にRLHF（人間のフィードバックによる強化学習）で訓練。<br>・その自然な対話能力と汎用性で世界的な生成AIブームを引き起こした。">
+                                <h3>ChatGPT<br>公開</h3>
+                            </div>
+                            <div class="event-connector"></div>
+                            <div class="event-dot"></div>
+                            <div class="event-month">11月</div>
                         </div>
-                        <div class="timeline-item year-marker"><div class="event-date">2024</div></div>
-                        <div class="timeline-item">
-                            <div class="event-box event-color-will" data-title="ウィル・スミス 本人がパロディ" data-date="2024年2月<br>(約1.5年前)" data-stats="プラットフォーム: TikTok, Instagram" data-summary="・「ひどいAI動画」がバイラルになった直後、ウィル・スミス本人がそれをパロディにした動画を投稿。<br>・AIと人間のユーモラスな関係性を示し、ミーム化を加速させた。" data-x-link="https://x.com/tkzwgrs/status/1760079101807976527"><h3>ウィル・スミス<br>本人がパロディ</h3></div>
-                            <div class="event-connector"></div><div class="event-dot"></div><div class="event-month">2月</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="event-box event-color-anthropic" data-title="Claude 3 (クロード 3)" data-date="2024年3月<br>(約1.5年前)" data-stats="モデル: Haiku, Sonnet, Opus" data-summary="・Anthropicが発表。<br>・最上位のOpusモデルは当時の主要ベンチマークでGPT-4を凌駕。<br>・画像解析能力の高さや、長文コンテキスト（最大100万トークン）の処理能力が特徴。"><h3>Claude 3<br>登場</h3></div>
-                            <div class="event-connector"></div><div class="event-dot"></div><div class="event-month">3月</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="event-box event-color-gpt" data-title="GPT-4o (ジーピーティーフォーオー)" data-date="2024年5月<br>(約1.5年前)" data-stats="速度: GPT-4 Turboの2倍<br>特徴: Omni（全能）モデル" data-summary="・OpenAIが発表。<br>・音声、テキスト、画像を単一モデルでリアルタイム処理。<br>・特に感情豊かで人間のような低遅延の音声会話機能がブレークスルーとされた。"><h3>GPT-4o<br>発表</h3></div>
-                            <div class="event-connector"></div><div class="event-dot"></div><div class="event-month">5月</div>
+                        <div class="timeline-item year-marker">
+                            <div class="event-date">2023</div>
                         </div>
                         <div class="timeline-item" style="width: 250px;">
-                            <div class="event-box event-color-misc" data-title="Sora / Kling & Apple Intelligence" data-date="2024年6月<br>(約1.5年前)" data-stats="AI動画: Sora, Kling<br>パーソナルAI: Apple" data-summary="・2023年の拙い動画からわずか1年余りで、Sora (OpenAI) や Kling (快手) など、実写と見紛うほどの高品質なAI動画生成モデルが登場。同時にAppleがOSに深く統合されたパーソナルAIシステム「Apple Intelligence」を発表した。"><h3>Sora / Kling<br>& Apple AI</h3></div>
-                            <div class="event-connector"></div><div class="event-dot"></div><div class="event-month">6月</div>
-                        </div>
-                        <div class="timeline-item year-marker"><div class="event-date">2025</div></div>
-                        <div class="timeline-item">
-                            <div class="event-box event-color-will" data-title="ウィル・スミス 高品質AI" data-date="2025年4月" data-stats="使用モデル: Sora, Kling等" data-summary="・2024年のSora/Kling登場後、高品質なAI動画ミームが一般化。<br>・「ひどいAI」から約2年で、ファンが作った映像が本人を巻き込むムーブメントに発展。" data-x-link="https://x.com/roaneatan2/status/1911452891766047126"><h3>ウィル・スミス<br>高品質AI</h3></div>
-                            <div class="event-connector"></div><div class="event-dot"></div><div class="event-month">4月</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="event-box event-color-gemini" data-title="Nano Banana" data-date="2025年8月" data-stats="モデル: Google" data-summary="Googleの画像生成AI。"><h3>Nano Banana<br>登場</h3></div>
-                            <div class="event-connector"></div><div class="event-dot"></div><div class="event-month">8月</div>
+                            <div class="event-box event-color-will" data-title="ウィル・スミス ひどいAI & GPT-4"
+                                data-date="2023年3月<br>(約2.5年前)" data-stats="AI動画: ModelScope<br>LLM: GPT-4 (OpenAI)"
+                                data-summary="・AI(ModelScope)で生成された「スパゲッティを食べるウィル・スミス」動画が話題に。当時のAI動画生成技術の限界を示したが、同時にOpenAIからテキストに加え画像入力も可能なマルチモーダルAI「GPT-4」がリリースされ、推論能力や専門知識が飛躍的に向上した時期でもある。"
+                                data-x-link="https://x.com/okiireiji/status/1911948461580423582">
+                                <h3>ウィル・スミス<br>ひどいAI<br>& GPT-4</h3>
+                            </div>
+                            <div class="event-connector"></div>
+                            <div class="event-dot"></div>
+                            <div class="event-month">3月</div>
                         </div>
                         <div class="timeline-item">
-                            <div class="event-box event-color-misc" data-title="Sora 2" data-date="2025年9月" data-stats="モデル: OpenAI" data-summary="すごい精度の動画が作れるようになったが初期は著作権ガン無視で話題に。水の呼吸でパチスロを打つ炭治郎、レバレッジ10倍でFXをする悟空など、音声も生成できていた。" data-x-link="https://x.com/NHDMMMMM/status/1973396299073655051"><h3>Sora 2<br>登場</h3></div>
-                            <div class="event-connector"></div><div class="event-dot"></div><div class="event-month">9月</div>
+                            <div class="event-box event-color-gemini" data-title="Gemini (ジェミニ)"
+                                data-date="2023年12月<br>(約2年前)" data-stats="モデルサイズ: Ultra, Pro, Nano"
+                                data-summary="・Googleが発表したマルチモーダルAIモデル群。<br>・テキスト、画像、音声、動画などをネイティブに統合処理するよう設計。<br>・当初BardにProが搭載され、後にGeminiへリブランド。">
+                                <h3>Gemini<br>発表</h3>
+                            </div>
+                            <div class="event-connector"></div>
+                            <div class="event-dot"></div>
+                            <div class="event-month">12月</div>
+                        </div>
+                        <div class="timeline-item year-marker">
+                            <div class="event-date">2024</div>
                         </div>
                         <div class="timeline-item">
-                            <div class="event-box-bottom" data-link="https://gemini.google.com/share/eee892fb9230" data-date="2025年10月" data-stats="分析: Gemini (PDF読込)" data-summary="過去10年分の健康診断結果(PDF)をGeminiにアップロードし、主要項目の時系列推移や潜在的リスクを分析・可視化したダッシュボード。"><h3>健康診断<br>ダッシュボード化</h3></div>
-                            <div class="event-connector-bottom"></div><div class="event-dot" style="background-color: #38b2ac;"></div><div class="event-month">10月</div>
+                            <div class="event-box event-color-will" data-title="ウィル・スミス 本人がパロディ"
+                                data-date="2024年2月<br>(約1.5年前)" data-stats="プラットフォーム: TikTok, Instagram"
+                                data-summary="・「ひどいAI動画」がバイラルになった直後、ウィル・スミス本人がそれをパロディにした動画を投稿。<br>・AIと人間のユーモラスな関係性を示し、ミーム化を加速させた。"
+                                data-x-link="https://x.com/tkzwgrs/status/1760079101807976527">
+                                <h3>ウィル・スミス<br>本人がパロディ</h3>
+                            </div>
+                            <div class="event-connector"></div>
+                            <div class="event-dot"></div>
+                            <div class="event-month">2月</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="event-box event-color-anthropic" data-title="Claude 3 (クロード 3)"
+                                data-date="2024年3月<br>(約1.5年前)" data-stats="モデル: Haiku, Sonnet, Opus"
+                                data-summary="・Anthropicが発表。<br>・最上位のOpusモデルは当時の主要ベンチマークでGPT-4を凌駕。<br>・画像解析能力の高さや、長文コンテキスト（最大100万トークン）の処理能力が特徴。">
+                                <h3>Claude 3<br>登場</h3>
+                            </div>
+                            <div class="event-connector"></div>
+                            <div class="event-dot"></div>
+                            <div class="event-month">3月</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="event-box event-color-gpt" data-title="GPT-4o (ジーピーティーフォーオー)"
+                                data-date="2024年5月<br>(約1.5年前)" data-stats="速度: GPT-4 Turboの2倍<br>特徴: Omni（全能）モデル"
+                                data-summary="・OpenAIが発表。<br>・音声、テキスト、画像を単一モデルでリアルタイム処理。<br>・特に感情豊かで人間のような低遅延の音声会話機能がブレークスルーとされた。">
+                                <h3>GPT-4o<br>発表</h3>
+                            </div>
+                            <div class="event-connector"></div>
+                            <div class="event-dot"></div>
+                            <div class="event-month">5月</div>
+                        </div>
+                        <div class="timeline-item" style="width: 250px;">
+                            <div class="event-box event-color-misc" data-title="Sora / Kling & Apple Intelligence"
+                                data-date="2024年6月<br>(約1.5年前)" data-stats="AI動画: Sora, Kling<br>パーソナルAI: Apple"
+                                data-summary="・2023年の拙い動画からわずか1年余りで、Sora (OpenAI) や Kling (快手) など、実写と見紛うほどの高品質なAI動画生成モデルが登場。同時にAppleがOSに深く統合されたパーソナルAIシステム「Apple Intelligence」を発表した。">
+                                <h3>Sora / Kling<br>& Apple AI</h3>
+                            </div>
+                            <div class="event-connector"></div>
+                            <div class="event-dot"></div>
+                            <div class="event-month">6月</div>
+                        </div>
+                        <div class="timeline-item year-marker">
+                            <div class="event-date">2025</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="event-box event-color-will" data-title="ウィル・スミス 高品質AI" data-date="2025年4月"
+                                data-stats="使用モデル: Sora, Kling等"
+                                data-summary="・2024年のSora/Kling登場後、高品質なAI動画ミームが一般化。<br>・「ひどいAI」から約2年で、ファンが作った映像が本人を巻き込むムーブメントに発展。"
+                                data-x-link="https://x.com/roaneatan2/status/1911452891766047126">
+                                <h3>ウィル・スミス<br>高品質AI</h3>
+                            </div>
+                            <div class="event-connector"></div>
+                            <div class="event-dot"></div>
+                            <div class="event-month">4月</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="event-box event-color-gemini" data-title="Nano Banana" data-date="2025年8月"
+                                data-stats="モデル: Google" data-summary="Googleの画像生成AI。">
+                                <h3>Nano Banana<br>登場</h3>
+                            </div>
+                            <div class="event-connector"></div>
+                            <div class="event-dot"></div>
+                            <div class="event-month">8月</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="event-box event-color-misc" data-title="Sora 2" data-date="2025年9月"
+                                data-stats="モデル: OpenAI"
+                                data-summary="すごい精度の動画が作れるようになったが初期は著作権ガン無視で話題に。水の呼吸でパチスロを打つ炭治郎、レバレッジ10倍でFXをする悟空など、音声も生成できていた。"
+                                data-x-link="https://x.com/NHDMMMMM/status/1973396299073655051">
+                                <h3>Sora 2<br>登場</h3>
+                            </div>
+                            <div class="event-connector"></div>
+                            <div class="event-dot"></div>
+                            <div class="event-month">9月</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="event-box-bottom" data-link="https://gemini.google.com/share/eee892fb9230"
+                                data-date="2025年10月" data-stats="分析: Gemini (PDF読込)"
+                                data-summary="過去10年分の健康診断結果(PDF)をGeminiにアップロードし、主要項目の時系列推移や潜在的リスクを分析・可視化したダッシュボード。">
+                                <h3>健康診断<br>ダッシュボード化</h3>
+                            </div>
+                            <div class="event-connector-bottom"></div>
+                            <div class="event-dot" style="background-color: #38b2ac;"></div>
+                            <div class="event-month">10月</div>
                         </div>
                     </div>
                 </div>
             </div>
             <div id="description-box" class="focus-box">
-                 <p class="text-base text-gray-300 p-4"><strong>上のタイムラインの項目をクリックすると、ここに詳細が表示されます。</strong></p>
+                <p class="text-base text-gray-300 p-4"><strong>上のタイムラインの項目をクリックすると、ここに詳細が表示されます。</strong></p>
             </div>
         </div>
     </div>
 
     <!-- Modals and Lightbox -->
-    <div id="modal-overlay" class="hidden"><div id="modal-content"><button id="modal-close-btn" class="absolute top-3 right-4 text-gray-300 hover:text-white text-3xl font-bold" style="z-index: 10;">&times;</button><div id="modal-tweet-container"></div><div id="modal-images-container"></div></div></div>
-    <div id="lightbox-overlay" class="hidden"><button id="lightbox-close-btn">&times;</button><img id="lightbox-image" src="" alt="拡大画像"></div>
+    <div id="modal-overlay" class="hidden">
+        <div id="modal-content"><button id="modal-close-btn"
+                class="absolute top-3 right-4 text-gray-300 hover:text-white text-3xl font-bold"
+                style="z-index: 10;">&times;</button>
+            <div id="modal-tweet-container"></div>
+            <div id="modal-images-container"></div>
+        </div>
+    </div>
+    <div id="lightbox-overlay" class="hidden"><button id="lightbox-close-btn">&times;</button><img id="lightbox-image"
+            src="" alt="拡大画像"></div>
     <script async src="https://platform.x.com/widgets.js" charset="utf-8"></script>
-    
+
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // --- Sidebar Logic ---
-        const sidebar = document.getElementById('sidebar');
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        const sidebarClose = document.getElementById('sidebar-close');
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
-        function openSidebar() { if (!sidebar || !sidebarOverlay) return; sidebar.classList.remove('-translate-x-full'); sidebarOverlay.classList.remove('hidden'); document.body.classList.add('overflow-hidden'); }
-        function closeSidebar() { if (!sidebar || !sidebarOverlay) return; sidebar.classList.add('-translate-x-full'); sidebarOverlay.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); }
-        if (sidebarToggle) sidebarToggle.addEventListener('click', openSidebar);
-        if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
-        if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
-        try { const currentPath=window.location.pathname; document.querySelectorAll('#sidebar a').forEach(link=> { const linkUrl=new URL(link.getAttribute('href'), window.location.href); if (linkUrl.pathname===currentPath) { link.classList.add('bg-blue-600', 'text-white'); link.classList.remove('hover:bg-gray-700'); } }); } catch (e) { console.error("Error highlighting current page:", e); }
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Sidebar Logic ---
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebarClose = document.getElementById('sidebar-close');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+            function openSidebar() { if (!sidebar || !sidebarOverlay) return; sidebar.classList.remove('-translate-x-full'); sidebarOverlay.classList.remove('hidden'); document.body.classList.add('overflow-hidden'); }
+            function closeSidebar() { if (!sidebar || !sidebarOverlay) return; sidebar.classList.add('-translate-x-full'); sidebarOverlay.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); }
+            if (sidebarToggle) sidebarToggle.addEventListener('click', openSidebar);
+            if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+            if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+            try { const currentPath = window.location.pathname; document.querySelectorAll('#sidebar a').forEach(link => { const linkUrl = new URL(link.getAttribute('href'), window.location.href); if (linkUrl.pathname === currentPath) { link.classList.add('bg-blue-600', 'text-white'); link.classList.remove('hover:bg-gray-700'); } }); } catch (e) { console.error("Error highlighting current page:", e); }
 
-        /**
-         * Calculates the time ago from a given year and month to now (Oct 2025).
-         * @param {number} year - The target year.
-         * @param {number | null} month - The target month (1-12). Can be null.
-         * @returns {string} - "X years Y months ago" or "X years ago".
-         */
-        function calculateTimeAgo(year, month) {
-            const now = new Date(2025, 9, 23); // Reference date: Oct 23, 2025
-            const targetMonth = month ? month - 1 : 0;
-            const targetDate = new Date(year, targetMonth, 1);
-            let diffYears = now.getFullYear() - targetDate.getFullYear();
-            let diffMonths = now.getMonth() - targetDate.getMonth();
-            if (diffMonths < 0) { diffYears--; diffMonths += 12; }
-            if (!month) { return diffYears === 0 ? '今年' : `${diffYears}年前`; }
-            if (diffYears === 0 && diffMonths === 0) return '今月';
-            if (diffYears === 0) return `${diffMonths}ヶ月前`;
-            if (diffMonths === 0) return `${diffYears}年前`;
-            return `${diffYears}年${diffMonths}ヶ月前`;
-        }
-
-        // --- Modal & Lightbox ---
-        const modalOverlay = document.getElementById('modal-overlay');
-        const modalContent = document.getElementById('modal-content');
-        const modalTweetContainer = document.getElementById('modal-tweet-container');
-        const modalImagesContainer = document.getElementById('modal-images-container');
-        const modalCloseBtn = document.getElementById('modal-close-btn');
-        const lightboxOverlay = document.getElementById('lightbox-overlay');
-        const lightboxImage = document.getElementById('lightbox-image');
-        const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
-
-        function openLightbox(imgSrc) { if (!lightboxOverlay || !lightboxImage) return; lightboxImage.src = imgSrc; lightboxOverlay.classList.add('visible'); lightboxOverlay.classList.remove('hidden'); }
-        function closeLightbox() { if (!lightboxOverlay || !lightboxImage) return; lightboxOverlay.classList.remove('visible'); lightboxOverlay.classList.add('hidden'); lightboxImage.src = ''; }
-        if (lightboxOverlay) lightboxOverlay.addEventListener('click', (e) => { if (e.target === lightboxOverlay || e.target === lightboxImage) closeLightbox(); });
-        if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closeLightbox);
-
-        function openModal(data) {
-            if (!modalOverlay) return;
-            modalTweetContainer.innerHTML = ''; modalImagesContainer.innerHTML = '';
-            if (data.xLink) {
-                const tweetIdMatch = data.xLink.match(/\/status\/(\d+)/);
-                if (tweetIdMatch && tweetIdMatch[1]) {
-                    const tweetId = tweetIdMatch[1];
-                    if (window.twttr && window.twttr.widgets) {
-                        window.twttr.widgets.createTweet(tweetId, modalTweetContainer, { theme: 'dark', align: 'center' }).then(el => { if (!el) modalTweetContainer.innerHTML = `<p class="text-center text-red-400">ツイートの読み込みに失敗しました。</p>`; });
-                    }
-                }
-                const fallbackLink = document.createElement('a'); fallbackLink.href = data.xLink; fallbackLink.target = '_blank'; fallbackLink.rel = 'noopener noreferrer'; fallbackLink.className = 'inline-block bg-blue-500 text-white font-bold px-4 py-2 rounded-md mt-4 hover:bg-blue-400 transition-colors'; fallbackLink.textContent = 'X で開く'; modalTweetContainer.appendChild(fallbackLink);
-            } else if (data.img1 || data.img2) {
-                if (data.img1) { const figure1 = document.createElement('figure'); figure1.innerHTML = `<img src="${data.img1}" alt="${data.caption1 || ''}"><figcaption>${data.caption1 || ''}</figcaption>`; figure1.querySelector('img')?.addEventListener('click', () => openLightbox(data.img1)); modalImagesContainer.appendChild(figure1); }
-                if (data.img2) { const figure2 = document.createElement('figure'); figure2.innerHTML = `<img src="${data.img2}" alt="${data.caption2 || ''}"><figcaption>${data.caption2 || ''}</figcaption>`; figure2.querySelector('img')?.addEventListener('click', () => openLightbox(data.img2)); modalImagesContainer.appendChild(figure2); }
+            /**
+             * Calculates the time ago from a given year and month to now (Oct 2025).
+             * @param {number} year - The target year.
+             * @param {number | null} month - The target month (1-12). Can be null.
+             * @returns {string} - "X years Y months ago" or "X years ago".
+             */
+            function calculateTimeAgo(year, month) {
+                const now = new Date(); // Reference date: Now
+                const targetMonth = month ? month - 1 : 0;
+                const targetDate = new Date(year, targetMonth, 1);
+                let diffYears = now.getFullYear() - targetDate.getFullYear();
+                let diffMonths = now.getMonth() - targetDate.getMonth();
+                if (diffMonths < 0) { diffYears--; diffMonths += 12; }
+                if (!month) { return diffYears === 0 ? '今年' : `${diffYears}年前`; }
+                if (diffYears === 0 && diffMonths === 0) return '今月';
+                if (diffYears === 0) return `${diffMonths}ヶ月前`;
+                if (diffMonths === 0) return `${diffYears}年前`;
+                return `${diffYears}年${diffMonths}ヶ月前`;
             }
-            modalOverlay.classList.add('visible'); modalOverlay.classList.remove('hidden');
-        }
-        function closeModal() { if (!modalOverlay) return; modalOverlay.classList.remove('visible'); modalOverlay.classList.add('hidden'); modalTweetContainer.innerHTML = ''; modalImagesContainer.innerHTML = ''; }
-        if (modalOverlay) modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-        if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
 
-        function generateDescriptionBoxContent(itemData) {
-            let dateText = itemData.date || '（データなし）'; const stats = itemData.stats || '（データなし）'; const summary = itemData.summary || '（概要なし）';
-            const dateMatch = dateText.match(/(\d{4})年(?:(\d{1,2})月)?/);
-            if (dateMatch) { const year = parseInt(dateMatch[1], 10); const month = dateMatch[2] ? parseInt(dateMatch[2], 10) : null; const timeAgo = calculateTimeAgo(year, month); dateText = dateText.replace(/\(.+?\)/, `(${timeAgo})`); }
-            
-            let buttonHtml = '';
-            if (itemData.link) { buttonHtml = `<a href="${itemData.link}" target="_blank" rel="noopener noreferrer" class="inline-block bg-teal-500 text-white font-bold px-4 py-2 rounded-md mt-auto ml-auto hover:bg-teal-400 transition-colors text-sm">詳細を見る</a>`; }
-            else if (itemData.img1 || itemData.img2) { buttonHtml = `<button class="modal-open-btn inline-block bg-green-600 text-white font-bold px-4 py-2 rounded-md mt-auto ml-auto hover:bg-green-500 transition-colors text-sm" data-img1="${itemData.img1 || ''}" data-img2="${itemData.img2 || ''}" data-caption1="${itemData.caption1 || ''}" data-caption2="${itemData.caption2 || ''}">関連画像を見る</button>`; }
-            else if (itemData.xLink) { buttonHtml = `<button class="modal-open-btn inline-block bg-blue-500 text-white font-bold px-4 py-2 rounded-md mt-auto ml-auto hover:bg-blue-400 transition-colors text-sm" data-x-link="${itemData.xLink}">関連投稿 (X) を見る</button>`; }
+            // --- Modal & Lightbox ---
+            const modalOverlay = document.getElementById('modal-overlay');
+            const modalContent = document.getElementById('modal-content');
+            const modalTweetContainer = document.getElementById('modal-tweet-container');
+            const modalImagesContainer = document.getElementById('modal-images-container');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+            const lightboxOverlay = document.getElementById('lightbox-overlay');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
 
-            return `<div class="grid grid-cols-[1fr_1.5fr_3fr] grid-rows-[auto_1fr] text-base h-full"><div class="border-b border-r border-gray-500 p-3 flex items-start justify-center"><strong class="block text-sm text-gray-300">年月</strong></div><div class="border-b border-r border-gray-500 p-3 flex items-start justify-center"><strong class="block text-sm text-gray-300">関連数値</strong></div><div class="border-b border-gray-500 p-3 flex items-start justify-center"><strong class="block text-sm text-gray-300">概要</strong></div><div class="border-r border-gray-500 p-3 flex items-center justify-center h-full"><p class="font-medium text-white text-center">${dateText}</p></div><div class="border-r border-gray-500 p-3 flex items-center justify-start h-full"><p class="font-medium text-white text-left">${stats}</p></div><div class="p-3 flex flex-col h-full"><div class="flex-grow flex items-center justify-center"><p class="font-light text-gray-200" style="line-height: 1.6;">${summary}</p></div>${buttonHtml}</div></div>`;
-        }
+            function openLightbox(imgSrc) { if (!lightboxOverlay || !lightboxImage) return; lightboxImage.src = imgSrc; lightboxOverlay.classList.add('visible'); lightboxOverlay.classList.remove('hidden'); }
+            function closeLightbox() { if (!lightboxOverlay || !lightboxImage) return; lightboxOverlay.classList.remove('visible'); lightboxOverlay.classList.add('hidden'); lightboxImage.src = ''; }
+            if (lightboxOverlay) lightboxOverlay.addEventListener('click', (e) => { if (e.target === lightboxOverlay || e.target === lightboxImage) closeLightbox(); });
+            if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closeLightbox);
 
-        function setupInteractiveTimeline() {
-            const allTimelineItems = document.querySelectorAll('.timeline-item .event-box, .timeline-item .event-box-bottom');
-            const descBox = document.getElementById('description-box');
-            
-            if (descBox && allTimelineItems.length > 0) {
-                allTimelineItems.forEach(item => {
-                    item.addEventListener('click', () => {
-                        allTimelineItems.forEach(i => i.classList.remove('active'));
-                        item.classList.add('active');
-                        const itemData = item.dataset;
-                        descBox.innerHTML = generateDescriptionBoxContent(itemData);
-                        
-                        const modalButtons = descBox.querySelectorAll('.modal-open-btn');
-                        modalButtons.forEach(button => {
-                            const data = { xLink: button.dataset.xLink, img1: button.dataset.img1, img2: button.dataset.img2, caption1: button.dataset.caption1, caption2: button.dataset.caption2 };
-                            button.addEventListener('click', () => openModal(data));
+            function openModal(data) {
+                if (!modalOverlay) return;
+                modalTweetContainer.innerHTML = ''; modalImagesContainer.innerHTML = '';
+                if (data.xLink) {
+                    const tweetIdMatch = data.xLink.match(/\/status\/(\d+)/);
+                    if (tweetIdMatch && tweetIdMatch[1]) {
+                        const tweetId = tweetIdMatch[1];
+                        if (window.twttr && window.twttr.widgets) {
+                            window.twttr.widgets.createTweet(tweetId, modalTweetContainer, { theme: 'dark', align: 'center' }).then(el => { if (!el) modalTweetContainer.innerHTML = `<p class="text-center text-red-400">ツイートの読み込みに失敗しました。</p>`; });
+                        }
+                    }
+                    const fallbackLink = document.createElement('a'); fallbackLink.href = data.xLink; fallbackLink.target = '_blank'; fallbackLink.rel = 'noopener noreferrer'; fallbackLink.className = 'inline-block bg-blue-500 text-white font-bold px-4 py-2 rounded-md mt-4 hover:bg-blue-400 transition-colors'; fallbackLink.textContent = 'X で開く'; modalTweetContainer.appendChild(fallbackLink);
+                } else if (data.img1 || data.img2) {
+                    if (data.img1) { const figure1 = document.createElement('figure'); figure1.innerHTML = `<img src="${data.img1}" alt="${data.caption1 || ''}"><figcaption>${data.caption1 || ''}</figcaption>`; figure1.querySelector('img')?.addEventListener('click', () => openLightbox(data.img1)); modalImagesContainer.appendChild(figure1); }
+                    if (data.img2) { const figure2 = document.createElement('figure'); figure2.innerHTML = `<img src="${data.img2}" alt="${data.caption2 || ''}"><figcaption>${data.caption2 || ''}</figcaption>`; figure2.querySelector('img')?.addEventListener('click', () => openLightbox(data.img2)); modalImagesContainer.appendChild(figure2); }
+                }
+                modalOverlay.classList.add('visible'); modalOverlay.classList.remove('hidden');
+            }
+            function closeModal() { if (!modalOverlay) return; modalOverlay.classList.remove('visible'); modalOverlay.classList.add('hidden'); modalTweetContainer.innerHTML = ''; modalImagesContainer.innerHTML = ''; }
+            if (modalOverlay) modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+            if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+
+            function generateDescriptionBoxContent(itemData) {
+                let dateText = itemData.date || '（データなし）'; const stats = itemData.stats || '（データなし）'; const summary = itemData.summary || '（概要なし）';
+                const dateMatch = dateText.match(/(\d{4})年(?:(\d{1,2})月)?/);
+                if (dateMatch) { const year = parseInt(dateMatch[1], 10); const month = dateMatch[2] ? parseInt(dateMatch[2], 10) : null; const timeAgo = calculateTimeAgo(year, month); dateText = dateText.replace(/\(.+?\)/, `(${timeAgo})`); }
+
+                let buttonHtml = '';
+                if (itemData.link) { buttonHtml = `<a href="${itemData.link}" target="_blank" rel="noopener noreferrer" class="inline-block bg-teal-500 text-white font-bold px-4 py-2 rounded-md mt-auto ml-auto hover:bg-teal-400 transition-colors text-sm">詳細を見る</a>`; }
+                else if (itemData.img1 || itemData.img2) { buttonHtml = `<button class="modal-open-btn inline-block bg-green-600 text-white font-bold px-4 py-2 rounded-md mt-auto ml-auto hover:bg-green-500 transition-colors text-sm" data-img1="${itemData.img1 || ''}" data-img2="${itemData.img2 || ''}" data-caption1="${itemData.caption1 || ''}" data-caption2="${itemData.caption2 || ''}">関連画像を見る</button>`; }
+                else if (itemData.xLink) { buttonHtml = `<button class="modal-open-btn inline-block bg-blue-500 text-white font-bold px-4 py-2 rounded-md mt-auto ml-auto hover:bg-blue-400 transition-colors text-sm" data-x-link="${itemData.xLink}">関連投稿 (X) を見る</button>`; }
+
+                return `<div class="grid grid-cols-[1fr_1.5fr_3fr] grid-rows-[auto_1fr] text-base h-full"><div class="border-b border-r border-gray-500 p-3 flex items-start justify-center"><strong class="block text-sm text-gray-300">年月</strong></div><div class="border-b border-r border-gray-500 p-3 flex items-start justify-center"><strong class="block text-sm text-gray-300">関連数値</strong></div><div class="border-b border-gray-500 p-3 flex items-start justify-center"><strong class="block text-sm text-gray-300">概要</strong></div><div class="border-r border-gray-500 p-3 flex items-center justify-center h-full"><p class="font-medium text-white text-center">${dateText}</p></div><div class="border-r border-gray-500 p-3 flex items-center justify-start h-full"><p class="font-medium text-white text-left">${stats}</p></div><div class="p-3 flex flex-col h-full"><div class="flex-grow flex items-center justify-center"><p class="font-light text-gray-200" style="line-height: 1.6;">${summary}</p></div>${buttonHtml}</div></div>`;
+            }
+
+            function setupInteractiveTimeline() {
+                const allTimelineItems = document.querySelectorAll('.timeline-item .event-box, .timeline-item .event-box-bottom');
+                const descBox = document.getElementById('description-box');
+
+                if (descBox && allTimelineItems.length > 0) {
+                    allTimelineItems.forEach(item => {
+                        item.addEventListener('click', () => {
+                            allTimelineItems.forEach(i => i.classList.remove('active'));
+                            item.classList.add('active');
+                            const itemData = item.dataset;
+                            descBox.innerHTML = generateDescriptionBoxContent(itemData);
+
+                            const modalButtons = descBox.querySelectorAll('.modal-open-btn');
+                            modalButtons.forEach(button => {
+                                const data = { xLink: button.dataset.xLink, img1: button.dataset.img1, img2: button.dataset.img2, caption1: button.dataset.caption1, caption2: button.dataset.caption2 };
+                                button.addEventListener('click', () => openModal(data));
+                            });
                         });
                     });
+                }
+            }
+
+            function setupModalBadges() {
+                const items = document.querySelectorAll('.event-box, .event-box-bottom');
+                items.forEach(item => {
+                    if (item.querySelector('.modal-badge')) return;
+                    const hasData = item.dataset.xLink || item.dataset.img1 || item.dataset.link;
+                    if (hasData) {
+                        const badge = document.createElement('div'); badge.className = 'modal-badge'; let iconSvg = '';
+                        if (item.dataset.xLink) { badge.style.backgroundColor = '#000000'; iconSvg = `<svg fill="currentColor" viewBox="0 0 16 16"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633Z"/></svg>`; }
+                        else if (item.dataset.img1) { badge.style.backgroundColor = '#2563eb'; iconSvg = `<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>`; }
+                        else if (item.dataset.link) { badge.style.backgroundColor = '#0d9488'; iconSvg = `<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>`; }
+                        badge.innerHTML = iconSvg; item.appendChild(badge);
+                    }
                 });
             }
-        }
-        
-        function setupModalBadges() {
-            const items = document.querySelectorAll('.event-box, .event-box-bottom');
-            items.forEach(item => {
-                if (item.querySelector('.modal-badge')) return;
-                const hasData = item.dataset.xLink || item.dataset.img1 || item.dataset.link;
-                if (hasData) {
-                    const badge = document.createElement('div'); badge.className = 'modal-badge'; let iconSvg = '';
-                    if (item.dataset.xLink) { badge.style.backgroundColor = '#000000'; iconSvg = `<svg fill="currentColor" viewBox="0 0 16 16"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633Z"/></svg>`; }
-                    else if (item.dataset.img1) { badge.style.backgroundColor = '#2563eb'; iconSvg = `<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>`; }
-                    else if (item.dataset.link) { badge.style.backgroundColor = '#0d9488'; iconSvg = `<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>`; }
-                    badge.innerHTML = iconSvg; item.appendChild(badge);
-                }
-            });
-        }
 
-        setupInteractiveTimeline();
-        setupModalBadges();
-    });
+            setupInteractiveTimeline();
+            setupModalBadges();
+        });
     </script>
 </body>
+
 </html>
