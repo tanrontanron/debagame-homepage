@@ -1,0 +1,601 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #e9ebee;
+        }
+
+        .slide-container {
+            /* 16:9 aspect ratio */
+            max-width: 1200px;
+            aspect-ratio: 16 / 9;
+            margin: auto;
+            display: flex;
+            /* JavaScript縺ｧ hidden 繧貞・繧頑崛縺医※陦ｨ遉ｺ */
+            margin-bottom: 2rem;
+            /* 蜷・せ繝ｩ繧､繝峨さ繝ｳ繝・リ髢薙・繧ｹ繝壹・繧ｹ */
+        }
+
+        .slide-page {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            /* 繧ｹ繝ｩ繧､繝牙・縺ｮ縺ｯ縺ｿ蜃ｺ縺励ｒ髦ｲ豁｢ */
+        }
+
+        .era-title {
+            text-align: left;
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: #1a202c;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            /* 莉募・繧顔ｷ・*/
+            flex-shrink: 0;
+            /* 繧ｿ繧､繝医Ν縺檎ｸｮ縺ｾ縺ｪ縺・ｈ縺・↓ */
+        }
+
+        /* --- 繧ｿ繧､繝繝ｩ繧､繝ｳ蜈ｱ騾壹せ繧ｿ繧､繝ｫ --- */
+        .timeline-wrapper {
+            position: relative;
+            /* z-index 縺ｮ蝓ｺ貅・*/
+            width: 100%;
+            height: 100%;
+        }
+
+        .timeline-axis {
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: #cbd5e0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        .timeline-events {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+        }
+
+        .timeline-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            height: 100%;
+            flex-shrink: 0;
+        }
+
+        .event-dot {
+            width: 16px;
+            height: 16px;
+            background-color: #f56565;
+            border-radius: 50%;
+            border: 3px solid white;
+            position: absolute;
+            z-index: 10;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .event-date {
+            /* 蟷ｴ陦ｨ遉ｺ */
+            position: absolute;
+            background-color: white;
+            /* 笘・閭梧勹濶ｲ逋ｽ */
+            padding: 0 8px;
+            /* 蟾ｦ蜿ｳ縺ｮ繝代ョ繧｣繝ｳ繧ｰ縺ｧ邱壹ｒ髫縺・*/
+            font-weight: 700;
+            color: #e2e8f0;
+            font-size: 1.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+            /* 霆ｸ(0)繧医ｊ謇句燕 */
+        }
+
+        .event-month {
+            /* 譛郁｡ｨ遉ｺ */
+            position: absolute;
+            top: calc(50% + 20px);
+            transform: translateY(-50%);
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #2d3748;
+            background-color: transparent;
+            z-index: 11;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .event-connector {
+            /* 荳翫さ繝阪け繧ｿ */
+            width: 3px;
+            bottom: calc(50% + 8px);
+            height: 32px;
+            position: absolute;
+            background-color: #cbd5e0;
+        }
+
+        .event-connector-bottom {
+            /* 荳九さ繝阪け繧ｿ */
+            width: 3px;
+            top: calc(50% + 8px);
+            height: 32px;
+            position: absolute;
+            background-color: #cbd5e0;
+        }
+
+        .event-box {
+            /* 荳翫・繝・け繧ｹ */
+            position: absolute;
+            bottom: calc(50% + 40px);
+            padding: 0.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 150px;
+            background-color: #edf2f7;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            z-index: 15;
+        }
+
+        .event-box h3 {
+            font-size: 0.9rem;
+            line-height: 1.3;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .event-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-box.active {
+            border-color: #3b82f6;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .event-box-bottom {
+            /* 荳九・繝・け繧ｹ */
+            position: absolute;
+            top: calc(50% + 40px);
+            width: 150px;
+            background-color: #e6fffa;
+            border-radius: 8px;
+            padding: 0.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            z-index: 15;
+        }
+
+        .event-box-bottom h3 {
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: #234e52;
+            line-height: 1.3;
+        }
+
+        .event-box-bottom:hover {
+            transform: translateY(2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-box-bottom.active {
+            border-color: #38b2ac;
+            box-shadow: 0 4px 12px rgba(56, 178, 172, 0.4);
+        }
+
+
+        /* 濶ｲ蛻・￠ */
+        .event-color-gpt {
+            background-color: #d1fae5;
+        }
+
+        .event-color-will {
+            background-color: #fee2e2;
+        }
+
+        .event-color-gemini {
+            background-color: #ede9fe;
+        }
+
+        .event-color-anthropic {
+            background-color: #ffedd5;
+        }
+
+        .event-color-meta {
+            background-color: #dbeafe;
+        }
+
+        .event-color-apple {
+            background-color: #e5e7eb;
+        }
+
+        .event-color-misc {
+            background-color: #fef9c3;
+        }
+
+        .event-color-history {
+            background-color: #e0e7ff;
+        }
+
+        /* 繝｢繝ｼ繝繝ｫ繝舌ャ繧ｸ */
+        .modal-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            transform: translate(50%, -50%);
+            width: 22px;
+            height: 22px;
+            background-color: #3182ce;
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .modal-badge svg {
+            width: 12px;
+            height: 12px;
+            color: white;
+        }
+
+        /* 蟷ｴ繝槭・繧ｫ繝ｼ */
+        .year-marker {
+            width: 100px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 繧ｫ繧ｮ蝙九さ繝阪け繧ｿ */
+        .key-connector-h-line {
+            position: absolute;
+            bottom: calc(50% + 40px + 3.5rem / 2);
+            left: 75px;
+            right: 75px;
+            height: 3px;
+            background-color: #cbd5e0;
+            z-index: 5;
+        }
+
+        .timeline-item[style*="width: 320px"] .event-connector {
+            bottom: calc(50% + 8px);
+            height: calc(40px + 3.5rem / 2 - 8px);
+        }
+
+        .timeline-item[style*="width: 320px"] .event-connector-bottom {
+            top: calc(50% + 8px);
+            height: calc(40px + 3.5rem / 2 - 8px);
+        }
+
+        /* --- 蜈ｱ騾壹せ繧ｿ繧､繝ｫ (邯壹″) --- */
+        .focus-box {
+            margin-top: auto;
+            padding: 0.75rem;
+            background-color: #4a5568;
+            color: white;
+            border-radius: 8px;
+            text-align: left;
+            height: 240px;
+            display: flex;
+            flex-direction: column;
+            justify-content: stretch;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .scrollable-timeline {
+            /* P1/P3蜈ｱ騾・*/
+            overflow-x: auto;
+            width: 100%;
+            flex-grow: 1;
+            scrollbar-color: #a0aec0 #edf2f7;
+            scrollbar-width: thin;
+        }
+
+        .scrollable-timeline::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .scrollable-timeline::-webkit-scrollbar-thumb {
+            background-color: #a0aec0;
+            border-radius: 4px;
+        }
+
+        .scrollable-timeline::-webkit-scrollbar-track {
+            background-color: #edf2f7;
+            border-radius: 4px;
+        }
+
+        /* --- 閠・ｯ溘せ繝ｩ繧､繝牙・騾・--- */
+        .insight-content {
+            flex-grow: 1;
+            padding: 0 1rem;
+            overflow-y: auto;
+        }
+
+        .insight-content ul {
+            list-style: none;
+            padding-left: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .insight-content li {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .insight-content li ul {
+            margin-top: 0.75rem;
+            margin-bottom: 0.75rem;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .insight-content li ul li {
+            padding-left: 1rem;
+            margin-bottom: 0.25rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .insight-content li ul li::before {
+            content: '繝ｻ';
+            position: absolute;
+            left: -0.5rem;
+            top: 0;
+            color: #4a5568;
+        }
+
+        .insight-content>ul>li::before {
+            content: '笨・;
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 1.5rem;
+            color: #4a5568;
+            font-weight: bold;
+        }
+
+        .insight-content li strong {
+            font-weight: bold;
+            color: #2d3748;
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        /* --- 繝翫ン繧ｲ繝ｼ繧ｷ繝ｧ繝ｳUI --- */
+        .navigation-ui {
+            flex-shrink: 0;
+        }
+
+        /* --- 繝｢繝ｼ繝繝ｫ繧ｦ繧｣繝ｳ繝峨え --- */
+        #modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        #modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #modal-content {
+            background-color: #2d3748;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        #modal-overlay.visible #modal-content {
+            transform: scale(1);
+        }
+
+        #modal-images-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        #modal-images-container figure {
+            flex-basis: 48%;
+            max-width: 48%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #modal-images-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid #4a5568;
+            cursor: pointer;
+        }
+
+        #modal-images-container figcaption {
+            font-size: 0.8rem;
+            color: #a0aec0;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        #modal-tweet-container {
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- 繝ｩ繧､繝医・繝・け繧ｹ --- */
+        #lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        #lightbox-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #lightbox-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        #lightbox-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2.5rem;
+            color: white;
+            cursor: pointer;
+            z-index: 1002;
+            line-height: 1;
+        }
+
+        /* --- AI豈碑ｼ・｡ｨ --- */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            table-layout: fixed;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem;
+            text-align: left;
+            vertical-align: middle;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .comparison-table thead th {
+            background-color: #f7fafc;
+            font-weight: bold;
+            color: #2d3748;
+            text-align: center;
+            font-size: 0.85rem;
+            padding: 0.5rem 0.25rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .comparison-table td {
+            color: #4a5568;
+            font-size: 0.8rem;
+        }
+
+        .comparison-table tbody tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+
+        .comparison-table td.feature-label {
+            font-weight: bold;
+            background-color: #edf2f7;
+            color: #2d3748;
+            white-space: nowrap;
+            width: 120px;
+        }
+
+        /* 笘・菫ｮ豁｣: 豈碑ｼ・｡ｨ縺ｮ濶ｲ蛻・￠繧ｯ繝ｩ繧ｹ */
+        .bg-dark-green-100 {
+            background-color: #a7f3d0;
+        }
+
+        /* 笳・*/
+        .bg-green-100 {
+            background-color: #dcfce7;
+        }
+
+        /* 笳・*/
+        .bg-red-100 {
+            background-color: #fee2e2;
+        }
+
+        /* ﾃ・*/
+        .bg-yellow-100 {
+            background-color: #fef9c3;
+        }
+
+        /* 笆ｳ */
+        .bg-gray-100 {
+            background-color: #f3f4f6;
+        }
+
+        /* N/A */
+        /* 笘・霑ｽ蜉: 豈碑ｼ・｡ｨ邨仙粋繧ｻ繝ｫ逕ｨ */
+        .merged-cell {
+            text-align: center;
+            font-weight: bold;
+            background-color: #e0e7ff;
+        }
