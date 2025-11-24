@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,29 +9,101 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@700;900&family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@700;900&family=Oswald:wght@700&display=swap"
+        rel="stylesheet">
     <style>
-        body { font-family: 'Inter', 'Noto Sans JP', sans-serif; }
-        .main-content { }
-        .plate-font-jp { font-family: 'Noto Sans JP', sans-serif; font-weight: 900; }
-        .plate-font-en { font-family: 'Oswald', sans-serif; font-weight: 700; }
-        .plate-white { background-color: #ffffff; color: #006837; }
-        .plate-yellow { background-color: #fde047; color: #1f2937; }
-        .plate-green { background-color: #006837; color: #ffffff; }
-        .plate-blue { background-color: #3b82f6; color: #ffffff; }
-        .plate-black { background-color: #1f2937; color: #fde047; }
-        .matrix-label { transition: all 0.2s ease; border: 2px solid transparent; }
-        .matrix-radio:checked + .matrix-label { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-color: #3b82f6; background-color: #dbeafe; }
-        .plate-graphic { position: absolute; inset: 0; z-index: 5; background: linear-gradient(120deg, rgba(133, 235, 203, 0.4) 0%, rgba(252, 223, 135, 0.3) 30%, rgba(255, 179, 188, 0.4) 60%, rgba(168, 204, 255, 0.5) 100%); opacity: 0; transition: opacity 0.3s ease; }
-        .plate-graphic.visible { opacity: 1; }
-        .red-sash { position: absolute; top: 50%; left: 50%; width: 150%; height: 10px; background-color: #ef4444; transform: translate(-50%, -50%) rotate(-25deg); transform-origin: center; opacity: 0; transition: opacity 0.3s ease; z-index: 15; }
-        .red-sash.visible { opacity: 1; }
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+
+        .main-content {}
+
+        .plate-font-jp {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 900;
+        }
+
+        .plate-font-en {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+        }
+
+        .plate-white {
+            background-color: #ffffff;
+            color: #006837;
+        }
+
+        .plate-yellow {
+            background-color: #fde047;
+            color: #1f2937;
+        }
+
+        .plate-green {
+            background-color: #006837;
+            color: #ffffff;
+        }
+
+        .plate-blue {
+            background-color: #3b82f6;
+            color: #ffffff;
+        }
+
+        .plate-black {
+            background-color: #1f2937;
+            color: #fde047;
+        }
+
+        .matrix-label {
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .matrix-radio:checked+.matrix-label {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-color: #3b82f6;
+            background-color: #dbeafe;
+        }
+
+        .plate-graphic {
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            background: linear-gradient(120deg, rgba(133, 235, 203, 0.4) 0%, rgba(252, 223, 135, 0.3) 30%, rgba(255, 179, 188, 0.4) 60%, rgba(168, 204, 255, 0.5) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .plate-graphic.visible {
+            opacity: 1;
+        }
+
+        .red-sash {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150%;
+            height: 10px;
+            background-color: #ef4444;
+            transform: translate(-50%, -50%) rotate(-25deg);
+            transform-origin: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 15;
+        }
+
+        .red-sash.visible {
+            opacity: 1;
+        }
     </style>
 </head>
+
 <body class="bg-gray-100 text-gray-800 p-4 sm:p-8">
 
     <!-- Sidebar Component -->
-    <nav id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-gray-900 text-white transform -translate-x-full transition-transform duration-300 ease-in-out z-50">
+    <nav id="sidebar"
+        class="fixed left-0 top-0 h-full w-64 bg-gray-900 text-white transform -translate-x-full transition-transform duration-300 ease-in-out z-50">
         <div class="flex items-center justify-between p-4 border-b border-gray-700">
             <h2 class="text-lg font-semibold">メニュー</h2>
             <button id="sidebar-close" class="text-gray-400 hover:text-white">
@@ -39,19 +112,42 @@
         </div>
         <div class="p-4">
             <ul class="space-y-2">
-                <li><a href="../index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-home mr-3"></i>トップページ</a></li>
-                <li><a href="../Interactive_worldmap/worldmap.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-globe mr-3"></i>世界地図</a></li>
-                <li><a href="../bear/index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-chart-line mr-3"></i>熊被害状況</a></li>
-                <li><a href="./numberplate.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-car-side mr-3"></i>ナンバープレート</a></li>
-                <li><a href="../size/size.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-ruler-combined mr-3"></i>サイズ検討</a></li>
-                <li><a href="../endless-chinchirorin/dist/index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-dice mr-3"></i>無限チンチロ</a></li>
-                <li><a href="../ai-timeline/index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-brain mr-3"></i>AI年表</a></li>
+                <li><a href="../index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-home mr-3"></i>トップページ</a></li>
+                <li><a href="../Interactive_worldmap/worldmap.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-globe mr-3"></i>世界地図</a></li>
+                <li><a href="../bear/index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-chart-line mr-3"></i>熊被害状況</a></li>
+                <li><a href="./numberplate.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-car-side mr-3"></i>ナンバープレート</a></li>
+                <li><a href="../size/size.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-ruler-combined mr-3"></i>サイズ検討</a></li>
+                <li><a href="../endless-chinchirorin/dist/index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-dice mr-3"></i>無限チンチロ</a></li>
+                <li><a href="../ai-timeline/index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-brain mr-3"></i>AI年表</a></li>
+                <li><a href="../myhealth/index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-heartbeat mr-3"></i>健康診断</a></li>
             </ul>
         </div>
-        <div class="absolute bottom-4 left-4 right-4"><div class="text-xs text-gray-400 text-center"><p>&copy; 2025 でばがめのほめぱげ</p></div></div>
+        <div class="absolute bottom-4 left-4 right-4">
+            <div class="text-xs text-gray-400 text-center">
+                <p>&copy; 2025 でばがめのほめぱげ</p>
+            </div>
+        </div>
     </nav>
     <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
-    <button id="sidebar-toggle" class="fixed top-4 left-4 z-30 bg-gray-900 text-white p-3 rounded-lg shadow-lg hover:bg-gray-800 transition-colors"><i class="fas fa-bars"></i></button>
+    <button id="sidebar-toggle"
+        class="fixed top-4 left-4 z-30 bg-gray-900 text-white p-3 rounded-lg shadow-lg hover:bg-gray-800 transition-colors"><i
+            class="fas fa-bars"></i></button>
 
     <div class="main-content">
         <div class="max-w-4xl mx-auto">
@@ -59,71 +155,117 @@
                 <h1 class="text-3xl md:text-4xl font-bold text-gray-700 plate-font-jp">ナンバープレートに対する知識ゼロの奴集合</h1>
             </header>
             <main>
-                <div class="flex justify-center items-center mb-8"><div id="plate-bg" class="w-full max-w-lg h-auto aspect-[2/1] rounded-xl shadow-lg border-2 border-gray-700 flex p-2 relative cursor-pointer overflow-hidden"><div id="plate-graphic" class="plate-graphic"></div><div id="red-sash" class="red-sash"></div><div id="seal" class="absolute top-4 left-5 w-7 h-7 z-20"></div><div id="bolt-left" class="absolute top-4 left-5 w-7 h-7 z-20"></div><div id="bolt-right" class="absolute top-4 right-5 w-7 h-7 z-20"></div><div id="plate-content-wrapper" class="h-full w-full grid grid-rows-2 z-10"><div id="top-row" class="w-full flex items-end justify-center gap-1 sm:gap-4 px-8"><div id="place-name" style="font-size: clamp(1.2rem, 6vw, 2.25rem);">品川</div><div id="class-number" class="plate-font-en" style="font-size: clamp(1.2rem, 6vw, 2.25rem);">300</div><div id="logo-wrapper" class="flex-grow flex items-center justify-end"><div id="logo" class="text-center"><span class="block text-blue-500 font-bold" style="font-size: clamp(0.5rem, 2vw, 0.8rem);">EXPO</span><span class="block text-red-500 font-bold plate-font-en" style="font-size: clamp(0.6rem, 2.5vw, 1rem);">2027</span></div></div></div><div id="bottom-row" class="w-full flex items-start justify-center px-4"><div id="hiragana-area" class="w-1/4 flex items-center justify-end pr-2 sm:pr-4"><div id="hiragana-wrapper" class="inline-block"><div id="hiragana" style="font-size: clamp(1.5rem, 8vw, 3.5rem);">す</div></div></div><div id="serial-area" class="w-3/4 flex items-center justify-start"><div id="serial-number" class="plate-font-en leading-none whitespace-nowrap" style="font-size: clamp(2.5rem, 16vw, 6rem);">12-34</div></div></div></div><div id="diplomat-content-wrapper" class="h-full w-full flex items-center justify-center gap-4 z-10"><div id="diplomat-place-name" style="font-size: clamp(1.5rem, 10vw, 3.5rem);">外</div><div id="diplomat-serial-number" class="plate-font-en" style="font-size: clamp(2rem, 15vw, 5rem);">90001</div></div></div></div>
+                <div class="flex justify-center items-center mb-8">
+                    <div id="plate-bg"
+                        class="w-full max-w-lg h-auto aspect-[2/1] rounded-xl shadow-lg border-2 border-gray-700 flex p-2 relative cursor-pointer overflow-hidden">
+                        <div id="plate-graphic" class="plate-graphic"></div>
+                        <div id="red-sash" class="red-sash"></div>
+                        <div id="seal" class="absolute top-4 left-5 w-7 h-7 z-20"></div>
+                        <div id="bolt-left" class="absolute top-4 left-5 w-7 h-7 z-20"></div>
+                        <div id="bolt-right" class="absolute top-4 right-5 w-7 h-7 z-20"></div>
+                        <div id="plate-content-wrapper" class="h-full w-full grid grid-rows-2 z-10">
+                            <div id="top-row" class="w-full flex items-end justify-center gap-1 sm:gap-4 px-8">
+                                <div id="place-name" style="font-size: clamp(1.2rem, 6vw, 2.25rem);">品川</div>
+                                <div id="class-number" class="plate-font-en"
+                                    style="font-size: clamp(1.2rem, 6vw, 2.25rem);">300</div>
+                                <div id="logo-wrapper" class="flex-grow flex items-center justify-end">
+                                    <div id="logo" class="text-center"><span class="block text-blue-500 font-bold"
+                                            style="font-size: clamp(0.5rem, 2vw, 0.8rem);">EXPO</span><span
+                                            class="block text-red-500 font-bold plate-font-en"
+                                            style="font-size: clamp(0.6rem, 2.5vw, 1rem);">2027</span></div>
+                                </div>
+                            </div>
+                            <div id="bottom-row" class="w-full flex items-start justify-center px-4">
+                                <div id="hiragana-area" class="w-1/4 flex items-center justify-end pr-2 sm:pr-4">
+                                    <div id="hiragana-wrapper" class="inline-block">
+                                        <div id="hiragana" style="font-size: clamp(1.5rem, 8vw, 3.5rem);">す</div>
+                                    </div>
+                                </div>
+                                <div id="serial-area" class="w-3/4 flex items-center justify-start">
+                                    <div id="serial-number" class="plate-font-en leading-none whitespace-nowrap"
+                                        style="font-size: clamp(2.5rem, 16vw, 6rem);">12-34</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="diplomat-content-wrapper"
+                            class="h-full w-full flex items-center justify-center gap-4 z-10">
+                            <div id="diplomat-place-name" style="font-size: clamp(1.5rem, 10vw, 3.5rem);">外</div>
+                            <div id="diplomat-serial-number" class="plate-font-en"
+                                style="font-size: clamp(2rem, 15vw, 5rem);">90001</div>
+                        </div>
+                    </div>
+                </div>
                 <div id="matrix-selector" class="bg-white p-4 sm:p-6 rounded-lg shadow-md mb-8"></div>
-                <div id="summary-explanation" class="bg-white p-6 rounded-lg shadow-md min-h-[100px]"><h2 id="summary-title" class="text-xl font-bold mb-3 text-sky-700 plate-font-jp"></h2><p id="summary-text" class="text-base leading-relaxed"></p><p id="trivia-text" class="mt-4 text-sm text-indigo-700 bg-indigo-50 p-3 rounded-md"></p></div>
+                <div id="summary-explanation" class="bg-white p-6 rounded-lg shadow-md min-h-[100px]">
+                    <h2 id="summary-title" class="text-xl font-bold mb-3 text-sky-700 plate-font-jp"></h2>
+                    <p id="summary-text" class="text-base leading-relaxed"></p>
+                    <p id="trivia-text" class="mt-4 text-sm text-indigo-700 bg-indigo-50 p-3 rounded-md"></p>
+                </div>
             </main>
-            <footer class="text-center mt-12 text-gray-500 text-sm"><p>&copy; 2025 でばがめのほめぱげ. All Rights Reserved.</p></footer>
+            <footer class="text-center mt-12 text-gray-500 text-sm">
+                <p>&copy; 2025 でばがめのほめぱげ. All Rights Reserved.</p>
+            </footer>
         </div>
     </div>
 
     <script>
-        const optionsData = { plateType: { title: '① プレートの種類', options: [ { key: 'standard', name: '自家用(白)', summary: '最も一般的な自家用車用のナンバープレートです。', plateClass: 'plate-white' }, { key: 'special', name: '図柄ナンバー', summary: '地域の風景やイベントが描かれた特別なプレートです。', plateClass: 'plate-white' }, { key: 'kei', name: '軽自動車(黄)', summary: '軽自動車用のナンバープレートです。', plateClass: 'plate-yellow' }, { key: 'kei-commercial', name: '軽自動車(事業用)', summary: '軽貨物運送などに使われる黒地のプレートです。通称「黒ナンバー」。', plateClass: 'plate-black' }, { key: 'commercial', name: '事業用(緑)', summary: 'タクシーやトラックなど、事業用車両のプレートです。', plateClass: 'plate-green' }, { key: 'temporary', name: '仮ナンバー', summary: '車検切れの車などを一時的に運行するためのプレートです。', plateClass: 'plate-white' }, { key: 'diplomat', name: '外交官用', summary: '外交官が使用する車両で、特別な権限を持ちます。', plateClass: 'plate-blue' }, ] }, fastenerType: { title: '② ボルト/封印', options: [ { key: 'front', name: '前部プレート', summary: '前部プレートは左右ともボルトで固定されます。' }, { key: 'rear', name: '後部プレート', summary: '後部プレートは、左側が運輸支局で取り付けられる「封印」になります。（軽自動車を除く）' }, ] }, hiraganaType: { title: '③ ひらがな', dependencies: { standard: [ { key: 'jikayo', name: '自家用', summary: '自家用車には、<b>「さすせそ たちつてと なにぬねの はひふほ まみむめも やゆ らりるろ」</b>が使われます。' }, { key: 'rentacar', name: 'レンタカー', summary: 'レンタカーには、<b>「わ」</b>と<b>「れ」</b>が使われます。' }, { key: 'y-number', name: '駐留軍', summary: '駐留軍関係車両には、<b>「よ」</b>のほか、アルファベットの<b>「Y, E, H, K, M, T」</b>が使われます。' }, ], special: [ { key: 'special-jikayo', name: '自家用', summary: '図柄ナンバーでも通常のひらがなが使われます。例えば自家用なら<b>「さすせそ…」</b>、レンタカーなら<b>「わ」</b>が使われます。' } ], kei: [ { key: 'kei-jikayo', name: '自家用', summary: '軽自動車（自家用）には、<b>「あいうえかきくけこさすせそたちつてとなにぬねのはひふほまみむめもやゆよらるろを」</b>が使われます。' }, { key: 'kei-rentacar', name: 'レンタカー', summary: '軽自動車のレンタカーには、<b>「わ」</b>が使われます。' }, ], 'kei-commercial': [ { key: 'kei-jigyo', name: '事業用', summary: '黒ナンバーの軽貨物車には<b>「り」</b>と<b>「れ」</b>が使われます。' } ], commercial: [ { key: 'jigyo', name: '事業用', summary: '事業用（緑ナンバー）には<b>「あいうえかきくけこを」</b>が使われます。' } ], } }, serialNumber: { title: '④ 一連指定番号', options: [ { key: 'serial', name: '番号', summary: '車両を個別に識別する番号です。<br><b>・一般ナンバー：</b>希望しない場合は連続した番号が交付されます。<br><b>・希望ナンバー：</b>手数料を支払うことで好きな番号を選ぶことができます。特に人気が高い「1」「7」「8」「8888」などの13通りの番号は抽選となります。「42（死に）」「49（轢く）」などは通常欠番です。' } ] } };
+        const optionsData = { plateType: { title: '① プレートの種類', options: [{ key: 'standard', name: '自家用(白)', summary: '最も一般的な自家用車用のナンバープレートです。', plateClass: 'plate-white' }, { key: 'special', name: '図柄ナンバー', summary: '地域の風景やイベントが描かれた特別なプレートです。', plateClass: 'plate-white' }, { key: 'kei', name: '軽自動車(黄)', summary: '軽自動車用のナンバープレートです。', plateClass: 'plate-yellow' }, { key: 'kei-commercial', name: '軽自動車(事業用)', summary: '軽貨物運送などに使われる黒地のプレートです。通称「黒ナンバー」。', plateClass: 'plate-black' }, { key: 'commercial', name: '事業用(緑)', summary: 'タクシーやトラックなど、事業用車両のプレートです。', plateClass: 'plate-green' }, { key: 'temporary', name: '仮ナンバー', summary: '車検切れの車などを一時的に運行するためのプレートです。', plateClass: 'plate-white' }, { key: 'diplomat', name: '外交官用', summary: '外交官が使用する車両で、特別な権限を持ちます。', plateClass: 'plate-blue' },] }, fastenerType: { title: '② ボルト/封印', options: [{ key: 'front', name: '前部プレート', summary: '前部プレートは左右ともボルトで固定されます。' }, { key: 'rear', name: '後部プレート', summary: '後部プレートは、左側が運輸支局で取り付けられる「封印」になります。（軽自動車を除く）' },] }, hiraganaType: { title: '③ ひらがな', dependencies: { standard: [{ key: 'jikayo', name: '自家用', summary: '自家用車には、<b>「さすせそ たちつてと なにぬねの はひふほ まみむめも やゆ らりるろ」</b>が使われます。' }, { key: 'rentacar', name: 'レンタカー', summary: 'レンタカーには、<b>「わ」</b>と<b>「れ」</b>が使われます。' }, { key: 'y-number', name: '駐留軍', summary: '駐留軍関係車両には、<b>「よ」</b>のほか、アルファベットの<b>「Y, E, H, K, M, T」</b>が使われます。' },], special: [{ key: 'special-jikayo', name: '自家用', summary: '図柄ナンバーでも通常のひらがなが使われます。例えば自家用なら<b>「さすせそ…」</b>、レンタカーなら<b>「わ」</b>が使われます。' }], kei: [{ key: 'kei-jikayo', name: '自家用', summary: '軽自動車（自家用）には、<b>「あいうえかきくけこさすせそたちつてとなにぬねのはひふほまみむめもやゆよらるろを」</b>が使われます。' }, { key: 'kei-rentacar', name: 'レンタカー', summary: '軽自動車のレンタカーには、<b>「わ」</b>が使われます。' },], 'kei-commercial': [{ key: 'kei-jigyo', name: '事業用', summary: '黒ナンバーの軽貨物車には<b>「り」</b>と<b>「れ」</b>が使われます。' }], commercial: [{ key: 'jigyo', name: '事業用', summary: '事業用（緑ナンバー）には<b>「あいうえかきくけこを」</b>が使われます。' }], } }, serialNumber: { title: '④ 一連指定番号', options: [{ key: 'serial', name: '番号', summary: '車両を個別に識別する番号です。<br><b>・一般ナンバー：</b>希望しない場合は連続した番号が交付されます。<br><b>・希望ナンバー：</b>手数料を支払うことで好きな番号を選ぶことができます。特に人気が高い「1」「7」「8」「8888」などの13通りの番号は抽選となります。「42（死に）」「49（轢く）」などは通常欠番です。' }] } };
         const triviaData = { standard: '【豆知識】希望ナンバーで「830」は、歌手の矢沢永吉さんのファンが「ヤザワ」の語呂合わせで取得するため「ヤザワナンバー」と呼ばれ人気です。', kei: '【豆知識】軽自動車に封印がないのは、普通車が国（運輸支局）の管轄に対し、軽自動車は地方自治体の管轄という歴史的経緯があるためです。また、ひらがなが「あ」から始まるのも、普通車がプレートの色で事業用（緑）を区別するのに対し、軽自動車はひらがなで事業用（り、れ）を区別してきた歴史があるため、自家用にはより多くの文字が割り当てられています。', special: '【豆知識】図柄ナンバーは、寄付金を支払うとフルカラー版が選べます。寄付金は地域の交通改善や観光振興などに活用されます。', 'kei-commercial': '【豆知識】黒ナンバーは、運賃をもらって荷物を運ぶ「事業」に必要なため、任意保険も自家用とは異なる契約が必要になります。' };
         const examples = { standard: { placeName: '品川', classNumber: '300', hiragana: 'す', serialNumber: '12-34', sealText: '東', logo: false, graphic: false }, special: { placeName: '横浜', classNumber: '589', hiragana: 'ろ', serialNumber: '20-27', sealText: '', logo: true, graphic: true }, kei: { placeName: '多摩', classNumber: '581', hiragana: 'あ', serialNumber: '・123', sealText: '', logo: false, graphic: false }, 'kei-commercial': { placeName: '所沢', classNumber: '480', hiragana: 'り', serialNumber: '88-88', sealText: '', logo: false, graphic: false }, commercial: { placeName: '足立', classNumber: '100', hiragana: 'あ', serialNumber: '88-88', sealText: '足', logo: false, graphic: false }, temporary: { placeName: '横浜', classNumber: 'あ', hiragana: '', serialNumber: '12-34', sealText: '', logo: false, graphic: false }, diplomat: { placeName: '外', classNumber: '', hiragana: '', serialNumber: '90001', sealText: '', logo: false, graphic: false }, };
         const hiraganaChars = { jikayo: 'す', rentacar: 'わ', 'y-number': 'よ', 'special-jikayo': 'ろ', 'kei-jikayo': 'あ', 'kei-rentacar': 'わ', 'kei-jigyo': 'り', jigyo: 'あ' };
         let currentState = { plateType: 'standard', fastenerType: 'rear', hiraganaType: 'jikayo', serialNumber: 'serial' };
         const dom = { plateBg: document.getElementById('plate-bg'), plateGraphic: document.getElementById('plate-graphic'), redSash: document.getElementById('red-sash'), plateContentWrapper: document.getElementById('plate-content-wrapper'), diplomatContentWrapper: document.getElementById('diplomat-content-wrapper'), hiraganaWrapper: document.getElementById('hiragana-wrapper'), seal: document.getElementById('seal'), boltLeft: document.getElementById('bolt-left'), boltRight: document.getElementById('bolt-right'), matrixSelector: document.getElementById('matrix-selector'), summaryTitle: document.getElementById('summary-title'), summaryText: document.getElementById('summary-text'), triviaText: document.getElementById('trivia-text'), topRow: document.getElementById('top-row'), hiraganaArea: document.getElementById('hiragana-area'), serialArea: document.getElementById('serial-area'), };
-        function createMatrix() { let matrixHtml = '<table class="w-full border-collapse"><tbody>'; Object.entries(optionsData).forEach(([category, data]) => { let currentOptions = []; if (category === 'hiraganaType') currentOptions = data.dependencies[currentState.plateType] || []; else currentOptions = data.options; if (currentOptions.length > 0) { matrixHtml += `<tr class="border-t"><td class="p-3 border-r align-top font-bold plate-font-jp text-gray-600 w-1/4">${data.title}</td>`; matrixHtml += '<td class="p-3"><div class="flex flex-wrap gap-2">'; currentOptions.forEach(option => { const isChecked = currentState[category] === option.key; matrixHtml += ` <input type="radio" name="${category}" value="${option.key}" id="rad_${category}_${option.key}" class="matrix-radio hidden" ${isChecked ? 'checked' : ''}> <label for="rad_${category}_${option.key}" class="matrix-label bg-white text-gray-700 font-semibold py-2 px-4 border border-gray-300 rounded shadow-sm cursor-pointer">${option.name}</label> `; }); matrixHtml += '</div></td></tr>'; } }); matrixHtml += '</tbody></table>'; dom.matrixSelector.innerHTML = matrixHtml; document.querySelectorAll('input[type="radio"]').forEach(radio => { radio.addEventListener('change', (e) => { const category = e.target.name; const key = e.target.value; currentState[category] = key; if(category === 'plateType') { const validHiragana = optionsData.hiraganaType.dependencies[key]; currentState.hiraganaType = validHiragana ? validHiragana[0].key : null; } createMatrix(); renderAll(); }); }); }
-        function renderAll() { const plateType = currentState.plateType; const example = examples[plateType]; const plateClass = optionsData.plateType.options.find(opt => opt.key === plateType).plateClass; dom.plateBg.className = `w-full max-w-lg h-auto aspect-[2/1] rounded-xl shadow-lg border-2 border-gray-700 flex p-2 relative cursor-pointer overflow-hidden ${plateClass}`; document.getElementById('logo-wrapper').style.display = example.logo ? 'flex' : 'none'; dom.plateGraphic.classList.toggle('visible', example.graphic); dom.redSash.classList.toggle('visible', plateType === 'temporary'); const isDiplomat = plateType === 'diplomat'; dom.plateContentWrapper.style.display = isDiplomat ? 'none' : 'grid'; dom.diplomatContentWrapper.style.display = isDiplomat ? 'flex' : 'none'; if (!isDiplomat) { document.getElementById('place-name').textContent = example.placeName; document.getElementById('class-number').textContent = example.classNumber; document.getElementById('serial-number').textContent = example.serialNumber; const hiraganaEl = document.getElementById('hiragana'); if(hiraganaEl) { const hiraganaKey = currentState.hiraganaType; hiraganaEl.textContent = hiraganaChars[hiraganaKey] || example.hiragana; } dom.hiraganaWrapper.style.visibility = (plateType === 'temporary' || !currentState.hiraganaType) ? 'hidden' : 'visible'; } const boltHTML = `<div class="w-full h-full rounded-full bg-gray-400 border border-gray-600"></div>`; const sealHTML = `<div class="w-full h-full bg-gray-300 rounded-full flex justify-center items-center border-2 border-gray-500"><div class="w-5 h-5 bg-white rounded-full flex justify-center items-center"><span class="text-gray-700 font-bold text-xs">${example.sealText}</span></div></div>`; dom.seal.style.display = 'none'; dom.boltLeft.style.display = 'none'; dom.boltRight.style.display = 'none'; if (!isDiplomat && plateType !== 'temporary') { if (currentState.fastenerType === 'front' || plateType === 'kei' || plateType === 'kei-commercial') { dom.boltLeft.style.display = 'flex'; dom.boltRight.style.display = 'flex'; dom.boltLeft.innerHTML = boltHTML; dom.boltRight.innerHTML = boltHTML; } else { dom.seal.style.display = 'flex'; dom.boltRight.style.display = 'flex'; dom.seal.innerHTML = sealHTML; dom.boltRight.innerHTML = boltHTML; } } const plateInfo = optionsData.plateType.options.find(o => o.key === currentState.plateType); const fastenerInfo = optionsData.fastenerType.options.find(o => o.key === currentState.fastenerType); const hiraganaOptions = optionsData.hiraganaType.dependencies[currentState.plateType]; const hiraganaInfo = hiraganaOptions ? hiraganaOptions.find(o => o.key === currentState.hiraganaType) : null; const serialInfo = optionsData.serialNumber.options[0]; let title = plateInfo.name; let text = plateInfo.summary; if (!isDiplomat && plateType !== 'temporary') { title += ` / ${fastenerInfo.name}`; text += ` ${fastenerInfo.summary}`; } if(hiraganaInfo) { title += ` / ${hiraganaInfo.name}`; text += ` ${hiraganaInfo.summary}`; } const activeRadio = document.querySelector('input[type="radio"]:checked'); if(activeRadio && activeRadio.name === 'serialNumber') { title = optionsData.serialNumber.title; text = serialInfo.summary; } dom.summaryTitle.textContent = title; dom.summaryText.innerHTML = text; const trivia = triviaData[plateType]; dom.triviaText.textContent = trivia || ''; dom.triviaText.style.display = trivia ? 'block' : 'none'; }
-        function cycleOption(category) { let options = []; if (category === 'hiraganaType') { options = optionsData.hiraganaType.dependencies[currentState.plateType] || []; } else { options = optionsData[category].options || []; } if(options.length <= 1) return; const currentIndex = options.findIndex(opt => opt.key === currentState[category]); const nextIndex = (currentIndex + 1) % options.length; currentState[category] = options[nextIndex].key; if(category === 'plateType') { const validHiragana = optionsData.hiraganaType.dependencies[currentState.plateType]; currentState.hiraganaType = validHiragana ? validHiragana[0].key : null; } createMatrix(); renderAll(); }
+        function createMatrix() { let matrixHtml = '<table class="w-full border-collapse"><tbody>'; Object.entries(optionsData).forEach(([category, data]) => { let currentOptions = []; if (category === 'hiraganaType') currentOptions = data.dependencies[currentState.plateType] || []; else currentOptions = data.options; if (currentOptions.length > 0) { matrixHtml += `<tr class="border-t"><td class="p-3 border-r align-top font-bold plate-font-jp text-gray-600 w-1/4">${data.title}</td>`; matrixHtml += '<td class="p-3"><div class="flex flex-wrap gap-2">'; currentOptions.forEach(option => { const isChecked = currentState[category] === option.key; matrixHtml += ` <input type="radio" name="${category}" value="${option.key}" id="rad_${category}_${option.key}" class="matrix-radio hidden" ${isChecked ? 'checked' : ''}> <label for="rad_${category}_${option.key}" class="matrix-label bg-white text-gray-700 font-semibold py-2 px-4 border border-gray-300 rounded shadow-sm cursor-pointer">${option.name}</label> `; }); matrixHtml += '</div></td></tr>'; } }); matrixHtml += '</tbody></table>'; dom.matrixSelector.innerHTML = matrixHtml; document.querySelectorAll('input[type="radio"]').forEach(radio => { radio.addEventListener('change', (e) => { const category = e.target.name; const key = e.target.value; currentState[category] = key; if (category === 'plateType') { const validHiragana = optionsData.hiraganaType.dependencies[key]; currentState.hiraganaType = validHiragana ? validHiragana[0].key : null; } createMatrix(); renderAll(); }); }); }
+        function renderAll() { const plateType = currentState.plateType; const example = examples[plateType]; const plateClass = optionsData.plateType.options.find(opt => opt.key === plateType).plateClass; dom.plateBg.className = `w-full max-w-lg h-auto aspect-[2/1] rounded-xl shadow-lg border-2 border-gray-700 flex p-2 relative cursor-pointer overflow-hidden ${plateClass}`; document.getElementById('logo-wrapper').style.display = example.logo ? 'flex' : 'none'; dom.plateGraphic.classList.toggle('visible', example.graphic); dom.redSash.classList.toggle('visible', plateType === 'temporary'); const isDiplomat = plateType === 'diplomat'; dom.plateContentWrapper.style.display = isDiplomat ? 'none' : 'grid'; dom.diplomatContentWrapper.style.display = isDiplomat ? 'flex' : 'none'; if (!isDiplomat) { document.getElementById('place-name').textContent = example.placeName; document.getElementById('class-number').textContent = example.classNumber; document.getElementById('serial-number').textContent = example.serialNumber; const hiraganaEl = document.getElementById('hiragana'); if (hiraganaEl) { const hiraganaKey = currentState.hiraganaType; hiraganaEl.textContent = hiraganaChars[hiraganaKey] || example.hiragana; } dom.hiraganaWrapper.style.visibility = (plateType === 'temporary' || !currentState.hiraganaType) ? 'hidden' : 'visible'; } const boltHTML = `<div class="w-full h-full rounded-full bg-gray-400 border border-gray-600"></div>`; const sealHTML = `<div class="w-full h-full bg-gray-300 rounded-full flex justify-center items-center border-2 border-gray-500"><div class="w-5 h-5 bg-white rounded-full flex justify-center items-center"><span class="text-gray-700 font-bold text-xs">${example.sealText}</span></div></div>`; dom.seal.style.display = 'none'; dom.boltLeft.style.display = 'none'; dom.boltRight.style.display = 'none'; if (!isDiplomat && plateType !== 'temporary') { if (currentState.fastenerType === 'front' || plateType === 'kei' || plateType === 'kei-commercial') { dom.boltLeft.style.display = 'flex'; dom.boltRight.style.display = 'flex'; dom.boltLeft.innerHTML = boltHTML; dom.boltRight.innerHTML = boltHTML; } else { dom.seal.style.display = 'flex'; dom.boltRight.style.display = 'flex'; dom.seal.innerHTML = sealHTML; dom.boltRight.innerHTML = boltHTML; } } const plateInfo = optionsData.plateType.options.find(o => o.key === currentState.plateType); const fastenerInfo = optionsData.fastenerType.options.find(o => o.key === currentState.fastenerType); const hiraganaOptions = optionsData.hiraganaType.dependencies[currentState.plateType]; const hiraganaInfo = hiraganaOptions ? hiraganaOptions.find(o => o.key === currentState.hiraganaType) : null; const serialInfo = optionsData.serialNumber.options[0]; let title = plateInfo.name; let text = plateInfo.summary; if (!isDiplomat && plateType !== 'temporary') { title += ` / ${fastenerInfo.name}`; text += ` ${fastenerInfo.summary}`; } if (hiraganaInfo) { title += ` / ${hiraganaInfo.name}`; text += ` ${hiraganaInfo.summary}`; } const activeRadio = document.querySelector('input[type="radio"]:checked'); if (activeRadio && activeRadio.name === 'serialNumber') { title = optionsData.serialNumber.title; text = serialInfo.summary; } dom.summaryTitle.textContent = title; dom.summaryText.innerHTML = text; const trivia = triviaData[plateType]; dom.triviaText.textContent = trivia || ''; dom.triviaText.style.display = trivia ? 'block' : 'none'; }
+        function cycleOption(category) { let options = []; if (category === 'hiraganaType') { options = optionsData.hiraganaType.dependencies[currentState.plateType] || []; } else { options = optionsData[category].options || []; } if (options.length <= 1) return; const currentIndex = options.findIndex(opt => opt.key === currentState[category]); const nextIndex = (currentIndex + 1) % options.length; currentState[category] = options[nextIndex].key; if (category === 'plateType') { const validHiragana = optionsData.hiraganaType.dependencies[currentState.plateType]; currentState.hiraganaType = validHiragana ? validHiragana[0].key : null; } createMatrix(); renderAll(); }
         function initialize() { createMatrix(); renderAll(); dom.topRow.addEventListener('click', () => cycleOption('plateType')); dom.hiraganaArea.addEventListener('click', () => cycleOption('hiraganaType')); dom.serialArea.addEventListener('click', () => { document.getElementById('rad_serialNumber_serial').checked = true; const event = new Event('change'); document.getElementById('rad_serialNumber_serial').dispatchEvent(event); }); dom.seal.addEventListener('click', () => cycleOption('fastenerType')); dom.boltLeft.addEventListener('click', () => cycleOption('fastenerType')); dom.boltRight.addEventListener('click', () => cycleOption('fastenerType')); }
         initialize();
-        </script>
+    </script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // --- Sidebar Logic ---
-        const sidebar = document.getElementById('sidebar');
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        const sidebarClose = document.getElementById('sidebar-close');
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
-        
-        function openSidebar() {
-            if (!sidebar || !sidebarOverlay) return;
-            sidebar.classList.remove('-translate-x-full');
-            sidebarOverlay.classList.remove('hidden');
-            document.body.classList.add('overflow-hidden');
-        }
-        
-        function closeSidebar() {
-            if (!sidebar || !sidebarOverlay) return;
-            sidebar.classList.add('-translate-x-full');
-            sidebarOverlay.classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
-        }
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Sidebar Logic ---
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebarClose = document.getElementById('sidebar-close');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
 
-        if (sidebarToggle) sidebarToggle.addEventListener('click', openSidebar);
-        if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
-        if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
-        
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+            function openSidebar() {
+                if (!sidebar || !sidebarOverlay) return;
+                sidebar.classList.remove('-translate-x-full');
+                sidebarOverlay.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            }
 
-        // --- Active Page Highlight Logic ---
-        try {
-            const currentPath = window.location.pathname;
-            document.querySelectorAll('#sidebar a').forEach(link => {
-                const linkHref = link.getAttribute('href');
-                // Create a full URL to resolve relative paths correctly
-                const linkUrl = new URL(linkHref, window.location.href);
-                if (linkUrl.pathname === currentPath) {
-                    link.classList.add('bg-blue-600', 'text-white');
-                    link.classList.remove('hover:bg-gray-700');
-                }
-            });
-        } catch (e) {
-            console.error("Error highlighting current page:", e);
-        }
-    });
+            function closeSidebar() {
+                if (!sidebar || !sidebarOverlay) return;
+                sidebar.classList.add('-translate-x-full');
+                sidebarOverlay.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+
+            if (sidebarToggle) sidebarToggle.addEventListener('click', openSidebar);
+            if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+            if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+
+            // --- Active Page Highlight Logic ---
+            try {
+                const currentPath = window.location.pathname;
+                document.querySelectorAll('#sidebar a').forEach(link => {
+                    const linkHref = link.getAttribute('href');
+                    // Create a full URL to resolve relative paths correctly
+                    const linkUrl = new URL(linkHref, window.location.href);
+                    if (linkUrl.pathname === currentPath) {
+                        link.classList.add('bg-blue-600', 'text-white');
+                        link.classList.remove('hover:bg-gray-700');
+                    }
+                });
+            } catch (e) {
+                console.error("Error highlighting current page:", e);
+            }
+        });
     </script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,28 +15,78 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet">
     <style>
-        body { font-family: 'Inter', 'Noto Sans JP', sans-serif; }
-        .country { stroke: #6b7280; stroke-width: 0.5px; transition: fill 0.3s ease; cursor: pointer; }
-        .country:hover { stroke-width: 1.5px; filter: brightness(0.9); }
-        .selected-map { stroke: #0ea5e9; stroke-width: 2px !important; filter: brightness(1.1); }
-        .country-label { pointer-events: none; font-weight: 500; fill: #1e293b; text-shadow: 0 0 2px white, 0 0 2px white, 0 0 2px white; }
-        #info-table th { cursor: pointer; user-select: none; }
-        #info-table th:hover { background-color: #f1f5f9; }
-        .highlight-row { background-color: #e0f2fe !important; }
-        .zoom-btn { transition: background-color 0.2s; }
-        .zoom-btn:hover { background-color: #d1d5db; }
-        .main-content { margin-left: 0; transition: margin-left 0.3s ease; }
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+
+        .country {
+            stroke: #6b7280;
+            stroke-width: 0.5px;
+            transition: fill 0.3s ease;
+            cursor: pointer;
+        }
+
+        .country:hover {
+            stroke-width: 1.5px;
+            filter: brightness(0.9);
+        }
+
+        .selected-map {
+            stroke: #0ea5e9;
+            stroke-width: 2px !important;
+            filter: brightness(1.1);
+        }
+
+        .country-label {
+            pointer-events: none;
+            font-weight: 500;
+            fill: #1e293b;
+            text-shadow: 0 0 2px white, 0 0 2px white, 0 0 2px white;
+        }
+
+        #info-table th {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        #info-table th:hover {
+            background-color: #f1f5f9;
+        }
+
+        .highlight-row {
+            background-color: #e0f2fe !important;
+        }
+
+        .zoom-btn {
+            transition: background-color 0.2s;
+        }
+
+        .zoom-btn:hover {
+            background-color: #d1d5db;
+        }
+
+        .main-content {
+            margin-left: 0;
+            transition: margin-left 0.3s ease;
+        }
+
         @media (min-width: 1024px) {
-            .main-content { margin-left: 0; }
+            .main-content {
+                margin-left: 0;
+            }
         }
     </style>
 </head>
+
 <body class="bg-slate-100 text-slate-800">
 
     <!-- Sidebar Component -->
-    <nav id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-gray-900 text-white transform -translate-x-full transition-transform duration-300 ease-in-out z-50">
+    <nav id="sidebar"
+        class="fixed left-0 top-0 h-full w-64 bg-gray-900 text-white transform -translate-x-full transition-transform duration-300 ease-in-out z-50">
         <div class="flex items-center justify-between p-4 border-b border-gray-700">
             <h2 class="text-lg font-semibold">メニュー</h2>
             <button id="sidebar-close" class="text-gray-400 hover:text-white">
@@ -44,62 +95,92 @@
         </div>
         <div class="p-4">
             <ul class="space-y-2">
-                <li><a href="../index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-home mr-3"></i>トップページ</a></li>
-                <li><a href="./worldmap.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-globe mr-3"></i>世界地図</a></li>
-                <li><a href="../bear/index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-chart-line mr-3"></i>熊被害状況</a></li>
-                <li><a href="../numberplate/numberplate.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-car-side mr-3"></i>ナンバープレート</a></li>
-                <li><a href="../size/size.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-ruler-combined mr-3"></i>サイズ検討</a></li>
-                <li><a href="../endless-chinchirorin/dist/index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-dice mr-3"></i>無限チンチロ</a></li>
-                <li><a href="../ai-timeline/index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-brain mr-3"></i>AI年表</a></li>
+                <li><a href="../index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-home mr-3"></i>トップページ</a></li>
+                <li><a href="./worldmap.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-globe mr-3"></i>世界地図</a></li>
+                <li><a href="../bear/index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-chart-line mr-3"></i>熊被害状況</a></li>
+                <li><a href="../numberplate/numberplate.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-car-side mr-3"></i>ナンバープレート</a></li>
+                <li><a href="../size/size.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-ruler-combined mr-3"></i>サイズ検討</a></li>
+                <li><a href="../endless-chinchirorin/dist/index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-dice mr-3"></i>無限チンチロ</a></li>
+                <li><a href="../ai-timeline/index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-brain mr-3"></i>AI年表</a></li>
+                <li><a href="../myhealth/index.html"
+                        class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i
+                            class="fas fa-heartbeat mr-3"></i>健康診断</a></li>
             </ul>
         </div>
-        <div class="absolute bottom-4 left-4 right-4"><div class="text-xs text-gray-400 text-center"><p>&copy; 2024 プロダクトサイト</p></div></div>
+        <div class="absolute bottom-4 left-4 right-4">
+            <div class="text-xs text-gray-400 text-center">
+                <p>&copy; 2024 プロダクトサイト</p>
+            </div>
+        </div>
     </nav>
     <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
-    <button id="sidebar-toggle" class="fixed top-4 left-4 z-30 bg-gray-900 text-white p-3 rounded-lg shadow-lg hover:bg-gray-800 transition-colors"><i class="fas fa-bars"></i></button>
-    
+    <button id="sidebar-toggle"
+        class="fixed top-4 left-4 z-30 bg-gray-900 text-white p-3 rounded-lg shadow-lg hover:bg-gray-800 transition-colors"><i
+            class="fas fa-bars"></i></button>
+
     <!-- Main Content -->
     <div class="main-content">
-    <div class="p-2 md:p-4">
-        <header class="text-center mb-6">
-            <h1 class="text-3xl md:text-4xl font-bold text-slate-900">インタラクティブ世界地図</h1>
-            <p class="text-slate-600 mt-2">国をクリックして2024年の人口データを確認しよう。</p>
-        </header>
+        <div class="p-2 md:p-4">
+            <header class="text-center mb-6">
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900">インタラクティブ世界地図</h1>
+                <p class="text-slate-600 mt-2">国をクリックして2024年の人口データを確認しよう。</p>
+            </header>
 
-        <div class="flex flex-col lg:flex-row gap-6">
-            <!-- Left: Map and Controls -->
-            <main class="w-full lg:w-2/3 bg-white p-4 rounded-xl shadow-lg flex flex-col">
-                <div id="map-container" class="relative w-full flex-grow aspect-[16/9] overflow-hidden rounded-md border border-slate-200 bg-slate-200">
-                    <svg id="world-map"></svg>
-                    <div id="zoom-controls" class="absolute top-2 right-2 flex flex-col gap-1">
-                        <button id="zoom-in" class="zoom-btn w-8 h-8 bg-white/80 rounded-md flex items-center justify-center shadow"><i class="fas fa-plus"></i></button>
-                        <button id="zoom-out" class="zoom-btn w-8 h-8 bg-white/80 rounded-md flex items-center justify-center shadow"><i class="fas fa-minus"></i></button>
-                         <button id="zoom-reset" class="zoom-btn w-8 h-8 bg-white/80 rounded-md flex items-center justify-center shadow"><i class="fas fa-compress"></i></button>
+            <div class="flex flex-col lg:flex-row gap-6">
+                <!-- Left: Map and Controls -->
+                <main class="w-full lg:w-2/3 bg-white p-4 rounded-xl shadow-lg flex flex-col">
+                    <div id="map-container"
+                        class="relative w-full flex-grow aspect-[16/9] overflow-hidden rounded-md border border-slate-200 bg-slate-200">
+                        <svg id="world-map"></svg>
+                        <div id="zoom-controls" class="absolute top-2 right-2 flex flex-col gap-1">
+                            <button id="zoom-in"
+                                class="zoom-btn w-8 h-8 bg-white/80 rounded-md flex items-center justify-center shadow"><i
+                                    class="fas fa-plus"></i></button>
+                            <button id="zoom-out"
+                                class="zoom-btn w-8 h-8 bg-white/80 rounded-md flex items-center justify-center shadow"><i
+                                    class="fas fa-minus"></i></button>
+                            <button id="zoom-reset"
+                                class="zoom-btn w-8 h-8 bg-white/80 rounded-md flex items-center justify-center shadow"><i
+                                    class="fas fa-compress"></i></button>
+                        </div>
                     </div>
-                </div>
-                 <div id="legend-container" class="pt-3 text-xs"></div>
-            </main>
+                    <div id="legend-container" class="pt-3 text-xs"></div>
+                </main>
 
-            <!-- Right: Info Table -->
-            <aside class="w-full lg:w-1/3 bg-white p-4 rounded-xl shadow-lg">
-                <div class="h-[75vh] overflow-y-auto">
-                    <table id="info-table" class="w-full text-sm text-left text-gray-500">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0">
-                            <tr>
-                                <th scope="col" class="p-3" data-sort="rank">No.</th>
-                                <th scope="col" class="p-1"></th> <!-- Flag column -->
-                                <th scope="col" class="p-3" data-sort="name">国名</th>
-                                <th scope="col" class="p-3" data-sort="value">人口</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Rows will be inserted here -->
-                        </tbody>
-                    </table>
-                </div>
-            </aside>
+                <!-- Right: Info Table -->
+                <aside class="w-full lg:w-1/3 bg-white p-4 rounded-xl shadow-lg">
+                    <div class="h-[75vh] overflow-y-auto">
+                        <table id="info-table" class="w-full text-sm text-left text-gray-500">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0">
+                                <tr>
+                                    <th scope="col" class="p-3" data-sort="rank">No.</th>
+                                    <th scope="col" class="p-1"></th> <!-- Flag column -->
+                                    <th scope="col" class="p-3" data-sort="name">国名</th>
+                                    <th scope="col" class="p-3" data-sort="value">人口</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Rows will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </aside>
+            </div>
         </div>
-    </div>
     </div> <!-- End main-content -->
 
     <!-- Footer -->
@@ -152,13 +233,13 @@
         async function initialize() {
             const world = await d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json");
             const allFeatures = topojson.feature(world, world.objects.countries).features;
-            
+
             const validCountryCodes = new Set(Object.keys(countryNameJp));
             allCountryFeatures = allFeatures.filter(d => validCountryCodes.has(d.id));
 
             setupZoom();
             handleResize();
-            
+
             g.selectAll("path.country")
                 .data(allCountryFeatures, d => d.id)
                 .enter().append("path")
@@ -166,7 +247,7 @@
                 .attr("d", path)
                 .attr("data-id", d => d.id)
                 .on("click", (event, d) => handleCountryClick(d));
-            
+
             g.append("g").attr("class", "labels");
 
             setupControls();
@@ -175,7 +256,7 @@
 
         // --- Setup Functions ---
         function setupControls() {
-            d3.selectAll('#info-table th[data-sort]').on('click', function() {
+            d3.selectAll('#info-table th[data-sort]').on('click', function () {
                 const newSortKey = d3.select(this).attr('data-sort');
                 if (sortState.key === newSortKey) {
                     sortState.order = sortState.order === 'asc' ? 'desc' : 'asc';
@@ -189,7 +270,7 @@
             d3.select('#zoom-out').on('click', () => zoom.scaleBy(svg.transition().duration(250), 1 / 1.2));
             d3.select('#zoom-reset').on('click', () => resetZoom());
         }
-        
+
         function setupZoom() {
             zoom = d3.zoom().scaleExtent([1, 12]).on("zoom", (event) => {
                 g.attr("transform", event.transform);
@@ -205,11 +286,11 @@
             updateLegend();
             updateTable();
         }
-        
+
         function updateMapLabelsStyle(currentScale) {
             g.selectAll(".country-label")
                 .style("font-size", `${10 / currentScale}px`)
-                .attr("display", function(d) {
+                .attr("display", function (d) {
                     const bounds = path.bounds(d);
                     const width = bounds[1][0] - bounds[0][0];
                     const height = bounds[1][1] - bounds[0][1];
@@ -251,7 +332,7 @@
                 const name = countryNameJp[d.id] || "N/A";
                 const displayValue = data?.population ?? 'N/A';
                 let sortValue = (displayValue === 'N/A') ? null : displayValue;
-                
+
                 return { id: d.id, name, value: displayValue, sortValue, feature: d };
             });
 
@@ -268,7 +349,7 @@
                     valA = a.sortValue;
                     valB = b.sortValue;
                 }
-                
+
                 const aHasValue = valA !== null;
                 const bHasValue = valB !== null;
 
@@ -282,22 +363,22 @@
                 } else {
                     comparison = String(valA).localeCompare(String(valB), 'ja');
                 }
-                
+
                 return comparison * order;
             });
-            
+
             if (sortState.key === 'rank') {
-                 tableData.sort((a,b) => (a.name.localeCompare(b.name, 'ja')) * (sortState.order === 'asc' ? 1 : -1));
+                tableData.sort((a, b) => (a.name.localeCompare(b.name, 'ja')) * (sortState.order === 'asc' ? 1 : -1));
             }
-            
+
             tableData.forEach((d, i) => d.rank = i + 1);
 
-            d3.selectAll('#info-table th[data-sort]').each(function() {
+            d3.selectAll('#info-table th[data-sort]').each(function () {
                 const th = d3.select(this);
                 const sortKey = th.attr('data-sort');
                 let icon = '';
                 if (sortState.key === sortKey) icon = sortState.order === 'asc' ? ' <i class="fas fa-sort-up"></i>' : ' <i class="fas fa-sort-down"></i>';
-                
+
                 let text = '';
                 if (sortKey === 'name') text = '国名';
                 else if (sortKey === 'value') text = '人口';
@@ -307,7 +388,7 @@
 
             const rows = tableBody.selectAll('tr').data(tableData, d => d.id);
             rows.exit().remove();
-            
+
             const rowsEnter = rows.enter().append('tr')
                 .attr('class', 'bg-white border-b hover:bg-gray-50 cursor-pointer')
                 .attr('data-id', d => d.id)
@@ -317,7 +398,7 @@
             rowsEnter.append('td').attr('class', 'p-1 text-center text-xl'); // Centered emoji
             rowsEnter.append('td').attr('class', 'px-3 py-2 font-medium text-gray-900 whitespace-nowrap');
             rowsEnter.append('td').attr('class', 'px-3 py-2');
-            
+
             const allRows = rowsEnter.merge(rows);
             allRows.order();
 
@@ -342,7 +423,7 @@
             items.append('span').attr('class', 'ml-2').text((d, i) => {
                 const domain = colorScale.domain();
                 if (i === 0) return `< ${d3.format(".2s")(domain[0])}`;
-                return `${d3.format(".2s")(domain[i-1])} - ${d3.format(".2s")(domain[i] || '')}`;
+                return `${d3.format(".2s")(domain[i - 1])} - ${d3.format(".2s")(domain[i] || '')}`;
             });
         }
 
@@ -366,15 +447,15 @@
             const translate = [width / 2 - scale * x, height / 2 - scale * y];
             svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale));
         }
-        
+
         function resetZoom() {
-             svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+            svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
         }
 
         function handleResize() {
             const { width, height } = mapContainer.node().getBoundingClientRect();
             svg.attr('width', width).attr('height', height);
-            projection.fitSize([width, height], {type: "FeatureCollection", features: allCountryFeatures});
+            projection.fitSize([width, height], { type: "FeatureCollection", features: allCountryFeatures });
             g.selectAll('path').attr('d', path);
             updateMapLabels();
         }
@@ -385,49 +466,50 @@
 
     </script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // --- Sidebar Logic ---
-        const sidebar = document.getElementById('sidebar');
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        const sidebarClose = document.getElementById('sidebar-close');
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
-        
-        function openSidebar() {
-            if (!sidebar || !sidebarOverlay) return;
-            sidebar.classList.remove('-translate-x-full');
-            sidebarOverlay.classList.remove('hidden');
-            document.body.classList.add('overflow-hidden');
-        }
-        
-        function closeSidebar() {
-            if (!sidebar || !sidebarOverlay) return;
-            sidebar.classList.add('-translate-x-full');
-            sidebarOverlay.classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
-        }
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Sidebar Logic ---
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebarClose = document.getElementById('sidebar-close');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
 
-        if (sidebarToggle) sidebarToggle.addEventListener('click', openSidebar);
-        if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
-        if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
-        
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+            function openSidebar() {
+                if (!sidebar || !sidebarOverlay) return;
+                sidebar.classList.remove('-translate-x-full');
+                sidebarOverlay.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            }
 
-        // --- Active Page Highlight Logic ---
-        try {
-            const currentPath = window.location.pathname;
-            document.querySelectorAll('#sidebar a').forEach(link => {
-                const linkHref = link.getAttribute('href');
-                const linkUrl = new URL(linkHref, window.location.href);
-                if (linkUrl.pathname === currentPath) {
-                    link.classList.add('bg-blue-600', 'text-white');
-                    link.classList.remove('hover:bg-gray-700');
-                }
-            });
-        } catch (e) {
-            console.error("Error highlighting current page:", e);
-        }
-    });
+            function closeSidebar() {
+                if (!sidebar || !sidebarOverlay) return;
+                sidebar.classList.add('-translate-x-full');
+                sidebarOverlay.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+
+            if (sidebarToggle) sidebarToggle.addEventListener('click', openSidebar);
+            if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+            if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+
+            // --- Active Page Highlight Logic ---
+            try {
+                const currentPath = window.location.pathname;
+                document.querySelectorAll('#sidebar a').forEach(link => {
+                    const linkHref = link.getAttribute('href');
+                    const linkUrl = new URL(linkHref, window.location.href);
+                    if (linkUrl.pathname === currentPath) {
+                        link.classList.add('bg-blue-600', 'text-white');
+                        link.classList.remove('hover:bg-gray-700');
+                    }
+                });
+            } catch (e) {
+                console.error("Error highlighting current page:", e);
+            }
+        });
     </script>
 
 </body>
+
 </html>
