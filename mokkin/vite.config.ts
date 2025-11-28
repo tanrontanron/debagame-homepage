@@ -9,16 +9,8 @@ export default defineConfig(({ mode }) => {
       port: 3000,
       host: '0.0.0.0',
     },
+    base: '/mokkin/dist/',
     plugins: [react()],
-    base: '/endless-chinchirorin/dist/',
-    build: {
-      emptyOutDir: true,
-      terserOptions: {
-        format: {
-          ascii_only: true
-        }
-      }
-    },
     define: {
       'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)

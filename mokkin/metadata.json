@@ -1,0 +1,5 @@
+{
+  "name": "ChromaXylo",
+  "description": "リアルな音色の木琴シミュレーター。AIによる自動作曲機能とメトロノーム付き。",
+  "requestFramePermissions": []
+}
