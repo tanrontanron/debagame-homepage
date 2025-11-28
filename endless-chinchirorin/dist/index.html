@@ -1,95 +1,79 @@
 <!doctype html>
 <html lang="ja">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>無限チンチロ</title>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Inter', 'Noto Sans JP', sans-serif; }
-        .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
-        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .feature-card { background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%); }
-        .main-content { margin-left: 0; transition: margin-left 0.3s ease; }
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+        }
+
+        .main-content {
+            margin-left: 0;
+            transition: margin-left 0.3s ease;
+        }
+
         @media (min-width: 1024px) {
-            .main-content { margin-left: 0; }
+            .main-content {
+                margin-left: 0;
+            }
         }
     </style>
-    <script type="module" crossorigin src="./assets/index-Dm6_VPjn.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-E87jrKgL.css">
-  </head>
-  <body>
-    <!-- Sidebar Component -->
-    <nav id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-gray-900 text-white transform -translate-x-full transition-transform duration-300 ease-in-out z-50">
-        <div class="flex items-center justify-between p-4 border-b border-gray-700">
-            <h2 class="text-lg font-semibold">メニュー</h2>
-            <button id="sidebar-close" class="text-gray-400 hover:text-white">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-        </div>
-        <div class="p-4">
-            <ul class="space-y-2">
-                <li><a href="../../index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-home mr-3"></i>トップページ</a></li>
-                <li><a href="../../Interactive_worldmap/worldmap.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-globe mr-3"></i>世界地図</a></li>
-                <li><a href="../../bear/index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-chart-line mr-3"></i>熊被害状況</a></li>
-                <li><a href="../../numberplate/numberplate.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-car-side mr-3"></i>ナンバープレート</a></li>
-                <li><a href="../../size/size.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-ruler-combined mr-3"></i>サイズ検討</a></li>
-                <li><a href="./index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-dice mr-3"></i>無限チンチロ</a></li>
-                <li><a href="../ai-timeline/index.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors"><i class="fas fa-brain mr-3"></i>AI年表</a></li>
-            </ul>
-        </div>
-        <div class="absolute bottom-4 left-4 right-4"><div class="text-xs text-gray-400 text-center"><p>&copy; 2025 でばがめのほめぱげ</p></div></div>
-    </nav>
-    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
-    <button id="sidebar-toggle" class="fixed top-4 left-4 z-30 bg-gray-900 text-white p-3 rounded-lg shadow-lg hover:bg-gray-800 transition-colors"><i class="fas fa-bars"></i></button>
+  <script type="module" crossorigin src="./assets/index-ulJs1i_w.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-B86eY5WK.css">
+</head>
+
+<body>
+    <!-- Shared Sidebar -->
+    <script src="../../js/sidebar.js"></script>
+    <button id="sidebar-toggle"
+        class="fixed top-4 left-4 z-30 bg-gray-900 text-white p-3 rounded-lg shadow-lg hover:bg-gray-800 transition-colors"><i
+            class="fas fa-bars"></i></button>
 
     <div id="root"></div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // --- Sidebar Logic ---
-        const sidebar = document.getElementById('sidebar');
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        const sidebarClose = document.getElementById('sidebar-close');
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
-        
-        function openSidebar() {
-            if (!sidebar || !sidebarOverlay) return;
-            sidebar.classList.remove('-translate-x-full');
-            sidebarOverlay.classList.remove('hidden');
-            document.body.classList.add('overflow-hidden');
-        }
-        
-        function closeSidebar() {
-            if (!sidebar || !sidebarOverlay) return;
-            sidebar.classList.add('-translate-x-full');
-            sidebarOverlay.classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
-        }
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Sidebar Logic ---
+            // Handled by sidebar.js
 
-        if (sidebarToggle) sidebarToggle.addEventListener('click', openSidebar);
-        if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
-        if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
-        
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
-
-        // --- Active Page Highlight Logic ---
-        try {
-            const currentPath = window.location.pathname;
-            document.querySelectorAll('#sidebar a').forEach(link => {
-                const linkHref = link.getAttribute('href');
-                const linkUrl = new URL(linkHref, window.location.href);
-                if (linkUrl.pathname === currentPath) {
-                    link.classList.add('bg-blue-600', 'text-white');
-                    link.classList.remove('hover:bg-gray-700');
-                }
-            });
-        } catch (e) {
-            console.error("Error highlighting current page:", e);
-        }
-    });
+            // --- Active Page Highlight Logic ---
+            try {
+                const currentPath = window.location.pathname;
+                document.querySelectorAll('#sidebar a').forEach(link => {
+                    const linkHref = link.getAttribute('href');
+                    const linkUrl = new URL(linkHref, window.location.href);
+                    if (linkUrl.pathname === currentPath) {
+                        link.classList.add('bg-blue-600', 'text-white');
+                        link.classList.remove('hover:bg-gray-700');
+                    }
+                });
+            } catch (e) {
+                console.error("Error highlighting current page:", e);
+            }
+        });
     </script>
-  </body>
+</body>
+
 </html>
