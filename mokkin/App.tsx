@@ -8,6 +8,8 @@ import { NoteDefinition, NoteType } from './types';
 function App() {
   const [activeNoteId, setActiveNoteId] = useState<string | null>(null);
   const [isMouseDown, setIsMouseDown] = useState(false);
+  const [showNoteLabels, setShowNoteLabels] = useState(true);
+  const [showKeyLabels, setShowKeyLabels] = useState(true);
 
   // 自然な鍵盤配置のためのグルーピング
   const noteGroups = React.useMemo(() => {
@@ -70,7 +72,12 @@ function App() {
         </h1>
 
         <div className="flex items-center justify-end z-10">
-          <ControlPanel />
+          <ControlPanel
+            showNoteLabels={showNoteLabels}
+            onToggleNoteLabels={setShowNoteLabels}
+            showKeyLabels={showKeyLabels}
+            onToggleKeyLabels={setShowKeyLabels}
+          />
         </div>
       </div>
 
@@ -115,6 +122,8 @@ function App() {
                           onPlay={playNote}
                           index={group.index + 1}
                           totalNotes={NOTES.length}
+                          showNoteLabels={showNoteLabels}
+                          showKeyLabels={showKeyLabels}
                         />
                       </div>
                     )}
@@ -129,6 +138,8 @@ function App() {
                       onPlay={playNote}
                       index={group.index}
                       totalNotes={NOTES.length}
+                      showNoteLabels={showNoteLabels}
+                      showKeyLabels={showKeyLabels}
                     />
                   </div>
 

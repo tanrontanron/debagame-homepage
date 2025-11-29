@@ -7,9 +7,19 @@ interface XylophoneKeyProps {
   onPlay: (note: NoteDefinition) => void;
   index: number;
   totalNotes: number;
+  showNoteLabels: boolean;
+  showKeyLabels: boolean;
 }
 
-export const XylophoneKey: React.FC<XylophoneKeyProps> = ({ note, isActive, onPlay, index, totalNotes }) => {
+export const XylophoneKey: React.FC<XylophoneKeyProps> = ({
+  note,
+  isActive,
+  onPlay,
+  index,
+  totalNotes,
+  showNoteLabels,
+  showKeyLabels
+}) => {
   const [isPressed, setIsPressed] = useState(false);
 
   useEffect(() => {
@@ -35,30 +45,30 @@ export const XylophoneKey: React.FC<XylophoneKeyProps> = ({ note, isActive, onPl
   // --- サイズ計算ロジック ---
   const positionRatio = index / totalNotes; // 0.0 (Left) -> 1.0 (Right)
 
-  // 長さ (Height): 
+  // 長さ (Height):
   const baseLengthRem = note.type === NoteType.NATURAL ? 24 : 16;
   const minLengthRem = note.type === NoteType.NATURAL ? 12 : 8;
   const heightRem = baseLengthRem - ((baseLengthRem - minLengthRem) * positionRatio);
 
-  // 幅 (Width): 
+  // 幅 (Width):
   const baseWidthPx = 56; // 約3.5rem
   const minWidthPx = 36;  // 約2.25rem
   const widthPx = baseWidthPx - ((baseWidthPx - minWidthPx) * positionRatio);
 
   // --- 色計算ロジック (ローズウッドのグラデーション) ---
   const h = 0 + (20 * positionRatio);
-  const s = 45 + (15 * positionRatio); 
-  const l = 20 + (25 * positionRatio); 
-  
+  const s = 45 + (15 * positionRatio);
+  const l = 20 + (25 * positionRatio);
+
   const woodColorStyle = {
     backgroundColor: `hsl(${h}, ${s}%, ${l}%)`,
     height: `${heightRem}rem`,
     width: `${widthPx}px`,
     backgroundImage: `
-      repeating-linear-gradient(90deg, 
-        rgba(255,255,255,0.02) 0px, 
-        rgba(0,0,0,0.05) 1px, 
-        transparent 2px, 
+      repeating-linear-gradient(90deg,
+        rgba(255,255,255,0.02) 0px,
+        rgba(0,0,0,0.05) 1px,
+        transparent 2px,
         transparent 4px
       ),
       linear-gradient(to bottom, rgba(255,255,255,0.05) 0%, transparent 40%, rgba(0,0,0,0.2) 100%)
@@ -66,8 +76,8 @@ export const XylophoneKey: React.FC<XylophoneKeyProps> = ({ note, isActive, onPl
   };
 
   // シャープ（上段）の浮き上がり表現
-  const shadowClass = isPressed 
-    ? "shadow-[0_0_20px_rgba(255,215,0,0.8)] brightness-125 translate-y-[2px]" 
+  const shadowClass = isPressed
+    ? "shadow-[0_0_20px_rgba(255,215,0,0.8)] brightness-125 translate-y-[2px]"
     : "shadow-[2px_2px_4px_rgba(0,0,0,0.6)] hover:brightness-110";
 
   // フォントサイズの決定（お子様向けに特大）
@@ -77,7 +87,7 @@ export const XylophoneKey: React.FC<XylophoneKeyProps> = ({ note, isActive, onPl
   return (
     <div
       className={`
-        relative flex flex-col items-center justify-center select-none 
+        relative flex flex-col items-center justify-center select-none
         rounded-sm transition-transform duration-75 ease-out
         ${shadowClass} z-10 cursor-pointer
         border-r border-b border-black/30
@@ -92,20 +102,24 @@ export const XylophoneKey: React.FC<XylophoneKeyProps> = ({ note, isActive, onPl
       <div className="absolute top-[15%] w-2.5 h-2.5 rounded-full bg-[#1a1a1a] shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)] flex items-center justify-center pointer-events-none">
         <div className="w-1.5 h-1.5 rounded-full bg-[#555] opacity-80"></div>
       </div>
-      
+
       {/* 音名ラベル (中央配置) */}
       {/* 留め具と重ならないよう、鍵盤の幾何学的中心に配置 */}
       <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20">
-        
-        {/* キーボードショートカット（控えめに表示） */}
-        <div className="text-[10px] text-white/30 font-mono absolute top-2">{note.keyBind}</div>
-        
+
+        {/* キーボードショートカット（大きく表示、下端に配置） */}
+        {showKeyLabels && (
+          <div className="text-xl sm:text-2xl text-white/60 font-mono font-bold absolute bottom-4 drop-shadow-md">
+            {note.keyBind.toUpperCase()}
+          </div>
+        )}
+
         {/* メインのひらがなラベル */}
-        {note.label && (
-          <div 
+        {showNoteLabels && note.label && (
+          <div
             className={`
-              font-black text-white 
-              drop-shadow-[0_2px_3px_rgba(0,0,0,0.9)] 
+              font-black text-white
+              drop-shadow-[0_2px_3px_rgba(0,0,0,0.9)]
               leading-none tracking-tighter
               ${labelSizeClass}
             `}
@@ -119,9 +133,9 @@ export const XylophoneKey: React.FC<XylophoneKeyProps> = ({ note, isActive, onPl
       {/* 紐を通す穴 (Node Points) - 下部 */}
       {/* 鍵盤の端（下）から少し内側に配置 */}
       <div className="absolute bottom-[15%] w-2.5 h-2.5 rounded-full bg-[#1a1a1a] shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)] flex items-center justify-center pointer-events-none">
-         <div className="w-1.5 h-1.5 rounded-full bg-[#555] opacity-80"></div>
+        <div className="w-1.5 h-1.5 rounded-full bg-[#555] opacity-80"></div>
       </div>
-      
+
       {/* 発光エフェクト (打鍵時) */}
       {isPressed && (
         <div className="absolute inset-0 bg-yellow-200/30 mix-blend-overlay rounded-sm pointer-events-none"></div>

@@ -5,9 +5,18 @@ interface ControlPanelProps {
   onStop?: () => void;
   isAutoPlaying?: boolean;
   onSongGenerated?: (song: any) => void;
+  showNoteLabels: boolean;
+  onToggleNoteLabels: (show: boolean) => void;
+  showKeyLabels: boolean;
+  onToggleKeyLabels: (show: boolean) => void;
 }
 
-export const ControlPanel: React.FC<ControlPanelProps> = () => {
+export const ControlPanel: React.FC<ControlPanelProps> = ({
+  showNoteLabels,
+  onToggleNoteLabels,
+  showKeyLabels,
+  onToggleKeyLabels
+}) => {
   const [bpm, setBpm] = useState(100);
   const [isMetronomePlaying, setIsMetronomePlaying] = useState(false);
   const metronomeInterval = useRef<number | null>(null);
@@ -37,17 +46,38 @@ export const ControlPanel: React.FC<ControlPanelProps> = () => {
 
   return (
     <div className="flex flex-row items-center justify-end gap-2 sm:gap-4 text-sm text-stone-700 w-full overflow-x-auto no-scrollbar">
-      
+
+      {/* 音名ラベル表示切り替え */}
+      <label className="flex flex-shrink-0 items-center gap-2 bg-stone-100/80 rounded-full px-3 py-1.5 border border-stone-300 shadow-sm cursor-pointer hover:bg-stone-200/80 transition-colors">
+        <input
+          type="checkbox"
+          checked={showNoteLabels}
+          onChange={(e) => onToggleNoteLabels(e.target.checked)}
+          className="w-4 h-4 text-amber-600 rounded focus:ring-amber-500 border-gray-300 accent-amber-600"
+        />
+        <span className="text-xs font-bold text-stone-600 whitespace-nowrap">音名</span>
+      </label>
+
+      {/* キー表示切り替え */}
+      <label className="flex flex-shrink-0 items-center gap-2 bg-stone-100/80 rounded-full px-3 py-1.5 border border-stone-300 shadow-sm cursor-pointer hover:bg-stone-200/80 transition-colors">
+        <input
+          type="checkbox"
+          checked={showKeyLabels}
+          onChange={(e) => onToggleKeyLabels(e.target.checked)}
+          className="w-4 h-4 text-amber-600 rounded focus:ring-amber-500 border-gray-300 accent-amber-600"
+        />
+        <span className="text-xs font-bold text-stone-600 whitespace-nowrap">キー</span>
+      </label>
+
       {/* メトロノーム */}
       <div className="flex flex-shrink-0 items-center gap-2 bg-stone-100/80 rounded-full px-3 py-1.5 border border-stone-300 shadow-sm">
         <span className="text-base select-none">⏱️</span>
         <button
           onClick={() => setIsMetronomePlaying(!isMetronomePlaying)}
-          className={`px-2 py-0.5 rounded-full text-xs font-bold transition-all min-w-[2.5rem] border ${
-            isMetronomePlaying 
-              ? 'bg-rose-500 text-white border-rose-600' 
+          className={`px-2 py-0.5 rounded-full text-xs font-bold transition-all min-w-[2.5rem] border ${isMetronomePlaying
+              ? 'bg-rose-500 text-white border-rose-600'
               : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-50'
-          }`}
+            }`}
         >
           {isMetronomePlaying ? 'ON' : 'OFF'}
         </button>
