@@ -8,6 +8,9 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3000,
       host: '0.0.0.0',
+      fs: {
+        allow: ['..'],
+      },
     },
     base: './',
     plugins: [react()],
@@ -18,6 +21,7 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
+        '/js': path.resolve(__dirname, '../js'),
       }
     }
   };
