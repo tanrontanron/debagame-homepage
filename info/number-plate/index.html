@@ -4,6 +4,12 @@
 			gtag('js', new Date());
 
 			gtag('config', 'G-ZDEY5ZH97E');
+
+			document.addEventListener('astro:page-load', () => {
+				gtag('config', 'G-ZDEY5ZH97E', {
+					page_path: window.location.pathname,
+				});
+			});
 		</script><link rel="stylesheet" href="/debagame-homepage/_astro/bear.8KpX8viA.css">
 <style>@import"https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700;900&family=Oswald:wght@700&display=swap";.font-noto-sans-jp{font-family:Noto Sans JP,sans-serif}.font-oswald{font-family:Oswald,sans-serif}
 :root{--accent: 136, 58, 234;--accent-light: 224, 204, 250;--accent-dark: 49, 10, 101;--accent-gradient: linear-gradient( 45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60% )}
