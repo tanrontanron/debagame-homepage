@@ -9,13 +9,1286 @@
 					page_path: window.location.pathname,
 				});
 			});
-		</script><link rel="stylesheet" href="/debagame-homepage/_astro/index.CurJP2l1.css">
-<style>body{margin:0;overflow:hidden;background-color:#1a202c;color:#e2e8f0;font-family:sans-serif;-webkit-user-select:none;-moz-user-select:none;user-select:none}#app[data-astro-cid-esrn4vye]{display:flex;flex-direction:column;height:100vh;width:100vw}.screen[data-astro-cid-esrn4vye]{display:none;flex:1;flex-direction:column;width:100%;height:100%}.screen[data-astro-cid-esrn4vye].active{display:flex}#game-canvas[data-astro-cid-esrn4vye]{display:block;width:100%;height:100%;background-color:#1e293b}#canvas-container[data-astro-cid-esrn4vye]{flex:1;position:relative;overflow:hidden}.overlay-ui[data-astro-cid-esrn4vye]{position:absolute;pointer-events:none}.pointer-events-auto[data-astro-cid-esrn4vye]{pointer-events:auto}.shelf-cell[data-astro-cid-esrn4vye]{width:60px;height:60px;border:1px dashed #4a5568;display:flex;align-items:center;justify-content:center;background-color:#2d3748;font-size:24px;cursor:pointer}.shelf-cell[data-astro-cid-esrn4vye].drag-over{background-color:#4a5568}.item[data-astro-cid-esrn4vye]{cursor:grab;text-shadow:0 2px 4px rgba(0,0,0,.5)}.item[data-astro-cid-esrn4vye]:active{cursor:grabbing}.key-guide[data-astro-cid-esrn4vye]{display:inline-block;padding:2px 8px;background:#4a5568;border-radius:4px;font-weight:700;margin:0 4px;border-bottom:2px solid #2d3748}.vbtn[data-astro-cid-esrn4vye]{transition:all .1s}.vbtn[data-astro-cid-esrn4vye].key-active{transform:scale(.9)}.vbtn-move[data-astro-cid-esrn4vye].key-active{background-color:#4b5563!important;border-color:#9ca3af!important}.vbtn-atk-z[data-astro-cid-esrn4vye].key-active{background-color:#3b82f6!important;border-color:#93c5fd!important}.vbtn-atk-x[data-astro-cid-esrn4vye].key-active{background-color:#ef4444!important;border-color:#fca5a5!important}
+		</script><link rel="stylesheet" href="/debagame-homepage/_astro/index.CgxUX2fy.css">
+<style>#app{display:flex;flex:1;flex-direction:column;width:100%;overflow:hidden;background-color:#1a202c;color:#e2e8f0;font-family:sans-serif;-webkit-user-select:none;-moz-user-select:none;user-select:none}.screen{display:none;flex:1;flex-direction:column;width:100%;height:100%}.screen.active{display:flex}#game-canvas{display:block;width:100%;height:100%;background-color:#1e293b}#canvas-container{flex:1;position:relative;overflow:hidden}.overlay-ui{position:absolute;pointer-events:none}.pointer-events-auto{pointer-events:auto}.shelf-cell{width:60px;height:60px;border:1px dashed #4a5568;display:flex;align-items:center;justify-content:center;background-color:#2d3748;font-size:24px;cursor:pointer}.shelf-cell.drag-over{background-color:#4a5568}.item{cursor:grab;text-shadow:0 2px 4px rgba(0,0,0,.5)}.item:active{cursor:grabbing}.key-guide{display:inline-block;padding:2px 8px;background:#4a5568;border-radius:4px;font-weight:700;margin:0 4px;border-bottom:2px solid #2d3748}.vbtn{transition:all .1s}.vbtn.key-active{transform:scale(.9)}.vbtn-move.key-active{background-color:#4b5563!important;border-color:#9ca3af!important}.vbtn-atk-z.key-active{background-color:#3b82f6!important;border-color:#93c5fd!important}.vbtn-atk-x.key-active{background-color:#ef4444!important;border-color:#fca5a5!important}
 .astro-route-announcer{position:absolute;left:0;top:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;width:1px;height:1px}:root{--accent: 136, 58, 234;--accent-light: 224, 204, 250;--accent-dark: 49, 10, 101;--accent-gradient: linear-gradient( 45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60% )}
 </style></head> <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col font-sans"> <aside id="sidebar" class="fixed top-0 left-0 z-50 w-64 h-screen transition-transform -translate-x-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 shadow-lg" aria-label="Sidebar"> <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 flex flex-col"> <div class="flex justify-between items-center mb-6 px-2"> <h2 class="text-xl font-bold text-gray-800 dark:text-white">Menu</h2> <button id="close-sidebar" class="text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2"> <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path> </svg> <span class="sr-only">Close menu</span> </button> </div> <ul class="space-y-2 font-medium"> <li> <a href="/debagame-homepage" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group transition-colors"> <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21"> <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"></path> <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"></path> </svg> <span class="ms-3">トップページ</span> </a> </li> <li class="pt-4 mt-4 space-y-2 border-t border-gray-200 dark:border-gray-700"> <div class="px-2 text-xs font-semibold text-gray-500 uppercase dark:text-gray-400">Contents</div> </li> <li> <a href="/debagame-homepage/ai-timeline" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group transition-colors"> <span class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center"> ℹ️ </span> <span class="ms-3">AI年表</span> </a> </li><li> <a href="/debagame-homepage/game/chinchiro" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group transition-colors"> <span class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center"> 🎮 </span> <span class="ms-3">無限チンチロ</span> </a> </li><li> <a href="/debagame-homepage/game/xylophone" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group transition-colors"> <span class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center"> 🎮 </span> <span class="ms-3">木琴シミュレータ</span> </a> </li><li> <a href="/debagame-homepage/tool/size-check" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group transition-colors"> <span class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center"> 🛠️ </span> <span class="ms-3">服のサイズ検討</span> </a> </li><li> <a href="/debagame-homepage/dashboard/health" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group transition-colors"> <span class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center"> 📊 </span> <span class="ms-3">健康診断ダッシュボード</span> </a> </li><li> <a href="/debagame-homepage/dashboard/bear" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group transition-colors"> <span class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center"> 📊 </span> <span class="ms-3">熊被害状況ダッシュボード</span> </a> </li><li> <a href="/debagame-homepage/info/world-map" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group transition-colors"> <span class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center"> ℹ️ </span> <span class="ms-3">インタラクティブ世界地図</span> </a> </li><li> <a href="/debagame-homepage/info/number-plate" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group transition-colors"> <span class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center"> ℹ️ </span> <span class="ms-3">ナンバープレート情報</span> </a> </li><li> <a href="/debagame-homepage/game/pc-break" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group transition-colors"> <span class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center"> 🎮 </span> <span class="ms-3">PC破壊ゲーム 2025</span> </a> </li><li> <a href="/debagame-homepage/game/lane-defense" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group transition-colors"> <span class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center"> 🎮 </span> <span class="ms-3">ミニマム無双 - レーン防衛Ver</span> </a> </li><li> <a href="/debagame-homepage/info/anime-timeline" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group transition-colors"> <span class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center"> ℹ️ </span> <span class="ms-3">日本アニメ映画史年表</span> </a> </li><li> <a href="/debagame-homepage/tool/length-visualizer" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group transition-colors"> <span class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center"> 🛠️ </span> <span class="ms-3">長さ単位ビジュアライザー</span> </a> </li> </ul> <div class="mt-auto pt-4 border-t border-gray-200 dark:border-gray-700"> <a href="/debagame-homepage/admin/" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group transition-colors"> <span class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center">
 ℹ️
 </span> <span class="ms-3">芸人年表（管理）</span> </a> </div> </div> </aside> <div id="sidebar-overlay" class="fixed inset-0 bg-gray-900/50 z-40 hidden backdrop-blur-sm transition-opacity" aria-hidden="true"></div> <script type="module">function s(){const t=document.getElementById("sidebar"),d=document.getElementById("sidebar-overlay"),o=document.getElementById("close-sidebar"),a=document.querySelectorAll(".sidebar-toggle");function i(){t?.classList.remove("-translate-x-full"),d?.classList.remove("hidden"),document.body.classList.add("overflow-hidden")}function e(){t?.classList.add("-translate-x-full"),d?.classList.add("hidden"),document.body.classList.remove("overflow-hidden")}o?.addEventListener("click",e),d?.addEventListener("click",e),a.forEach(n=>{n.addEventListener("click",c=>{c.stopPropagation(),t?.classList.contains("-translate-x-full")?i():e()})}),document.addEventListener("keydown",n=>{n.key==="Escape"&&e()})}s();document.addEventListener("astro:page-load",s);</script>  <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50"> <div class="container mx-auto px-4 h-16 flex items-center justify-between"> <div class="flex items-center gap-2"> <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white font-bold">
 &lt;/&gt;
-</div> <h1 class="font-bold text-xl tracking-tight"> <a href="/debagame-homepage" class="hover:text-blue-600 transition-colors">でばがめのほめぱげ</a> </h1> </div> <button class="sidebar-toggle p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="メニューを開く"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg> </button> </div> </header> <main class="flex flex-col w-full h-[calc(100vh-64px)] overflow-hidden" data-astro-cid-esrn4vye>  <div id="general-toast" class="fixed top-4 left-1/2 transform -translate-x-1/2 text-white px-6 py-3 rounded-full shadow-2xl z-[100] transition-all duration-500 opacity-0 -translate-y-20 pointer-events-none flex items-center gap-4 border-2" data-astro-cid-esrn4vye> <div id="toast-icon" class="text-3xl" data-astro-cid-esrn4vye>ℹ️</div> <div data-astro-cid-esrn4vye> <div id="toast-title" class="text-xs font-bold text-gray-200" data-astro-cid-esrn4vye>通知</div> <div id="toast-desc" class="font-bold text-lg leading-tight" data-astro-cid-esrn4vye>メッセージ</div> </div> </div> <div id="app" data-astro-cid-esrn4vye> <!-- ================= 拠点画面 ================= --> <div id="screen-base" class="screen active flex-col h-full bg-gray-900 w-full relative" data-astro-cid-esrn4vye> <!-- Header --> <div class="p-4 bg-gray-800 border-b border-gray-700 flex justify-between items-center flex-shrink-0" data-astro-cid-esrn4vye> <div data-astro-cid-esrn4vye> <h1 class="text-2xl font-bold text-blue-400" data-astro-cid-esrn4vye>拠点</h1> <div class="text-yellow-400 font-bold text-sm mt-1" data-astro-cid-esrn4vye>所持金: <span id="base-money" data-astro-cid-esrn4vye>0</span> G</div> </div> <button onclick="document.getElementById('help-modal').classList.remove('hidden')" class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-2 rounded shadow text-xs border border-gray-500 font-bold" data-astro-cid-esrn4vye>？ ヘルプ</button> <h2 class="text-lg font-bold mb-4 border-b border-gray-600 pb-2" data-astro-cid-esrn4vye>パイロット・ステータス ＆ 訓練場</h2> <div class="grid grid-cols-1 md:grid-cols-3 gap-6" data-astro-cid-esrn4vye> <!-- 左側: ステータス概要と強化ボタン --> <div class="md:col-span-1 space-y-4 bg-gray-900 p-4 rounded border border-gray-700 flex flex-col justify-between" data-astro-cid-esrn4vye> <div data-astro-cid-esrn4vye> <div class="text-center pb-4 border-b border-gray-700 mb-4" data-astro-cid-esrn4vye> <div class="text-xs text-gray-400" data-astro-cid-esrn4vye>識別コード</div> <div class="text-2xl font-black text-blue-400 mt-1" data-astro-cid-esrn4vye>DEFENDER-01</div> </div> <div class="space-y-3" data-astro-cid-esrn4vye> <div class="bg-gray-800 p-2 rounded border border-gray-700 relative overflow-hidden" data-astro-cid-esrn4vye> <div class="flex justify-between text-sm mb-1 relative z-10" data-astro-cid-esrn4vye> <span class="text-gray-400" data-astro-cid-esrn4vye>攻撃力 (ATK)</span> <span id="stat-atk" class="font-bold text-white" data-astro-cid-esrn4vye>10</span> </div> <button id="btn-upgrade-atk" class="w-full bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 rounded font-bold transition text-xs flex justify-between items-center mt-1 relative z-10 cursor-pointer" data-astro-cid-esrn4vye> <span data-astro-cid-esrn4vye>強化</span><span data-astro-cid-esrn4vye><span id="cost-atk" data-astro-cid-esrn4vye>50</span> G</span> </button> </div> <div class="bg-gray-800 p-2 rounded border border-gray-700 relative overflow-hidden" data-astro-cid-esrn4vye> <div class="flex justify-between text-sm mb-1 relative z-10" data-astro-cid-esrn4vye> <span class="text-gray-400" data-astro-cid-esrn4vye>拠点耐久力 (HP)</span> <span id="stat-hp" class="font-bold text-white" data-astro-cid-esrn4vye>100</span> </div> <button id="btn-upgrade-hp" class="w-full bg-green-600 hover:bg-green-500 text-white px-2 py-1 rounded font-bold transition text-xs flex justify-between items-center mt-1 relative z-10 cursor-pointer" data-astro-cid-esrn4vye> <span data-astro-cid-esrn4vye>強化</span><span data-astro-cid-esrn4vye><span id="cost-hp" data-astro-cid-esrn4vye>50</span> G</span> </button> </div> </div> </div> <div class="pt-3 border-t border-gray-700 mt-4" data-astro-cid-esrn4vye> <div class="flex justify-between text-xs mb-1" data-astro-cid-esrn4vye> <span class="text-gray-500" data-astro-cid-esrn4vye>最高到達WAVE</span> <span id="stat-max-wave" class="text-yellow-500 font-bold" data-astro-cid-esrn4vye>1</span> </div> <div class="flex justify-between text-xs" data-astro-cid-esrn4vye> <span class="text-gray-500" data-astro-cid-esrn4vye>累計撃破数</span> <span id="stat-kills" class="text-gray-300 font-bold" data-astro-cid-esrn4vye>0</span> </div> </div> </div> <!-- 右側: 練習キャンバス --> <div class="md:col-span-2 relative w-full h-64 md:h-auto min-h-[250px] bg-gray-900 rounded border border-gray-700 overflow-hidden" data-astro-cid-esrn4vye> <canvas id="practice-canvas" class="block w-full h-full" data-astro-cid-esrn4vye></canvas> <!-- 練習用 コンボガイド --> <div class="absolute bottom-16 left-0 w-full flex justify-center pointer-events-none z-0" data-astro-cid-esrn4vye> <div id="prac-guide-container" class="bg-gray-900/80 border border-gray-600 rounded-lg p-2 shadow-lg backdrop-blur-sm transform transition-all duration-100" data-astro-cid-esrn4vye></div> </div> <div class="absolute top-2 left-0 w-full flex flex-col items-center pointer-events-none" data-astro-cid-esrn4vye> <div id="prac-hud-skill" class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 drop-shadow-lg tracking-widest transition-all duration-300 opacity-0 mt-1 italic" data-astro-cid-esrn4vye></div> </div> <div class="absolute bottom-2 right-2 flex gap-2 z-10 pointer-events-auto" data-astro-cid-esrn4vye> <button onpointerdown="event.preventDefault(); triggerAction('z', true)" class="w-12 h-12 bg-blue-600/80 hover:bg-blue-500 rounded-full text-white font-bold text-sm select-none shadow border border-blue-400 flex items-center justify-center cursor-pointer" data-astro-cid-esrn4vye>弱</button> <button onpointerdown="event.preventDefault(); triggerAction('x', true)" class="w-12 h-12 bg-red-600/80 hover:bg-red-500 rounded-full text-white font-bold text-sm select-none shadow border border-red-400 flex items-center justify-center cursor-pointer" data-astro-cid-esrn4vye>強</button> </div> <div class="absolute bottom-2 left-2 text-xs text-gray-500 pointer-events-none bg-gray-900/60 px-2 py-1 rounded" data-astro-cid-esrn4vye>
+</div> <h1 class="font-bold text-xl tracking-tight"> <a href="/debagame-homepage" class="hover:text-blue-600 transition-colors">でばがめのほめぱげ</a> </h1> </div> <button class="sidebar-toggle p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="メニューを開く"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg> </button> </div> </header> <main class="flex flex-col w-full h-[calc(100vh-64px)] overflow-hidden">  <div id="general-toast" class="fixed top-4 left-1/2 transform -translate-x-1/2 text-white px-6 py-3 rounded-full shadow-2xl z-[100] transition-all duration-500 opacity-0 -translate-y-20 pointer-events-none flex items-center gap-4 border-2"> <div id="toast-icon" class="text-3xl">ℹ️</div> <div> <div id="toast-title" class="text-xs font-bold text-gray-200">通知</div> <div id="toast-desc" class="font-bold text-lg leading-tight">メッセージ</div> </div> </div> <div id="app"> <!-- ================= 拠点画面 ================= --> <div id="screen-base" class="screen active flex-col h-full bg-gray-900 w-full relative"> <!-- Header --> <div class="p-4 bg-gray-800 border-b border-gray-700 flex justify-between items-center flex-shrink-0"> <div> <h1 class="text-2xl font-bold text-blue-400">拠点</h1> <div class="text-yellow-400 font-bold text-sm mt-1">所持金: <span id="base-money">0</span> G</div> </div> <button onclick="document.getElementById('help-modal').classList.remove('hidden')" class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-2 rounded shadow text-xs border border-gray-500 font-bold">？ ヘルプ</button> </div> <!-- Scrollable Content Area --> <div class="flex-1 overflow-y-auto p-4 md:p-6 pb-32"> <!-- Tabs --> <div class="flex space-x-2 border-b border-gray-700 mb-6 bg-gray-900 sticky top-0 z-20 pt-2"> <button class="tab-btn px-4 py-2 font-bold text-blue-400 border-b-2 border-blue-500" data-target="tab-status">ステータス</button> <button class="tab-btn px-4 py-2 font-bold text-gray-500 hover:text-gray-300" data-target="tab-upgrade">強化・スキル</button> <button class="tab-btn px-4 py-2 font-bold text-gray-500 hover:text-gray-300" data-target="tab-item">アーカイブ・遺物</button> </div> <!-- Status Tab --> <div id="tab-status" class="tab-content space-y-6"> <div class="bg-gray-800 p-5 rounded-lg shadow-lg border border-gray-700"> <h2 class="text-lg font-bold mb-4 border-b border-gray-600 pb-2">パイロット・ステータス ＆ 訓練場</h2> <div class="grid grid-cols-1 md:grid-cols-3 gap-6"> <!-- 左側: ステータス概要と強化ボタン --> <div class="md:col-span-1 space-y-4 bg-gray-900 p-4 rounded border border-gray-700 flex flex-col justify-between"> <div> <div class="text-center pb-4 border-b border-gray-700 mb-4"> <div class="text-xs text-gray-400">識別コード</div> <div class="text-2xl font-black text-blue-400 mt-1">DEFENDER-01</div> </div> <div class="space-y-3"> <div class="bg-gray-800 p-2 rounded border border-gray-700 relative overflow-hidden"> <div class="flex justify-between text-sm mb-1 relative z-10"> <span class="text-gray-400">攻撃力 (ATK)</span> <span id="stat-atk" class="font-bold text-white">10</span> </div> <button id="btn-upgrade-atk" class="w-full bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 rounded font-bold transition text-xs flex justify-between items-center mt-1 relative z-10 cursor-pointer"> <span>強化</span><span><span id="cost-atk">50</span> G</span> </button> </div> <div class="bg-gray-800 p-2 rounded border border-gray-700 relative overflow-hidden"> <div class="flex justify-between text-sm mb-1 relative z-10"> <span class="text-gray-400">拠点耐久力 (HP)</span> <span id="stat-hp" class="font-bold text-white">100</span> </div> <button id="btn-upgrade-hp" class="w-full bg-green-600 hover:bg-green-500 text-white px-2 py-1 rounded font-bold transition text-xs flex justify-between items-center mt-1 relative z-10 cursor-pointer"> <span>強化</span><span><span id="cost-hp">50</span> G</span> </button> </div> </div> </div> <div class="pt-3 border-t border-gray-700 mt-4"> <div class="flex justify-between text-xs mb-1"> <span class="text-gray-500">最高到達WAVE</span> <span id="stat-max-wave" class="text-yellow-500 font-bold">1</span> </div> <div class="flex justify-between text-xs"> <span class="text-gray-500">累計撃破数</span> <span id="stat-kills" class="text-gray-300 font-bold">0</span> </div> </div> </div> <!-- 右側: 練習キャンバス --> <div class="md:col-span-2 relative w-full h-64 md:h-auto min-h-[250px] bg-gray-900 rounded border border-gray-700 overflow-hidden"> <canvas id="practice-canvas" class="block w-full h-full"></canvas> <!-- 練習用 コンボガイド --> <div class="absolute bottom-16 left-0 w-full flex justify-center pointer-events-none z-0"> <div id="prac-guide-container" class="bg-gray-900/80 border border-gray-600 rounded-lg p-2 shadow-lg backdrop-blur-sm transform transition-all duration-100"></div> </div> <div class="absolute top-2 left-0 w-full flex flex-col items-center pointer-events-none"> <div id="prac-hud-skill" class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 drop-shadow-lg tracking-widest transition-all duration-300 opacity-0 mt-1 italic"></div> </div> <div class="absolute bottom-2 right-2 flex gap-2 z-10 pointer-events-auto"> <button onpointerdown="event.preventDefault(); triggerAction('z', true)" class="w-12 h-12 bg-blue-600/80 hover:bg-blue-500 rounded-full text-white font-bold text-sm select-none shadow border border-blue-400 flex items-center justify-center cursor-pointer">弱</button> <button onpointerdown="event.preventDefault(); triggerAction('x', true)" class="w-12 h-12 bg-red-600/80 hover:bg-red-500 rounded-full text-white font-bold text-sm select-none shadow border border-red-400 flex items-center justify-center cursor-pointer">強</button> </div> <div class="absolute bottom-2 left-2 text-xs text-gray-500 pointer-events-none bg-gray-900/60 px-2 py-1 rounded">
 W/S: 移動 | A/D: 向き
-</div> </div> </div> </div> </div> <!-- Upgrade Tab --> <div id="tab-upgrade" class="tab-content hidden space-y-6" data-astro-cid-esrn4vye> <!-- Skill Tree --> <div class="bg-gray-800 p-5 rounded-lg shadow-lg" data-astro-cid-esrn4vye> <h2 class="text-lg font-bold mb-4 border-b border-gray-600 pb-2" data-astro-cid-esrn4vye>スキル解放ツリー</h2> <div class="space-y-3" data-astro-cid-esrn4vye> <div class="p-3 bg-gray-900 rounded border border-gray-700" data-astro-cid-esrn4vye> <div class="flex justify-between items-center" data-astro-cid-esrn4vye> <div data-astro-cid-esrn4vye><div class="font-bold text-gray-200" data-astro-cid-esrn4vye>弱攻撃 2段目</div><div class="text-xs text-gray-400 mt-1" data-astro-cid-esrn4vye>弱→弱 (射程・威力微増)</div></div> <button id="btn-ul-weak2" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2" data-astro-cid-esrn4vye>習得 (<span id="cost-ul-weak2" data-astro-cid-esrn4vye>50</span> G)</button> <span id="txt-ul-weak2" class="hidden text-green-400 font-bold px-2 py-1 text-sm flex-shrink-0 ml-2" data-astro-cid-esrn4vye>習得済</span> </div> </div> <div id="skill-weak3" class="hidden p-3 bg-gray-900 rounded border border-gray-700 relative" data-astro-cid-esrn4vye> <div class="absolute -top-3 left-6 text-gray-500" data-astro-cid-esrn4vye>↓</div> <div class="flex justify-between items-center" data-astro-cid-esrn4vye> <div data-astro-cid-esrn4vye><div class="font-bold text-gray-200" data-astro-cid-esrn4vye>弱攻撃 3段目</div><div class="text-xs text-gray-400 mt-1" data-astro-cid-esrn4vye>弱→弱→弱 (威力増 / 使用後隙あり)</div></div> <button id="btn-ul-weak3" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2" data-astro-cid-esrn4vye>習得 (<span id="cost-ul-weak3" data-astro-cid-esrn4vye>100</span> G)</button> <span id="txt-ul-weak3" class="hidden text-green-400 font-bold px-2 py-1 text-sm flex-shrink-0 ml-2" data-astro-cid-esrn4vye>習得済</span> </div> </div> <div id="skill-strong" class="hidden p-3 bg-gray-900 rounded border border-gray-700 relative" data-astro-cid-esrn4vye> <div class="absolute -top-3 left-6 text-gray-500" data-astro-cid-esrn4vye>↓</div> <div class="flex justify-between items-center mb-2" data-astro-cid-esrn4vye> <div data-astro-cid-esrn4vye><div class="font-bold text-red-300" data-astro-cid-esrn4vye>ワイド・スウィープ</div><div class="text-xs text-gray-400 mt-1" data-astro-cid-esrn4vye>強 (前方3レーン薙ぎ払い / 隙大)</div></div> <button id="btn-ul-strong" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2" data-astro-cid-esrn4vye>解放 (<span id="cost-ul-strong" data-astro-cid-esrn4vye>150</span> G)</button> </div> <div id="strong-upgrades" class="hidden flex space-x-2 mt-2 pt-2 border-t border-gray-700" data-astro-cid-esrn4vye> <button id="btn-up-s-dmg" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 text-xs rounded transition font-bold" data-astro-cid-esrn4vye>威力 Lv.<span id="lvl-s-dmg" data-astro-cid-esrn4vye>1</span> (<span id="cost-s-dmg" data-astro-cid-esrn4vye>100</span>G)</button> <button id="btn-up-s-rng" class="flex-1 bg-teal-600 hover:bg-teal-500 text-white px-2 py-1 text-xs rounded transition font-bold" data-astro-cid-esrn4vye>射程 Lv.<span id="lvl-s-rng" data-astro-cid-esrn4vye>1</span> (<span id="cost-s-rng" data-astro-cid-esrn4vye>100</span>G)</button> </div> </div> <div id="skill-combo1" class="hidden p-3 bg-gray-900 rounded border border-gray-700 relative" data-astro-cid-esrn4vye> <div class="absolute -top-3 left-6 text-gray-500" data-astro-cid-esrn4vye>↓</div> <div class="flex justify-between items-center mb-2" data-astro-cid-esrn4vye> <div data-astro-cid-esrn4vye><div class="font-bold text-cyan-300" data-astro-cid-esrn4vye>ピアシング・レイ</div><div class="text-xs text-gray-400 mt-1" data-astro-cid-esrn4vye>弱→強 (貫通レーン)</div></div> <button id="btn-ul-combo1" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2" data-astro-cid-esrn4vye>解放 (<span id="cost-ul-combo1" data-astro-cid-esrn4vye>250</span> G)</button> </div> <div id="combo1-upgrades" class="hidden flex space-x-2 mt-2 pt-2 border-t border-gray-700" data-astro-cid-esrn4vye> <button id="btn-up-c1-dmg" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 text-xs rounded transition font-bold" data-astro-cid-esrn4vye>威力 Lv.<span id="lvl-c1-dmg" data-astro-cid-esrn4vye>1</span> (<span id="cost-c1-dmg" data-astro-cid-esrn4vye>150</span>G)</button> <button id="btn-up-c1-rng" class="flex-1 bg-teal-600 hover:bg-teal-500 text-white px-2 py-1 text-xs rounded transition font-bold" data-astro-cid-esrn4vye>射程 Lv.<span id="lvl-c1-rng" data-astro-cid-esrn4vye>1</span> (<span id="cost-c1-rng" data-astro-cid-esrn4vye>150</span>G)</button> </div> </div> <div id="skill-combo2" class="hidden p-3 bg-gray-900 rounded border border-gray-700 relative" data-astro-cid-esrn4vye> <div class="absolute -top-3 left-6 text-gray-500" data-astro-cid-esrn4vye>↓</div> <div class="flex justify-between items-center mb-2" data-astro-cid-esrn4vye> <div data-astro-cid-esrn4vye><div class="font-bold text-yellow-300" data-astro-cid-esrn4vye>グランド・クロス</div><div class="text-xs text-gray-400 mt-1" data-astro-cid-esrn4vye>弱→弱→強 (前方を広く薙ぎ払う)</div></div> <button id="btn-ul-combo2" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2" data-astro-cid-esrn4vye>解放 (<span id="cost-ul-combo2" data-astro-cid-esrn4vye>400</span> G)</button> </div> <div id="combo2-upgrades" class="hidden flex space-x-2 mt-2 pt-2 border-t border-gray-700" data-astro-cid-esrn4vye> <button id="btn-up-c2-dmg" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 text-xs rounded transition font-bold" data-astro-cid-esrn4vye>威力 Lv.<span id="lvl-c2-dmg" data-astro-cid-esrn4vye>1</span> (<span id="cost-c2-dmg" data-astro-cid-esrn4vye>200</span>G)</button> <button id="btn-up-c2-rng" class="flex-1 bg-teal-600 hover:bg-teal-500 text-white px-2 py-1 text-xs rounded transition font-bold" data-astro-cid-esrn4vye>射程 Lv.<span id="lvl-c2-rng" data-astro-cid-esrn4vye>1</span> (<span id="cost-c2-rng" data-astro-cid-esrn4vye>200</span>G)</button> </div> </div> <div class="p-3 bg-gray-900 rounded border border-gray-700 mt-6" data-astro-cid-esrn4vye> <div class="flex justify-between items-center" data-astro-cid-esrn4vye> <div data-astro-cid-esrn4vye><div class="font-bold text-green-300" data-astro-cid-esrn4vye>迎撃サポートAI</div><div class="text-xs text-gray-400 mt-1" data-astro-cid-esrn4vye>同レーンの敵を自動照準</div></div> <button id="btn-unlock-autoaim" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2" data-astro-cid-esrn4vye>解放 (<span id="cost-ul-autoaim" data-astro-cid-esrn4vye>300</span> G)</button> <span id="txt-unlocked-autoaim" class="hidden text-green-400 font-bold px-2 py-1 text-sm flex-shrink-0 ml-2" data-astro-cid-esrn4vye>実装済</span> </div> </div> </div> </div> <!-- Achievements --> <div class="bg-gray-800 p-5 rounded-lg shadow-lg" data-astro-cid-esrn4vye> <h2 class="text-lg font-bold mb-2 border-b border-gray-600 pb-2" data-astro-cid-esrn4vye>🏆 訓練・ボーナス</h2> <p class="mb-4 text-xs text-gray-400" data-astro-cid-esrn4vye>条件を達成すると自動的に基礎ステータスに永続ボーナスが付与されます。</p> <div id="achievement-list" class="space-y-3" data-astro-cid-esrn4vye></div> </div> </div> <!-- Item Tab --> <div id="tab-item" class="tab-content hidden space-y-6" data-astro-cid-esrn4vye> <!-- Story Log (Journal & Archive) --> <div class="grid grid-cols-1 md:grid-cols-2 gap-6" data-astro-cid-esrn4vye> <div class="bg-gray-800 p-5 rounded-lg shadow-lg" data-astro-cid-esrn4vye> <h2 class="text-lg font-bold mb-4 border-b border-gray-600 pb-2 text-blue-300" data-astro-cid-esrn4vye>📖 主人公の手記</h2> <p class="mb-4 text-xs text-gray-400" data-astro-cid-esrn4vye>機体強化・スキル解放を重ねるごとに、少しずつ記憶が読み出されていく。</p> <div id="journal-list" class="space-y-3 h-64 overflow-y-auto pr-2" data-astro-cid-esrn4vye></div> </div> <div class="bg-gray-800 p-5 rounded-lg shadow-lg" data-astro-cid-esrn4vye> <h2 class="text-lg font-bold mb-4 border-b border-gray-600 pb-2 text-yellow-300" data-astro-cid-esrn4vye>🌍 文明の復元（アーカイブ）</h2> <p class="mb-4 text-xs text-gray-400" data-astro-cid-esrn4vye>特定のWAVEを突破して遺物を回収し、世界の謎を解き明かす。<br data-astro-cid-esrn4vye><span class="text-green-400 font-bold" data-astro-cid-esrn4vye>※回収数に応じたステータスボーナスあり</span></p> <div id="archive-list" class="space-y-3 h-64 overflow-y-auto pr-2" data-astro-cid-esrn4vye></div> </div> </div> <!-- Collection --> <div class="bg-gray-800 p-5 rounded-lg shadow-lg flex flex-col" data-astro-cid-esrn4vye> <h2 class="text-lg font-bold mb-4 border-b border-gray-600 pb-2" data-astro-cid-esrn4vye>収集物（ジャンク・遺物）</h2> <div id="item-description" class="h-20 bg-gray-900 p-3 rounded border border-gray-700 text-sm text-gray-300 overflow-y-auto mb-4 flex-shrink-0" data-astro-cid-esrn4vye>アイテムをホバーで詳細表示</div> <!-- 棚の数を増やしてスクロール可能に --> <div class="overflow-y-auto max-h-64" data-astro-cid-esrn4vye> <div id="shelf-container" class="grid grid-cols-5 sm:grid-cols-8 gap-2 content-start bg-gray-900 p-3 rounded border border-gray-700 min-h-[160px]" data-astro-cid-esrn4vye></div> </div> </div> </div> </div> <!-- Footer (Sortie Panel - Always Visible) --> <div class="p-4 bg-gray-800 border-t border-gray-700 flex-shrink-0 pb-6 z-10 shadow-[0_-4px_10px_rgba(0,0,0,0.5)]" data-astro-cid-esrn4vye> <div class="flex items-center justify-center space-x-4 mb-3 bg-gray-900 p-2 rounded max-w-sm mx-auto border border-gray-700" data-astro-cid-esrn4vye> <button id="btn-wave-prev" class="w-10 h-10 bg-gray-700 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed rounded text-white font-bold flex items-center justify-center text-xl" data-astro-cid-esrn4vye>-</button> <div class="text-lg font-bold text-white w-24 text-center" data-astro-cid-esrn4vye>WAVE <span id="disp-selected-wave" class="text-yellow-400 text-xl" data-astro-cid-esrn4vye>1</span></div> <button id="btn-wave-next" class="w-10 h-10 bg-gray-700 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed rounded text-white font-bold flex items-center justify-center text-xl" data-astro-cid-esrn4vye>+</button> </div> <button id="btn-sortie" class="bg-red-600 hover:bg-red-500 text-white text-xl px-4 py-4 rounded-lg font-bold shadow-lg transition w-full max-w-sm mx-auto block tracking-widest" data-astro-cid-esrn4vye>防衛に出撃</button> </div> <!-- ================= 戦闘画面 ================= --> <div id="screen-battle" class="screen" data-astro-cid-esrn4vye> <div id="canvas-container" data-astro-cid-esrn4vye> <canvas id="game-canvas" data-astro-cid-esrn4vye></canvas> <div class="overlay-ui top-0 left-0 w-full p-4 flex justify-between items-start pointer-events-none" data-astro-cid-esrn4vye> <div data-astro-cid-esrn4vye> <div class="text-xl font-bold text-white mb-1 shadow-black drop-shadow-md" data-astro-cid-esrn4vye>Wave: <span id="hud-wave" data-astro-cid-esrn4vye>1</span></div> <div class="w-48 h-6 bg-gray-800 border-2 border-gray-600 rounded overflow-hidden" data-astro-cid-esrn4vye> <div id="hud-hp-bar" class="h-full bg-green-500 w-full transition-all duration-200" data-astro-cid-esrn4vye></div> </div> <div class="text-sm font-bold shadow-black drop-shadow-md mt-1 text-white" data-astro-cid-esrn4vye>拠点HP: <span id="hud-hp-val" data-astro-cid-esrn4vye>100</span> / <span id="hud-max-hp-val" data-astro-cid-esrn4vye>100</span></div> </div> <!-- ★資金表示 --> <div class="text-right flex flex-col items-end pointer-events-none" data-astro-cid-esrn4vye> <div class="text-xs font-bold text-gray-300 drop-shadow-md mb-1" data-astro-cid-esrn4vye>確定済: <span id="hud-base-money" data-astro-cid-esrn4vye>0</span> G</div> <div class="text-2xl font-bold text-yellow-400 drop-shadow-md border-b-2 border-yellow-600/50 pb-1 mb-1" data-astro-cid-esrn4vye>+ <span id="hud-session-money" data-astro-cid-esrn4vye>0</span> G</div> <div class="text-sm font-bold drop-shadow-md text-gray-200" data-astro-cid-esrn4vye>残敵: <span id="hud-enemies" data-astro-cid-esrn4vye>0</span></div> </div> </div> <!-- スキル発動名表示 (画面上部中央) --> <div class="overlay-ui top-20 left-0 w-full flex justify-center pointer-events-none z-10 flex-col items-center" data-astro-cid-esrn4vye> <div id="hud-skill-name" class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 drop-shadow-[0_4px_4px_rgba(0,0,0,1)] tracking-widest transition-all duration-300 opacity-0 transform scale-50 mt-4 italic" data-astro-cid-esrn4vye></div> </div> <!-- バトル用 動的コンボガイド --> <div class="overlay-ui bottom-24 md:bottom-16 left-0 w-full flex justify-center pointer-events-none z-0 transition-opacity duration-200" data-astro-cid-esrn4vye> <div id="battle-guide-container" class="bg-gray-900/80 border border-gray-600 rounded-lg p-2 shadow-lg backdrop-blur-sm transform transition-all duration-100" data-astro-cid-esrn4vye> <!-- JSで動的に生成 --> </div> </div> <!-- 仮想コントローラー (左: 移動・振り向き) --> <div class="overlay-ui bottom-6 left-4 flex flex-col items-center gap-1 pointer-events-auto z-10" data-astro-cid-esrn4vye> <button id="vbtn-up" onpointerdown="event.preventDefault(); tryMove(-1)" class="vbtn vbtn-move w-14 h-14 bg-gray-700/80 hover:bg-gray-600 rounded-full text-white font-bold select-none active:bg-gray-500 touch-none shadow-lg border border-gray-500 text-2xl flex items-center justify-center" data-astro-cid-esrn4vye>↑</button> <div class="flex gap-10" data-astro-cid-esrn4vye> <button id="vbtn-left" onpointerdown="event.preventDefault(); tryTurn(-1)" class="vbtn vbtn-move w-14 h-14 bg-gray-700/80 hover:bg-gray-600 rounded-full text-white font-bold select-none active:bg-gray-500 touch-none shadow-lg border border-gray-500 text-2xl flex items-center justify-center" data-astro-cid-esrn4vye>←</button> <button id="vbtn-right" onpointerdown="event.preventDefault(); tryTurn(1)" class="vbtn vbtn-move w-14 h-14 bg-gray-700/80 hover:bg-gray-600 rounded-full text-white font-bold select-none active:bg-gray-500 touch-none shadow-lg border border-gray-500 text-2xl flex items-center justify-center" data-astro-cid-esrn4vye>→</button> </div> <button id="vbtn-down" onpointerdown="event.preventDefault(); tryMove(1)" class="vbtn vbtn-move w-14 h-14 bg-gray-700/80 hover:bg-gray-600 rounded-full text-white font-bold select-none active:bg-gray-500 touch-none shadow-lg border border-gray-500 text-2xl flex items-center justify-center" data-astro-cid-esrn4vye>↓</button> </div> <!-- 仮想コントローラー (右: 攻撃) --> <div class="overlay-ui bottom-6 right-4 flex items-end gap-3 pointer-events-auto z-10" data-astro-cid-esrn4vye> <button id="vbtn-z" onpointerdown="event.preventDefault(); triggerAction('z', false)" class="vbtn vbtn-atk-z w-16 h-16 bg-blue-600/80 hover:bg-blue-500 rounded-full text-white font-bold text-xl select-none active:bg-blue-400 touch-none shadow-lg border border-blue-400 mb-0 flex items-center justify-center" data-astro-cid-esrn4vye>弱</button> <button id="vbtn-x" onpointerdown="event.preventDefault(); triggerAction('x', false)" class="vbtn vbtn-atk-x w-16 h-16 bg-red-600/80 hover:bg-red-500 rounded-full text-white font-bold text-xl select-none active:bg-red-400 touch-none shadow-lg border border-red-400 mb-10 flex items-center justify-center" data-astro-cid-esrn4vye>強</button> </div> <div id="wave-modal" class="overlay-ui top-0 left-0 w-full h-full flex items-center justify-center bg-black/80 hidden pointer-events-auto z-50" data-astro-cid-esrn4vye> <div class="bg-gray-800 p-8 rounded-lg text-center shadow-2xl border border-gray-600 max-w-md w-11/12" data-astro-cid-esrn4vye> <h2 class="text-3xl font-bold text-white mb-2" data-astro-cid-esrn4vye>Wave クリア！</h2> <p class="text-gray-300 mb-6" data-astro-cid-esrn4vye>WAVE獲得資金: <span id="modal-money" class="text-yellow-400 font-bold text-2xl" data-astro-cid-esrn4vye>0</span> G</p> <div id="drop-notification" class="mb-6 hidden" data-astro-cid-esrn4vye> <div class="p-4 bg-gray-900 rounded border border-gray-700 relative overflow-hidden" data-astro-cid-esrn4vye> <!-- 背景エフェクト風 --> <div class="absolute inset-0 bg-gradient-to-t from-purple-900/30 to-transparent pointer-events-none" data-astro-cid-esrn4vye></div> <p id="drop-title" class="text-sm text-purple-400 font-bold mb-2 relative z-10" data-astro-cid-esrn4vye>ジャンク品を回収</p> <div id="drop-item-icon" class="text-5xl mb-2 relative z-10 drop-shadow-lg" data-astro-cid-esrn4vye>💎</div> <p id="drop-item-name" class="font-bold text-white relative z-10" data-astro-cid-esrn4vye>名称</p> </div> </div> <p class="text-sm text-gray-400 mb-6 border-t border-gray-600 pt-4" data-astro-cid-esrn4vye>進めば敵は強くなる。帰還すれば安全だ。<br data-astro-cid-esrn4vye><span class="text-yellow-300 font-bold" data-astro-cid-esrn4vye>※ここまでの報酬は確定されました</span></p> <div class="flex space-x-4 justify-center" data-astro-cid-esrn4vye> <button id="btn-return" class="bg-gray-600 hover:bg-gray-500 text-white px-6 py-3 rounded font-bold transition flex-1 border border-gray-500" data-astro-cid-esrn4vye>帰還する</button> <button id="btn-next-wave" class="bg-red-600 hover:bg-red-500 text-white px-6 py-3 rounded font-bold transition shadow-lg shadow-red-900/50 flex-1 border border-red-500" data-astro-cid-esrn4vye>次へ進む</button> </div> </div> </div> <div id="death-modal" class="overlay-ui top-0 left-0 w-full h-full flex items-center justify-center bg-red-900/90 hidden pointer-events-auto z-50 backdrop-blur-sm" data-astro-cid-esrn4vye> <div class="bg-gray-900 p-8 rounded-lg text-center border border-red-500 w-11/12 max-w-md shadow-2xl" data-astro-cid-esrn4vye> <h2 class="text-4xl font-black text-red-500 mb-4 tracking-widest drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]" data-astro-cid-esrn4vye>BASE DESTROYED</h2> <p class="text-xl text-gray-200 mb-2 font-bold" data-astro-cid-esrn4vye>拠点が破壊された...</p> <div class="bg-red-950/50 p-4 rounded my-6 border border-red-800" data-astro-cid-esrn4vye> <p class="text-red-300 font-bold" data-astro-cid-esrn4vye>直前のWAVE獲得資金 半減</p> <p class="text-gray-400 text-sm mt-1" data-astro-cid-esrn4vye>未確定のドロップ品はすべてロスト</p> </div> <button id="btn-death-return" class="bg-gray-700 hover:bg-gray-600 text-white px-8 py-4 rounded font-bold transition w-full text-lg shadow-lg" data-astro-cid-esrn4vye>拠点に戻る</button> </div> </div> </div> </div> <!-- ================= ヘルプモーダル ================= --> <div id="help-modal" class="overlay-ui top-0 left-0 w-full h-full flex items-center justify-center bg-black/80 hidden pointer-events-auto z-50" data-astro-cid-esrn4vye> <div class="bg-gray-800 p-8 rounded-lg shadow-2xl border border-gray-600 max-w-2xl w-11/12 max-h-[90vh] overflow-y-auto relative text-gray-300" data-astro-cid-esrn4vye> <button onclick="document.getElementById('help-modal').classList.add('hidden')" class="absolute top-4 right-4 bg-gray-600 hover:bg-gray-500 text-white w-8 h-8 rounded-full font-bold" data-astro-cid-esrn4vye>×</button> <h2 class="text-2xl font-bold text-white mb-6 border-b border-gray-600 pb-2" data-astro-cid-esrn4vye>ゲーム仕様・ヘルプ</h2> <div class="space-y-6" data-astro-cid-esrn4vye> <section data-astro-cid-esrn4vye> <h3 class="text-lg font-bold text-blue-400 mb-2" data-astro-cid-esrn4vye>◆ 基本操作とコンボ</h3> <ul class="list-disc ml-5 space-y-1 text-sm" data-astro-cid-esrn4vye> <li data-astro-cid-esrn4vye><strong data-astro-cid-esrn4vye>移動/向き:</strong> W/S/A/D または 左下の十字ボタン</li> <li data-astro-cid-esrn4vye><strong data-astro-cid-esrn4vye>攻撃:</strong> Z/J (弱)、X/K (強) または 右下のアクションボタン</li> <li data-astro-cid-esrn4vye>戦闘画面下部の中央に、現在入力中のルートから派生できる技のガイドが表示されます。</li> <li data-astro-cid-esrn4vye>攻撃の硬直中は、機体の足元にゲージが表示され、ゲージが消えるまで次の行動ができません。</li> </ul> </section> <section data-astro-cid-esrn4vye> <h3 class="text-lg font-bold text-yellow-400 mb-2" data-astro-cid-esrn4vye>◆ ウェーブ進行ロジック</h3> <ul class="list-disc ml-5 space-y-1 text-sm" data-astro-cid-esrn4vye> <li data-astro-cid-esrn4vye><strong data-astro-cid-esrn4vye>戦場の拡大:</strong> WAVEの進行に合わせて、敵が侵攻してくるレーン数が<strong class="text-white" data-astro-cid-esrn4vye>最大5レーン</strong>まで段階的に増えていきます。</li> <li data-astro-cid-esrn4vye><strong data-astro-cid-esrn4vye>敵の出現数:</strong> <code class="bg-gray-900 px-1 rounded" data-astro-cid-esrn4vye>15体 + (ウェーブ数 × 10)体</code> が出現します。</li> <li data-astro-cid-esrn4vye><strong data-astro-cid-esrn4vye>ウェーブ倍率:</strong> <code class="bg-gray-900 px-1 rounded" data-astro-cid-esrn4vye>1.0 + ((ウェーブ数 - 1) × 0.2)</code> の倍率がかかります。(Wave2で1.2倍、Wave5で1.8倍)</li> <li data-astro-cid-esrn4vye><strong data-astro-cid-esrn4vye>敵の強さ:</strong> ベースHP(通常20/タフ60)と攻撃力(通常10/タフ20)に、上記の<strong data-astro-cid-esrn4vye>ウェーブ倍率</strong>が乗算されます。また、移動速度も少しずつ上昇します。</li> <li data-astro-cid-esrn4vye><strong data-astro-cid-esrn4vye>獲得資金:</strong> ベース額(通常1.5G/タフ7.5G)に、<code class="bg-gray-900 px-1 rounded" data-astro-cid-esrn4vye>√(ウェーブ倍率)</code> をかけた額がドロップします。</li> <li data-astro-cid-esrn4vye><strong data-astro-cid-esrn4vye>スポーン間隔:</strong> 序盤は1体ずつゆっくり湧きますが、Waveが進むにつれて一度に2〜3体まとめて連続で押し寄せるようになります。</li> </ul> </section> <section data-astro-cid-esrn4vye> <h3 class="text-lg font-bold text-purple-400 mb-2" data-astro-cid-esrn4vye>◆ スキルと成長</h3> <ul class="list-disc ml-5 space-y-1 text-sm" data-astro-cid-esrn4vye> <li data-astro-cid-esrn4vye>スキルはツリー形式で解放されます。まずは弱攻撃のコンボを伸ばし、強攻撃をアンロックしてください。</li> <li data-astro-cid-esrn4vye>強攻撃が絡む技（ワイド・スウィープ、ピアシング・レイ、グランド・クロス）は、解放後に資金で威力と射程を強化できます。</li> <li data-astro-cid-esrn4vye><strong data-astro-cid-esrn4vye>迎撃サポートAI</strong>を解放すると、拠点に張り付かれた際のパニック時でも、同レーンで攻撃ボタンを押すだけで自動的に敵側を向いて迎撃してくれます。</li> <li data-astro-cid-esrn4vye>攻撃ヒット時、ごく稀に全てを薙ぎ払う「クリティカル」が発生します。</li> </ul> </section> <section data-astro-cid-esrn4vye> <h3 class="text-lg font-bold text-emerald-400 mb-2" data-astro-cid-esrn4vye>◆ シナリオと遺物収集</h3> <ul class="list-disc ml-5 space-y-1 text-sm" data-astro-cid-esrn4vye> <li data-astro-cid-esrn4vye><strong data-astro-cid-esrn4vye>手記:</strong> 拠点での強化やスキル解放を一定回数行うと、過去の記憶が紐解かれます。</li> <li data-astro-cid-esrn4vye><strong data-astro-cid-esrn4vye>アーカイブ遺物:</strong> Wave 5, 10, 15 などの節目をクリアすると、世界の謎が記された特殊な遺物を回収できます。</li> <li data-astro-cid-esrn4vye>アーカイブ遺物を拠点に持ち帰るごとに、<strong data-astro-cid-esrn4vye>恒久的なステータスボーナス（攻撃力・HP）</strong>が付与されます。</li> </ul> </section> <div class="mt-8 text-center border-t border-gray-600 pt-6" data-astro-cid-esrn4vye> <button onclick="document.getElementById('help-modal').classList.add('hidden')" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-full font-bold transition shadow-lg w-full max-w-xs" data-astro-cid-esrn4vye>閉じる</button> </div> </div> </div> </div> <script type="module" src="/debagame-homepage/_astro/lane-defense.astro_astro_type_script_index_0_lang.DG1OD0-5.js"></script> </main>  </body></html>
+</div> </div> </div> </div> </div> <!-- Upgrade Tab --> <div id="tab-upgrade" class="tab-content hidden space-y-6"> <!-- Skill Tree --> <div class="bg-gray-800 p-5 rounded-lg shadow-lg"> <h2 class="text-lg font-bold mb-4 border-b border-gray-600 pb-2">スキル解放ツリー</h2> <div class="space-y-3"> <div class="p-3 bg-gray-900 rounded border border-gray-700"> <div class="flex justify-between items-center"> <div><div class="font-bold text-gray-200">弱攻撃 2段目</div><div class="text-xs text-gray-400 mt-1">弱→弱 (射程・威力微増)</div></div> <button id="btn-ul-weak2" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2">習得 (<span id="cost-ul-weak2">50</span> G)</button> <span id="txt-ul-weak2" class="hidden text-green-400 font-bold px-2 py-1 text-sm flex-shrink-0 ml-2">習得済</span> </div> </div> <div id="skill-weak3" class="hidden p-3 bg-gray-900 rounded border border-gray-700 relative"> <div class="absolute -top-3 left-6 text-gray-500">↓</div> <div class="flex justify-between items-center"> <div><div class="font-bold text-gray-200">弱攻撃 3段目</div><div class="text-xs text-gray-400 mt-1">弱→弱→弱 (威力増 / 使用後隙あり)</div></div> <button id="btn-ul-weak3" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2">習得 (<span id="cost-ul-weak3">100</span> G)</button> <span id="txt-ul-weak3" class="hidden text-green-400 font-bold px-2 py-1 text-sm flex-shrink-0 ml-2">習得済</span> </div> </div> <div id="skill-strong" class="hidden p-3 bg-gray-900 rounded border border-gray-700 relative"> <div class="absolute -top-3 left-6 text-gray-500">↓</div> <div class="flex justify-between items-center mb-2"> <div><div class="font-bold text-red-300">ワイド・スウィープ</div><div class="text-xs text-gray-400 mt-1">強 (前方3レーン薙ぎ払い / 隙大)</div></div> <button id="btn-ul-strong" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2">解放 (<span id="cost-ul-strong">150</span> G)</button> </div> <div id="strong-upgrades" class="hidden flex space-x-2 mt-2 pt-2 border-t border-gray-700"> <button id="btn-up-s-dmg" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 text-xs rounded transition font-bold">威力 Lv.<span id="lvl-s-dmg">1</span> (<span id="cost-s-dmg">100</span>G)</button> <button id="btn-up-s-rng" class="flex-1 bg-teal-600 hover:bg-teal-500 text-white px-2 py-1 text-xs rounded transition font-bold">射程 Lv.<span id="lvl-s-rng">1</span> (<span id="cost-s-rng">100</span>G)</button> </div> </div> <div id="skill-combo1" class="hidden p-3 bg-gray-900 rounded border border-gray-700 relative"> <div class="absolute -top-3 left-6 text-gray-500">↓</div> <div class="flex justify-between items-center mb-2"> <div><div class="font-bold text-cyan-300">ピアシング・レイ</div><div class="text-xs text-gray-400 mt-1">弱→強 (貫通レーン)</div></div> <button id="btn-ul-combo1" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2">解放 (<span id="cost-ul-combo1">250</span> G)</button> </div> <div id="combo1-upgrades" class="hidden flex space-x-2 mt-2 pt-2 border-t border-gray-700"> <button id="btn-up-c1-dmg" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 text-xs rounded transition font-bold">威力 Lv.<span id="lvl-c1-dmg">1</span> (<span id="cost-c1-dmg">150</span>G)</button> <button id="btn-up-c1-rng" class="flex-1 bg-teal-600 hover:bg-teal-500 text-white px-2 py-1 text-xs rounded transition font-bold">射程 Lv.<span id="lvl-c1-rng">1</span> (<span id="cost-c1-rng">150</span>G)</button> </div> </div> <div id="skill-combo2" class="hidden p-3 bg-gray-900 rounded border border-gray-700 relative"> <div class="absolute -top-3 left-6 text-gray-500">↓</div> <div class="flex justify-between items-center mb-2"> <div><div class="font-bold text-yellow-300">グランド・クロス</div><div class="text-xs text-gray-400 mt-1">弱→弱→強 (前方を広く薙ぎ払う)</div></div> <button id="btn-ul-combo2" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2">解放 (<span id="cost-ul-combo2">400</span> G)</button> </div> <div id="combo2-upgrades" class="hidden flex space-x-2 mt-2 pt-2 border-t border-gray-700"> <button id="btn-up-c2-dmg" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 text-xs rounded transition font-bold">威力 Lv.<span id="lvl-c2-dmg">1</span> (<span id="cost-c2-dmg">200</span>G)</button> <button id="btn-up-c2-rng" class="flex-1 bg-teal-600 hover:bg-teal-500 text-white px-2 py-1 text-xs rounded transition font-bold">射程 Lv.<span id="lvl-c2-rng">1</span> (<span id="cost-c2-rng">200</span>G)</button> </div> </div> <div class="p-3 bg-gray-900 rounded border border-gray-700 mt-6"> <div class="flex justify-between items-center"> <div><div class="font-bold text-green-300">迎撃サポートAI</div><div class="text-xs text-gray-400 mt-1">同レーンの敵を自動照準</div></div> <button id="btn-unlock-autoaim" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2">解放 (<span id="cost-ul-autoaim">300</span> G)</button> <span id="txt-unlocked-autoaim" class="hidden text-green-400 font-bold px-2 py-1 text-sm flex-shrink-0 ml-2">実装済</span> </div> </div> </div> </div> <!-- Achievements --> <div class="bg-gray-800 p-5 rounded-lg shadow-lg"> <h2 class="text-lg font-bold mb-2 border-b border-gray-600 pb-2">🏆 訓練・ボーナス</h2> <p class="mb-4 text-xs text-gray-400">条件を達成すると自動的に基礎ステータスに永続ボーナスが付与されます。</p> <div id="achievement-list" class="space-y-3"></div> </div> </div> <!-- Item Tab --> <div id="tab-item" class="tab-content hidden space-y-6"> <!-- Story Log (Journal & Archive) --> <div class="grid grid-cols-1 md:grid-cols-2 gap-6"> <div class="bg-gray-800 p-5 rounded-lg shadow-lg"> <h2 class="text-lg font-bold mb-4 border-b border-gray-600 pb-2 text-blue-300">📖 主人公の手記</h2> <p class="mb-4 text-xs text-gray-400">機体強化・スキル解放を重ねるごとに、少しずつ記憶が読み出されていく。</p> <div id="journal-list" class="space-y-3 h-64 overflow-y-auto pr-2"></div> </div> <div class="bg-gray-800 p-5 rounded-lg shadow-lg"> <h2 class="text-lg font-bold mb-4 border-b border-gray-600 pb-2 text-yellow-300">🌍 文明の復元（アーカイブ）</h2> <p class="mb-4 text-xs text-gray-400">特定のWAVEを突破して遺物を回収し、世界の謎を解き明かす。<br><span class="text-green-400 font-bold">※回収数に応じたステータスボーナスあり</span></p> <div id="archive-list" class="space-y-3 h-64 overflow-y-auto pr-2"></div> </div> </div> <!-- Collection --> <div class="bg-gray-800 p-5 rounded-lg shadow-lg flex flex-col"> <h2 class="text-lg font-bold mb-4 border-b border-gray-600 pb-2">収集物（ジャンク・遺物）</h2> <div id="item-description" class="h-20 bg-gray-900 p-3 rounded border border-gray-700 text-sm text-gray-300 overflow-y-auto mb-4 flex-shrink-0">アイテムをホバーで詳細表示</div> <!-- 棚の数を増やしてスクロール可能に --> <div class="overflow-y-auto max-h-64"> <div id="shelf-container" class="grid grid-cols-5 sm:grid-cols-8 gap-2 content-start bg-gray-900 p-3 rounded border border-gray-700 min-h-[160px]"></div> </div> </div> </div> </div> <!-- Footer (Sortie Panel - Always Visible) --> <div class="p-4 bg-gray-800 border-t border-gray-700 flex-shrink-0 pb-6 z-10 shadow-[0_-4px_10px_rgba(0,0,0,0.5)]"> <div class="flex items-center justify-center space-x-4 mb-3 bg-gray-900 p-2 rounded max-w-sm mx-auto border border-gray-700"> <button id="btn-wave-prev" class="w-10 h-10 bg-gray-700 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed rounded text-white font-bold flex items-center justify-center text-xl">-</button> <div class="text-lg font-bold text-white w-24 text-center">WAVE <span id="disp-selected-wave" class="text-yellow-400 text-xl">1</span></div> <button id="btn-wave-next" class="w-10 h-10 bg-gray-700 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed rounded text-white font-bold flex items-center justify-center text-xl">+</button> </div> <button id="btn-sortie" class="bg-red-600 hover:bg-red-500 text-white text-xl px-4 py-4 rounded-lg font-bold shadow-lg transition w-full max-w-sm mx-auto block tracking-widest">防衛に出撃</button> </div> </div> <!-- ================= 戦闘画面 ================= --> <div id="screen-battle" class="screen"> <div id="canvas-container"> <canvas id="game-canvas"></canvas> <div class="overlay-ui top-0 left-0 w-full p-4 flex justify-between items-start pointer-events-none"> <div> <div class="text-xl font-bold text-white mb-1 shadow-black drop-shadow-md">Wave: <span id="hud-wave">1</span></div> <div class="w-48 h-6 bg-gray-800 border-2 border-gray-600 rounded overflow-hidden"> <div id="hud-hp-bar" class="h-full bg-green-500 w-full transition-all duration-200"></div> </div> <div class="text-sm font-bold shadow-black drop-shadow-md mt-1 text-white">拠点HP: <span id="hud-hp-val">100</span> / <span id="hud-max-hp-val">100</span></div> </div> <!-- ★資金表示 --> <div class="text-right flex flex-col items-end pointer-events-none"> <div class="text-xs font-bold text-gray-300 drop-shadow-md mb-1">確定済: <span id="hud-base-money">0</span> G</div> <div class="text-2xl font-bold text-yellow-400 drop-shadow-md border-b-2 border-yellow-600/50 pb-1 mb-1">+ <span id="hud-session-money">0</span> G</div> <div class="text-sm font-bold drop-shadow-md text-gray-200">残敵: <span id="hud-enemies">0</span></div> </div> </div> <!-- スキル発動名表示 (画面上部中央) --> <div class="overlay-ui top-20 left-0 w-full flex justify-center pointer-events-none z-10 flex-col items-center"> <div id="hud-skill-name" class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 drop-shadow-[0_4px_4px_rgba(0,0,0,1)] tracking-widest transition-all duration-300 opacity-0 transform scale-50 mt-4 italic"></div> </div> <!-- バトル用 動的コンボガイド --> <div class="overlay-ui bottom-24 md:bottom-16 left-0 w-full flex justify-center pointer-events-none z-0 transition-opacity duration-200"> <div id="battle-guide-container" class="bg-gray-900/80 border border-gray-600 rounded-lg p-2 shadow-lg backdrop-blur-sm transform transition-all duration-100"> <!-- JSで動的に生成 --> </div> </div> <!-- 仮想コントローラー (左: 移動・振り向き) --> <div class="overlay-ui bottom-6 left-4 flex flex-col items-center gap-1 pointer-events-auto z-10"> <button id="vbtn-up" onpointerdown="event.preventDefault(); tryMove(-1)" class="vbtn vbtn-move w-14 h-14 bg-gray-700/80 hover:bg-gray-600 rounded-full text-white font-bold select-none active:bg-gray-500 touch-none shadow-lg border border-gray-500 text-2xl flex items-center justify-center">↑</button> <div class="flex gap-10"> <button id="vbtn-left" onpointerdown="event.preventDefault(); tryTurn(-1)" class="vbtn vbtn-move w-14 h-14 bg-gray-700/80 hover:bg-gray-600 rounded-full text-white font-bold select-none active:bg-gray-500 touch-none shadow-lg border border-gray-500 text-2xl flex items-center justify-center">←</button> <button id="vbtn-right" onpointerdown="event.preventDefault(); tryTurn(1)" class="vbtn vbtn-move w-14 h-14 bg-gray-700/80 hover:bg-gray-600 rounded-full text-white font-bold select-none active:bg-gray-500 touch-none shadow-lg border border-gray-500 text-2xl flex items-center justify-center">→</button> </div> <button id="vbtn-down" onpointerdown="event.preventDefault(); tryMove(1)" class="vbtn vbtn-move w-14 h-14 bg-gray-700/80 hover:bg-gray-600 rounded-full text-white font-bold select-none active:bg-gray-500 touch-none shadow-lg border border-gray-500 text-2xl flex items-center justify-center">↓</button> </div> <!-- 仮想コントローラー (右: 攻撃) --> <div class="overlay-ui bottom-6 right-4 flex items-end gap-3 pointer-events-auto z-10"> <button id="vbtn-z" onpointerdown="event.preventDefault(); triggerAction('z', false)" class="vbtn vbtn-atk-z w-16 h-16 bg-blue-600/80 hover:bg-blue-500 rounded-full text-white font-bold text-xl select-none active:bg-blue-400 touch-none shadow-lg border border-blue-400 mb-0 flex items-center justify-center">弱</button> <button id="vbtn-x" onpointerdown="event.preventDefault(); triggerAction('x', false)" class="vbtn vbtn-atk-x w-16 h-16 bg-red-600/80 hover:bg-red-500 rounded-full text-white font-bold text-xl select-none active:bg-red-400 touch-none shadow-lg border border-red-400 mb-10 flex items-center justify-center">強</button> </div> <div id="wave-modal" class="overlay-ui top-0 left-0 w-full h-full flex items-center justify-center bg-black/80 hidden pointer-events-auto z-50"> <div class="bg-gray-800 p-8 rounded-lg text-center shadow-2xl border border-gray-600 max-w-md w-11/12"> <h2 class="text-3xl font-bold text-white mb-2">Wave クリア！</h2> <p class="text-gray-300 mb-6">WAVE獲得資金: <span id="modal-money" class="text-yellow-400 font-bold text-2xl">0</span> G</p> <div id="drop-notification" class="mb-6 hidden"> <div class="p-4 bg-gray-900 rounded border border-gray-700 relative overflow-hidden"> <!-- 背景エフェクト風 --> <div class="absolute inset-0 bg-gradient-to-t from-purple-900/30 to-transparent pointer-events-none"></div> <p id="drop-title" class="text-sm text-purple-400 font-bold mb-2 relative z-10">ジャンク品を回収</p> <div id="drop-item-icon" class="text-5xl mb-2 relative z-10 drop-shadow-lg">💎</div> <p id="drop-item-name" class="font-bold text-white relative z-10">名称</p> </div> </div> <p class="text-sm text-gray-400 mb-6 border-t border-gray-600 pt-4">進めば敵は強くなる。帰還すれば安全だ。<br><span class="text-yellow-300 font-bold">※ここまでの報酬は確定されました</span></p> <div class="flex space-x-4 justify-center"> <button id="btn-return" class="bg-gray-600 hover:bg-gray-500 text-white px-6 py-3 rounded font-bold transition flex-1 border border-gray-500">帰還する</button> <button id="btn-next-wave" class="bg-red-600 hover:bg-red-500 text-white px-6 py-3 rounded font-bold transition shadow-lg shadow-red-900/50 flex-1 border border-red-500">次へ進む</button> </div> </div> </div> <div id="death-modal" class="overlay-ui top-0 left-0 w-full h-full flex items-center justify-center bg-red-900/90 hidden pointer-events-auto z-50 backdrop-blur-sm"> <div class="bg-gray-900 p-8 rounded-lg text-center border border-red-500 w-11/12 max-w-md shadow-2xl"> <h2 class="text-4xl font-black text-red-500 mb-4 tracking-widest drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]">BASE DESTROYED</h2> <p class="text-xl text-gray-200 mb-2 font-bold">拠点が破壊された...</p> <div class="bg-red-950/50 p-4 rounded my-6 border border-red-800"> <p class="text-red-300 font-bold">直前のWAVE獲得資金 半減</p> <p class="text-gray-400 text-sm mt-1">未確定のドロップ品はすべてロスト</p> </div> <button id="btn-death-return" class="bg-gray-700 hover:bg-gray-600 text-white px-8 py-4 rounded font-bold transition w-full text-lg shadow-lg">拠点に戻る</button> </div> </div> </div> </div> <!-- ================= ヘルプモーダル ================= --> <div id="help-modal" class="overlay-ui top-0 left-0 w-full h-full flex items-center justify-center bg-black/80 hidden pointer-events-auto z-50"> <div class="bg-gray-800 p-8 rounded-lg shadow-2xl border border-gray-600 max-w-2xl w-11/12 max-h-[90vh] overflow-y-auto relative text-gray-300"> <button onclick="document.getElementById('help-modal').classList.add('hidden')" class="absolute top-4 right-4 bg-gray-600 hover:bg-gray-500 text-white w-8 h-8 rounded-full font-bold">×</button> <h2 class="text-2xl font-bold text-white mb-6 border-b border-gray-600 pb-2">ゲーム仕様・ヘルプ</h2> <div class="space-y-6"> <section> <h3 class="text-lg font-bold text-blue-400 mb-2">◆ 基本操作とコンボ</h3> <ul class="list-disc ml-5 space-y-1 text-sm"> <li><strong>移動/向き:</strong> W/S/A/D または 左下の十字ボタン</li> <li><strong>攻撃:</strong> Z/J (弱)、X/K (強) または 右下のアクションボタン</li> <li>戦闘画面下部の中央に、現在入力中のルートから派生できる技のガイドが表示されます。</li> <li>攻撃の硬直中は、機体の足元にゲージが表示され、ゲージが消えるまで次の行動ができません。</li> </ul> </section> <section> <h3 class="text-lg font-bold text-yellow-400 mb-2">◆ ウェーブ進行ロジック</h3> <ul class="list-disc ml-5 space-y-1 text-sm"> <li><strong>戦場の拡大:</strong> WAVEの進行に合わせて、敵が侵攻してくるレーン数が<strong class="text-white">最大5レーン</strong>まで段階的に増えていきます。</li> <li><strong>敵の出現数:</strong> <code class="bg-gray-900 px-1 rounded">15体 + (ウェーブ数 × 10)体</code> が出現します。</li> <li><strong>ウェーブ倍率:</strong> <code class="bg-gray-900 px-1 rounded">1.0 + ((ウェーブ数 - 1) × 0.2)</code> の倍率がかかります。(Wave2で1.2倍、Wave5で1.8倍)</li> <li><strong>敵の強さ:</strong> ベースHP(通常20/タフ60)と攻撃力(通常10/タフ20)に、上記の<strong>ウェーブ倍率</strong>が乗算されます。また、移動速度も少しずつ上昇します。</li> <li><strong>獲得資金:</strong> ベース額(通常1.5G/タフ7.5G)に、<code class="bg-gray-900 px-1 rounded">√(ウェーブ倍率)</code> をかけた額がドロップします。</li> <li><strong>スポーン間隔:</strong> 序盤は1体ずつゆっくり湧きますが、Waveが進むにつれて一度に2〜3体まとめて連続で押し寄せるようになります。</li> </ul> </section> <section> <h3 class="text-lg font-bold text-purple-400 mb-2">◆ スキルと成長</h3> <ul class="list-disc ml-5 space-y-1 text-sm"> <li>スキルはツリー形式で解放されます。まずは弱攻撃のコンボを伸ばし、強攻撃をアンロックしてください。</li> <li>強攻撃が絡む技（ワイド・スウィープ、ピアシング・レイ、グランド・クロス）は、解放後に資金で威力と射程を強化できます。</li> <li><strong>迎撃サポートAI</strong>を解放すると、拠点に張り付かれた際のパニック時でも、同レーンで攻撃ボタンを押すだけで自動的に敵側を向いて迎撃してくれます。</li> <li>攻撃ヒット時、ごく稀に全てを薙ぎ払う「クリティカル」が発生します。</li> </ul> </section> <section> <h3 class="text-lg font-bold text-emerald-400 mb-2">◆ シナリオと遺物収集</h3> <ul class="list-disc ml-5 space-y-1 text-sm"> <li><strong>手記:</strong> 拠点での強化やスキル解放を一定回数行うと、過去の記憶が紐解かれます。</li> <li><strong>アーカイブ遺物:</strong> Wave 5, 10, 15 などの節目をクリアすると、世界の謎が記された特殊な遺物を回収できます。</li> <li>アーカイブ遺物を拠点に持ち帰るごとに、<strong>恒久的なステータスボーナス（攻撃力・HP）</strong>が付与されます。</li> </ul> </section> <div class="mt-8 text-center border-t border-gray-600 pt-6"> <button onclick="document.getElementById('help-modal').classList.add('hidden')" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-full font-bold transition shadow-lg w-full max-w-xs">閉じる</button> </div> </div> </div> </div> </div> <script>
+document.addEventListener('DOMContentLoaded', () => {
+
+/**
+ * 状態管理
+ */
+const GameState = {
+    money: 0,
+    playerStats: { atk: 10, maxHp: 100, hp: 100 },
+    costs: { 
+        atk: 50, hp: 50, 
+        unlockWeak2: 50, unlockWeak3: 100, unlockStrong: 150, unlockCombo1: 250, unlockCombo2: 400, unlockAutoAim: 300,
+        upSDmg: 100, upSRng: 100,
+        upC1Dmg: 150, upC1Rng: 150,
+        upC2Dmg: 200, upC2Rng: 200 
+    },
+    unlocks: { weak2: false, weak3: false, strong: false, combo1: false, combo2: false, autoAim: false },
+    comboLevels: { sDmg: 1, sRng: 1, c1Dmg: 1, c1Rng: 1, c2Dmg: 1, c2Rng: 1 },
+    stats: { zCount: 0, xCount: 0, kills: 0, critCount: 0, upgradeCount: 0 }, 
+    inventory: [],
+    currentWave: 1, maxWave: 1, selectedWave: 1, sessionMoney: 0, sessionDrops: [],
+    
+    // 一般ドロップ用ジャンク品
+    itemDB: [
+        { icon: '🔩', name: '曲がったボルト', desc: '規格外の部品。' },
+        { icon: '🔋', name: '枯渇した電池', desc: '微かに熱を帯びている。' },
+        { icon: '💾', name: '破損した記憶媒体', desc: 'データは完全に飛んでいる。' },
+        { icon: '🧸', name: '焦げたぬいぐるみ', desc: '誰かの宝物だった。' }
+    ],
+    storyData: { journalIndex: 0 }
+};
+
+// ★シナリオ定義 (手記)
+const JournalDB = [
+    { reqUpgrades: 1, title: "手記 #001", text: "防衛システム起動。システム正常。生体反応、自分のみ。自分が誰なのか、なぜここにいるのか思い出せない。" },
+    { reqUpgrades: 3, title: "手記 #002", text: "機体の強化プロセスに違和感がある。効率が良すぎる。まるで、あらかじめこうなることが予期されていたかのように。" },
+    { reqUpgrades: 6, title: "手記 #003", text: "迎撃AIの補助。私の思考を先読みしているかのようだ。私が機体を操縦しているのか、それとも機体が私を操縦しているのか。" },
+    { reqUpgrades: 10, title: "手記 #004", text: "ふと操縦桿から手を離してみた。機体は…完璧な迎撃を続けた。私という存在に意味はあるのか？" },
+    { reqUpgrades: 15, title: "手記 #005", text: "私は防衛プログラムだ。かつて人間だった「誰か」の記憶を焼き付けられた、ただの防衛兵器。…それでも、この拠点を守り抜く。" }
+];
+
+// ★シナリオ定義 (アーカイブ遺物 - 特定WAVE確定ドロップ)
+const ArchiveDB = [
+    { id: 'arc_5', targetWave: 5, icon: '📱', name: '汚染測定器', desc: '旧時代の遺物。', storyTitle: "文明記録: 崩壊", storyText: "「大気汚染度99%。地表の完全放棄を決定。自律型環境浄化機構を起動する。」" },
+    { id: 'arc_10', targetWave: 10, icon: '⚙️', name: '自律機械のコア', desc: '敵機の心臓部。', storyTitle: "文明記録: 暴走", storyText: "「浄化機構は地表の『有機物すべて』を汚染源とみなし、排除を開始した。我々は自ら作った機械に殺される。」" },
+    { id: 'arc_15', targetWave: 15, icon: '🧪', name: 'カプセルの破片', desc: '拠点の深部と同じ材質。', storyTitle: "文明記録: 眠り", storyText: "「我々はこの地下拠点で眠りにつく。浄化が終わり、再び青い空が見える日まで。防衛システムよ、我々を守ってくれ。」" },
+    { id: 'arc_20', targetWave: 20, icon: '👑', name: '旧人類の王冠', desc: '権力の象徴。', storyTitle: "文明記録: 終焉", storyText: "浄化機構に終わりは設定されていなかった。彼らはずっと、存在しない敵と戦い続けている。私もまた同じだ。" }
+];
+
+// ★実績定義
+const AchievementDB = [
+    { id: 'z100', type: 'zCount', target: 500, name: '素振り職人', desc: '弱攻撃を累計500回使用', rewardDesc: '基礎攻撃力 +5', unlocked: false },
+    { id: 'z500', type: 'zCount', target: 2500, name: '連打の鬼', desc: '弱攻撃を累計2500回使用', rewardDesc: '基礎攻撃力 +10', unlocked: false },
+    { id: 'x50', type: 'xCount', target: 250, name: '重い一撃', desc: '強攻撃を累計250回使用', rewardDesc: '基礎攻撃力 +5', unlocked: false },
+    { id: 'x200', type: 'xCount', target: 1000, name: '破壊衝動', desc: '強攻撃を累計1000回使用', rewardDesc: '基礎攻撃力 +10', unlocked: false },
+    { id: 'k100', type: 'kills', target: 500, name: '新米防衛者', desc: '敵を累計500体討伐', rewardDesc: '最大HP +50', unlocked: false },
+    { id: 'k500', type: 'kills', target: 2500, name: '熟練の掃除屋', desc: '敵を累計2500体討伐', rewardDesc: '最大HP +100', unlocked: false },
+    { id: 'c10', type: 'critCount', target: 10, name: '奇跡の一撃', desc: 'クリティカルを累計10回発動', rewardDesc: '基礎攻撃力 +15', unlocked: false }, 
+    { id: 'c50', type: 'critCount', target: 50, name: '神懸かり', desc: 'クリティカルを累計50回発動', rewardDesc: '基礎攻撃力 +30', unlocked: false }  
+];
+
+const screens = { base: document.getElementById('screen-base'), battle: document.getElementById('screen-battle') };
+
+// UI要素
+const elBaseMoney = document.getElementById('base-money'), elStatAtk = document.getElementById('stat-atk'), elStatHp = document.getElementById('stat-hp');
+const elCostAtk = document.getElementById('cost-atk'), elCostHp = document.getElementById('cost-hp');
+const btnUpgradeAtk = document.getElementById('btn-upgrade-atk'), btnUpgradeHp = document.getElementById('btn-upgrade-hp');
+
+// Skill Tree UI Elements
+const btnUlWeak2 = document.getElementById('btn-ul-weak2'), txtUlWeak2 = document.getElementById('txt-ul-weak2'), costUlWeak2 = document.getElementById('cost-ul-weak2');
+const btnUlWeak3 = document.getElementById('btn-ul-weak3'), txtUlWeak3 = document.getElementById('txt-ul-weak3'), costUlWeak3 = document.getElementById('cost-ul-weak3'), divSkillWeak3 = document.getElementById('skill-weak3');
+
+const btnUlStrong = document.getElementById('btn-ul-strong'), costUlStrong = document.getElementById('cost-ul-strong'), divSkillStrong = document.getElementById('skill-strong'), strongUpgrades = document.getElementById('strong-upgrades');
+const btnUpSDmg = document.getElementById('btn-up-s-dmg'), lvlSDmg = document.getElementById('lvl-s-dmg'), costSDmg = document.getElementById('cost-s-dmg');
+const btnUpSRng = document.getElementById('btn-up-s-rng'), lvlSRng = document.getElementById('lvl-s-rng'), costSRng = document.getElementById('cost-s-rng');
+
+const btnUlCombo1 = document.getElementById('btn-ul-combo1'), costUlCombo1 = document.getElementById('cost-ul-combo1'), divSkillCombo1 = document.getElementById('skill-combo1'), combo1Upgrades = document.getElementById('combo1-upgrades');
+const btnUpC1Dmg = document.getElementById('btn-up-c1-dmg'), lvlC1Dmg = document.getElementById('lvl-c1-dmg'), costC1Dmg = document.getElementById('cost-c1-dmg');
+const btnUpC1Rng = document.getElementById('btn-up-c1-rng'), lvlC1Rng = document.getElementById('lvl-c1-rng'), costC1Rng = document.getElementById('cost-c1-rng');
+
+const btnUlCombo2 = document.getElementById('btn-ul-combo2'), costUlCombo2 = document.getElementById('cost-ul-combo2'), divSkillCombo2 = document.getElementById('skill-combo2'), combo2Upgrades = document.getElementById('combo2-upgrades');
+const btnUpC2Dmg = document.getElementById('btn-up-c2-dmg'), lvlC2Dmg = document.getElementById('lvl-c2-dmg'), costC2Dmg = document.getElementById('cost-c2-dmg');
+const btnUpC2Rng = document.getElementById('btn-up-c2-rng'), lvlC2Rng = document.getElementById('lvl-c2-rng'), costC2Rng = document.getElementById('cost-c2-rng');
+
+const btnUnlockAutoAim = document.getElementById('btn-unlock-autoaim'), costUlAutoAim = document.getElementById('cost-ul-autoaim'), txtUnlockedAutoAim = document.getElementById('txt-unlocked-autoaim');
+
+const btnWavePrev = document.getElementById('btn-wave-prev'), btnWaveNext = document.getElementById('btn-wave-next'), dispSelectedWave = document.getElementById('disp-selected-wave');
+
+const btnSortie = document.getElementById('btn-sortie'), shelfContainer = document.getElementById('shelf-container'), itemDesc = document.getElementById('item-description');
+const canvas = document.getElementById('game-canvas'), ctx = canvas.getContext('2d');
+const hudWave = document.getElementById('hud-wave'), hudBaseMoney = document.getElementById('hud-base-money'), hudSessionMoney = document.getElementById('hud-session-money'), hudHpBar = document.getElementById('hud-hp-bar'), hudHpVal = document.getElementById('hud-hp-val'), hudMaxHpVal = document.getElementById('hud-max-hp-val'), hudEnemies = document.getElementById('hud-enemies');
+const hudSkillName = document.getElementById('hud-skill-name');
+const waveModal = document.getElementById('wave-modal'), modalMoney = document.getElementById('modal-money'), dropNotification = document.getElementById('drop-notification'), dropItemIcon = document.getElementById('drop-item-icon'), dropItemName = document.getElementById('drop-item-name'), dropTitle = document.getElementById('drop-title'), btnReturn = document.getElementById('btn-return'), btnNextWave = document.getElementById('btn-next-wave');
+const deathModal = document.getElementById('death-modal'), btnDeathReturn = document.getElementById('btn-death-return');
+
+// 練習キャンバス用
+const pCanvas = document.getElementById('practice-canvas');
+const pCtx = pCanvas.getContext('2d');
+const pracHudSkill = document.getElementById('prac-hud-skill');
+
+function resizeCanvas() {
+    const container = document.getElementById('canvas-container');
+    if(container) {
+        canvas.width = container.clientWidth;
+        canvas.height = container.clientHeight;
+    }
+    const pContainer = pCanvas.parentElement;
+    if(pContainer) {
+        pCanvas.width = pContainer.clientWidth;
+        pCanvas.height = pContainer.clientHeight;
+    }
+    if (screens['base'].classList.contains('active') && document.getElementById('tab-status').classList.contains('block')) {
+        initPractice();
+    }
+}
+
+// 汎用トースト
+function showMessageToast(title, desc, bgColorClass = "bg-blue-900") {
+    const toast = document.getElementById('general-toast');
+    document.getElementById('toast-title').innerText = title;
+    document.getElementById('toast-desc').innerText = desc;
+    
+    toast.className = toast.className.replace(/bg-[a-z]+-\d+/g, '');
+    toast.classList.add(bgColorClass.split(' ')[0]);
+
+    toast.classList.remove('opacity-0', '-translate-y-20');
+    toast.classList.add('translate-y-0', 'opacity-100');
+    
+    setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-20');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+    }, 4000);
+}
+
+
+// === タブ切り替えロジック ===
+window.switchTab = function(tabId) {
+    document.querySelectorAll('.tab-content').forEach(el => {
+        el.classList.add('hidden');
+        el.classList.remove('block');
+    });
+    const target = document.getElementById('tab-' + tabId);
+    target.classList.remove('hidden');
+    target.classList.add('block');
+
+    document.querySelectorAll('.tab-btn').forEach(el => {
+        el.classList.remove('border-blue-500', 'text-blue-400');
+        el.classList.add('border-transparent', 'text-gray-400');
+    });
+    const activeBtn = document.getElementById('tab-btn-' + tabId);
+    activeBtn.classList.remove('border-transparent', 'text-gray-400');
+    activeBtn.classList.add('border-blue-500', 'text-blue-400');
+
+    if (tabId === 'status') setTimeout(resizeCanvas, 50); // タブ表示後にリサイズ
+    if (tabId === 'upgrade') renderAchievements();
+    if (tabId === 'item') { renderShelf(); renderStories(); }
+}
+
+function showScreen(screenName) {
+    Object.values(screens).forEach(s => s.classList.remove('active'));
+    screens[screenName].classList.add('active');
+    if (screenName === 'base') { 
+        updateBaseUI(); renderAchievements(); renderShelf(); renderStories(); 
+        if (document.getElementById('tab-status').classList.contains('block')) {
+            setTimeout(resizeCanvas, 50);
+        }
+    } else if (screenName === 'battle') { 
+        resizeCanvas(); startBattleSession(); 
+    }
+}
+
+// === シナリオ・手記解放ロジック ===
+function checkJournalUnlock() {
+    GameState.stats.upgradeCount++;
+    const nextJournal = JournalDB.find(j => j.reqUpgrades === GameState.stats.upgradeCount);
+    
+    if (nextJournal) {
+        GameState.storyData.journalIndex++;
+        const toast = document.getElementById('story-toast');
+        document.getElementById('toast-story-name').innerText = nextJournal.title;
+        toast.classList.remove('opacity-0', '-translate-y-20');
+        toast.classList.add('translate-y-0', 'opacity-100');
+        setTimeout(() => {
+            toast.classList.add('opacity-0', '-translate-y-20');
+            toast.classList.remove('translate-y-0', 'opacity-100');
+        }, 4000);
+    }
+}
+
+function renderStories() {
+    const jList = document.getElementById('journal-list');
+    jList.innerHTML = '';
+    if (GameState.storyData.journalIndex === 0) {
+        jList.innerHTML = '<div class="text-center text-gray-500 py-4 text-sm border border-gray-700 rounded bg-gray-900">記録はありません</div>';
+    } else {
+        for (let i = 0; i < GameState.storyData.journalIndex; i++) {
+            const story = JournalDB[i];
+            const div = document.createElement('div');
+            div.className = `p-3 rounded border bg-blue-900/20 border-blue-800`;
+            div.innerHTML = `
+                <div class="font-bold text-blue-300 text-sm mb-1">${story.title}</div>
+                <div class="text-sm text-gray-300 leading-relaxed">${story.text}</div>
+            `;
+            jList.appendChild(div);
+        }
+    }
+
+    const aList = document.getElementById('archive-list');
+    aList.innerHTML = '';
+    const archives = GameState.inventory.filter(i => i.storyTitle);
+    if (archives.length === 0) {
+        aList.innerHTML = '<div class="text-center text-gray-500 py-4 text-sm border border-gray-700 rounded bg-gray-900">遺物を回収していません</div>';
+    } else {
+        archives.forEach(arc => {
+            const div = document.createElement('div');
+            div.className = `p-3 rounded border bg-yellow-900/20 border-yellow-800`;
+            div.innerHTML = `
+                <div class="font-bold text-yellow-300 text-sm mb-1">${arc.icon} ${arc.storyTitle}</div>
+                <div class="text-sm text-gray-300 leading-relaxed">${arc.storyText}</div>
+            `;
+            aList.appendChild(div);
+        });
+    }
+}
+
+// === 実績システム関連 ===
+function checkAchievements() {
+    let hasNew = false;
+    AchievementDB.forEach(ach => {
+        if (!ach.unlocked && GameState.stats[ach.type] >= ach.target) {
+            ach.unlocked = true;
+            
+            if (ach.id === 'z100') GameState.playerStats.atk += 5;
+            if (ach.id === 'z500') GameState.playerStats.atk += 10;
+            if (ach.id === 'x50') GameState.playerStats.atk += 5;
+            if (ach.id === 'x200') GameState.playerStats.atk += 10;
+            if (ach.id === 'k100') { GameState.playerStats.maxHp += 50; GameState.playerStats.hp += 50; }
+            if (ach.id === 'k500') { GameState.playerStats.maxHp += 100; GameState.playerStats.hp += 100; }
+            if (ach.id === 'c10') GameState.playerStats.atk += 15;
+            if (ach.id === 'c50') GameState.playerStats.atk += 30;
+            
+            showAchievementToast(ach);
+            hasNew = true;
+        }
+    });
+    if (hasNew && screens['base'].classList.contains('active')) {
+        updateBaseUI();
+        renderAchievements();
+    }
+}
+
+function showAchievementToast(ach) {
+    const toast = document.getElementById('achievement-toast');
+    document.getElementById('toast-achieve-name').innerText = ach.name;
+    document.getElementById('toast-achieve-reward').innerText = ach.rewardDesc;
+    toast.classList.remove('opacity-0', '-translate-y-20');
+    toast.classList.add('translate-y-0', 'opacity-100');
+    
+    setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-20');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+    }, 4000);
+}
+
+function renderAchievements() {
+    const list = document.getElementById('achievement-list');
+    list.innerHTML = '';
+    AchievementDB.forEach(ach => {
+        const div = document.createElement('div');
+        div.className = `p-3 rounded border ${ach.unlocked ? 'bg-yellow-900/40 border-yellow-600' : 'bg-gray-800 border-gray-600 opacity-60'}`;
+        div.innerHTML = `
+            <div class="flex justify-between items-center mb-1">
+                <div class="font-bold ${ach.unlocked ? 'text-yellow-400' : 'text-gray-400'}">${ach.unlocked ? '🏆 ' : ''}${ach.name}</div>
+                <div class="text-xs ${ach.unlocked ? 'text-green-400' : 'text-gray-500'}">${ach.unlocked ? '達成済' : `${GameState.stats[ach.type]} / ${ach.target}`}</div>
+            </div>
+            <div class="text-sm text-gray-300">${ach.desc}</div>
+            <div class="text-xs text-blue-300 mt-1">報酬: ${ach.rewardDesc}</div>
+        `;
+        list.appendChild(div);
+    });
+}
+
+// === 拠点ロジック ===
+function updateBaseUI() {
+    elBaseMoney.innerText = GameState.money; elStatAtk.innerText = GameState.playerStats.atk; elStatHp.innerText = GameState.playerStats.maxHp;
+    elCostAtk.innerText = GameState.costs.atk; elCostHp.innerText = GameState.costs.hp;
+    
+    const elMaxWave = document.getElementById('stat-max-wave');
+    const elKills = document.getElementById('stat-kills');
+    if(elMaxWave) elMaxWave.innerText = GameState.maxWave;
+    if(elKills) elKills.innerText = GameState.stats.kills;
+
+    btnUpgradeAtk.disabled = GameState.money < GameState.costs.atk; btnUpgradeHp.disabled = GameState.money < GameState.costs.hp;
+    btnUpgradeAtk.className = btnUpgradeAtk.disabled ? "w-full bg-gray-600 text-gray-400 px-2 py-1 rounded font-bold cursor-not-allowed text-xs flex justify-between items-center mt-1" : "w-full bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 rounded font-bold transition text-xs flex justify-between items-center mt-1 cursor-pointer";
+    btnUpgradeHp.className = btnUpgradeHp.disabled ? "w-full bg-gray-600 text-gray-400 px-2 py-1 rounded font-bold cursor-not-allowed text-xs flex justify-between items-center mt-1" : "w-full bg-green-600 hover:bg-green-500 text-white px-2 py-1 rounded font-bold transition text-xs flex justify-between items-center mt-1 cursor-pointer";
+
+    // --- ツリーUIの表示制御 ---
+    divSkillWeak3.classList.toggle('hidden', !GameState.unlocks.weak2);
+    divSkillStrong.classList.toggle('hidden', !GameState.unlocks.weak3);
+    divSkillCombo1.classList.toggle('hidden', !GameState.unlocks.strong);
+    divSkillCombo2.classList.toggle('hidden', !GameState.unlocks.combo1);
+
+    if (GameState.unlocks.weak2) { btnUlWeak2.classList.add('hidden'); txtUlWeak2.classList.remove('hidden'); }
+    else { costUlWeak2.innerText = GameState.costs.unlockWeak2; btnUlWeak2.disabled = GameState.money < GameState.costs.unlockWeak2; btnUlWeak2.className = btnUlWeak2.disabled ? "bg-gray-600 text-gray-400 px-3 py-1 rounded font-bold cursor-not-allowed text-sm flex-shrink-0 ml-2" : "bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2"; }
+
+    if (GameState.unlocks.weak3) { btnUlWeak3.classList.add('hidden'); txtUlWeak3.classList.remove('hidden'); }
+    else { costUlWeak3.innerText = GameState.costs.unlockWeak3; btnUlWeak3.disabled = GameState.money < GameState.costs.unlockWeak3; btnUlWeak3.className = btnUlWeak3.disabled ? "bg-gray-600 text-gray-400 px-3 py-1 rounded font-bold cursor-not-allowed text-sm flex-shrink-0 ml-2" : "bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2"; }
+
+    if (GameState.unlocks.strong) {
+        btnUlStrong.classList.add('hidden'); strongUpgrades.classList.remove('hidden');
+        costSDmg.innerText = GameState.costs.upSDmg; lvlSDmg.innerText = GameState.comboLevels.sDmg;
+        btnUpSDmg.disabled = GameState.money < GameState.costs.upSDmg; btnUpSDmg.className = btnUpSDmg.disabled ? "flex-1 bg-gray-600 text-gray-400 px-2 py-1 text-xs rounded font-bold cursor-not-allowed" : "flex-1 bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 text-xs rounded transition font-bold";
+        costSRng.innerText = GameState.costs.upSRng; lvlSRng.innerText = GameState.comboLevels.sRng;
+        btnUpSRng.disabled = GameState.money < GameState.costs.upSRng; btnUpSRng.className = btnUpSRng.disabled ? "flex-1 bg-gray-600 text-gray-400 px-2 py-1 text-xs rounded font-bold cursor-not-allowed" : "flex-1 bg-teal-600 hover:bg-teal-500 text-white px-2 py-1 text-xs rounded transition font-bold";
+    } else {
+        costUlStrong.innerText = GameState.costs.unlockStrong; btnUlStrong.disabled = GameState.money < GameState.costs.unlockStrong; btnUlStrong.className = btnUlStrong.disabled ? "bg-gray-600 text-gray-400 px-3 py-1 rounded font-bold cursor-not-allowed text-sm flex-shrink-0 ml-2" : "bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2";
+    }
+
+    if (GameState.unlocks.combo1) {
+        btnUlCombo1.classList.add('hidden'); combo1Upgrades.classList.remove('hidden');
+        costC1Dmg.innerText = GameState.costs.upC1Dmg; lvlC1Dmg.innerText = GameState.comboLevels.c1Dmg;
+        btnUpC1Dmg.disabled = GameState.money < GameState.costs.upC1Dmg; btnUpC1Dmg.className = btnUpC1Dmg.disabled ? "flex-1 bg-gray-600 text-gray-400 px-2 py-1 text-xs rounded font-bold cursor-not-allowed" : "flex-1 bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 text-xs rounded transition font-bold";
+        costC1Rng.innerText = GameState.costs.upC1Rng; lvlC1Rng.innerText = GameState.comboLevels.c1Rng;
+        btnUpC1Rng.disabled = GameState.money < GameState.costs.upC1Rng; btnUpC1Rng.className = btnUpC1Rng.disabled ? "flex-1 bg-gray-600 text-gray-400 px-2 py-1 text-xs rounded font-bold cursor-not-allowed" : "flex-1 bg-teal-600 hover:bg-teal-500 text-white px-2 py-1 text-xs rounded transition font-bold";
+    } else {
+        costUlCombo1.innerText = GameState.costs.unlockCombo1; btnUlCombo1.disabled = GameState.money < GameState.costs.unlockCombo1; btnUlCombo1.className = btnUlCombo1.disabled ? "bg-gray-600 text-gray-400 px-3 py-1 rounded font-bold cursor-not-allowed text-sm flex-shrink-0 ml-2" : "bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2";
+    }
+
+    if (GameState.unlocks.combo2) {
+        btnUlCombo2.classList.add('hidden'); combo2Upgrades.classList.remove('hidden');
+        costC2Dmg.innerText = GameState.costs.upC2Dmg; lvlC2Dmg.innerText = GameState.comboLevels.c2Dmg;
+        btnUpC2Dmg.disabled = GameState.money < GameState.costs.upC2Dmg; btnUpC2Dmg.className = btnUpC2Dmg.disabled ? "flex-1 bg-gray-600 text-gray-400 px-2 py-1 text-xs rounded font-bold cursor-not-allowed" : "flex-1 bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 text-xs rounded transition font-bold";
+        costC2Rng.innerText = GameState.costs.upC2Rng; lvlC2Rng.innerText = GameState.comboLevels.c2Rng;
+        btnUpC2Rng.disabled = GameState.money < GameState.costs.upC2Rng; btnUpC2Rng.className = btnUpC2Rng.disabled ? "flex-1 bg-gray-600 text-gray-400 px-2 py-1 text-xs rounded font-bold cursor-not-allowed" : "flex-1 bg-teal-600 hover:bg-teal-500 text-white px-2 py-1 text-xs rounded transition font-bold";
+    } else {
+        costUlCombo2.innerText = GameState.costs.unlockCombo2; btnUlCombo2.disabled = GameState.money < GameState.costs.unlockCombo2; btnUlCombo2.className = btnUlCombo2.disabled ? "bg-gray-600 text-gray-400 px-3 py-1 rounded font-bold cursor-not-allowed text-sm flex-shrink-0 ml-2" : "bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2";
+    }
+
+    if (GameState.unlocks.autoAim) { btnUnlockAutoAim.classList.add('hidden'); txtUnlockedAutoAim.classList.remove('hidden'); }
+    else { costUlAutoAim.innerText = GameState.costs.unlockAutoAim; btnUnlockAutoAim.disabled = GameState.money < GameState.costs.unlockAutoAim; btnUnlockAutoAim.className = btnUnlockAutoAim.disabled ? "bg-gray-600 text-gray-400 px-3 py-1 rounded font-bold cursor-not-allowed text-sm flex-shrink-0 ml-2" : "bg-purple-600 hover:bg-purple-500 text-white px-3 py-1 rounded font-bold transition text-sm flex-shrink-0 ml-2"; }
+
+    dispSelectedWave.innerText = GameState.selectedWave;
+    btnWavePrev.disabled = GameState.selectedWave <= 1;
+    btnWaveNext.disabled = GameState.selectedWave >= GameState.maxWave;
+}
+
+// 強化・解放イベント
+btnUpgradeAtk.addEventListener('click', () => { if (GameState.money >= GameState.costs.atk) { GameState.money -= GameState.costs.atk; GameState.playerStats.atk += 2; GameState.costs.atk = Math.floor(GameState.costs.atk * 1.5); updateBaseUI(); checkJournalUnlock(); }});
+btnUpgradeHp.addEventListener('click', () => { if (GameState.money >= GameState.costs.hp) { GameState.money -= GameState.costs.hp; GameState.playerStats.maxHp += 20; GameState.costs.hp = Math.floor(GameState.costs.hp * 1.5); updateBaseUI(); checkJournalUnlock(); }});
+btnUnlockAutoAim.addEventListener('click', () => { if (GameState.money >= GameState.costs.unlockAutoAim) { GameState.money -= GameState.costs.unlockAutoAim; GameState.unlocks.autoAim = true; updateBaseUI(); checkJournalUnlock(); }});
+
+btnUlWeak2.addEventListener('click', () => { if (GameState.money >= GameState.costs.unlockWeak2) { GameState.money -= GameState.costs.unlockWeak2; GameState.unlocks.weak2 = true; updateBaseUI(); checkJournalUnlock(); }});
+btnUlWeak3.addEventListener('click', () => { if (GameState.money >= GameState.costs.unlockWeak3) { GameState.money -= GameState.costs.unlockWeak3; GameState.unlocks.weak3 = true; updateBaseUI(); checkJournalUnlock(); }});
+
+btnUlStrong.addEventListener('click', () => { if (GameState.money >= GameState.costs.unlockStrong) { GameState.money -= GameState.costs.unlockStrong; GameState.unlocks.strong = true; updateBaseUI(); checkJournalUnlock(); }});
+btnUpSDmg.addEventListener('click', () => { if (GameState.money >= GameState.costs.upSDmg) { GameState.money -= GameState.costs.upSDmg; GameState.comboLevels.sDmg++; GameState.costs.upSDmg = Math.floor(GameState.costs.upSDmg * 1.5); updateBaseUI(); checkJournalUnlock(); }});
+btnUpSRng.addEventListener('click', () => { if (GameState.money >= GameState.costs.upSRng) { GameState.money -= GameState.costs.upSRng; GameState.comboLevels.sRng++; GameState.costs.upSRng = Math.floor(GameState.costs.upSRng * 1.5); updateBaseUI(); checkJournalUnlock(); }});
+
+btnUlCombo1.addEventListener('click', () => { if (GameState.money >= GameState.costs.unlockCombo1) { GameState.money -= GameState.costs.unlockCombo1; GameState.unlocks.combo1 = true; updateBaseUI(); checkJournalUnlock(); }});
+btnUpC1Dmg.addEventListener('click', () => { if (GameState.money >= GameState.costs.upC1Dmg) { GameState.money -= GameState.costs.upC1Dmg; GameState.comboLevels.c1Dmg++; GameState.costs.upC1Dmg = Math.floor(GameState.costs.upC1Dmg * 1.5); updateBaseUI(); checkJournalUnlock(); }});
+btnUpC1Rng.addEventListener('click', () => { if (GameState.money >= GameState.costs.upC1Rng) { GameState.money -= GameState.costs.upC1Rng; GameState.comboLevels.c1Rng++; GameState.costs.upC1Rng = Math.floor(GameState.costs.upC1Rng * 1.5); updateBaseUI(); checkJournalUnlock(); }});
+
+btnUlCombo2.addEventListener('click', () => { if (GameState.money >= GameState.costs.unlockCombo2) { GameState.money -= GameState.costs.unlockCombo2; GameState.unlocks.combo2 = true; updateBaseUI(); checkJournalUnlock(); }});
+btnUpC2Dmg.addEventListener('click', () => { if (GameState.money >= GameState.costs.upC2Dmg) { GameState.money -= GameState.costs.upC2Dmg; GameState.comboLevels.c2Dmg++; GameState.costs.upC2Dmg = Math.floor(GameState.costs.upC2Dmg * 1.5); updateBaseUI(); checkJournalUnlock(); }});
+btnUpC2Rng.addEventListener('click', () => { if (GameState.money >= GameState.costs.upC2Rng) { GameState.money -= GameState.costs.upC2Rng; GameState.comboLevels.c2Rng++; GameState.costs.upC2Rng = Math.floor(GameState.costs.upC2Rng * 1.5); updateBaseUI(); checkJournalUnlock(); }});
+
+// Wave Select Events
+btnWavePrev.addEventListener('click', () => { 
+    if (GameState.selectedWave > 1) { 
+        GameState.selectedWave--; 
+        updateBaseUI(); 
+        if (screens['base'].classList.contains('active') && document.getElementById('tab-status').classList.contains('block')) {
+            initPractice(); // レーン数更新のため
+        }
+    } 
+});
+btnWaveNext.addEventListener('click', () => { 
+    if (GameState.selectedWave < GameState.maxWave) { 
+        GameState.selectedWave++; 
+        updateBaseUI(); 
+        if (screens['base'].classList.contains('active') && document.getElementById('tab-status').classList.contains('block')) {
+            initPractice(); // レーン数更新のため
+        }
+    } 
+});
+
+btnSortie.addEventListener('click', () => {
+    GameState.currentWave = GameState.selectedWave;
+    showScreen('battle');
+});
+
+function renderShelf() {
+    shelfContainer.innerHTML = '';
+    for (let i = 0; i < 40; i++) {
+        const cell = document.createElement('div'); cell.className = 'shelf-cell rounded'; cell.id = `cell_${i}`;
+        cell.addEventListener('dragover', e => { e.preventDefault(); cell.classList.add('drag-over'); });
+        cell.addEventListener('dragleave', () => cell.classList.remove('drag-over'));
+        cell.addEventListener('drop', e => { e.preventDefault(); cell.classList.remove('drag-over'); moveItemToCell(e.dataTransfer.getData('text/plain'), cell.id); });
+        shelfContainer.appendChild(cell);
+    }
+    GameState.inventory.forEach(item => {
+        const targetCell = document.getElementById(item.cellId);
+        if (targetCell) {
+            const elItem = document.createElement('div'); elItem.className = 'item text-3xl'; elItem.id = item.id; elItem.innerText = item.icon; elItem.draggable = true;
+            elItem.addEventListener('mouseenter', () => {
+                let html = `<span class="font-bold ${item.storyTitle ? 'text-yellow-300' : 'text-white'}">${item.name}</span><br>${item.desc}`;
+                itemDesc.innerHTML = html;
+            });
+            elItem.addEventListener('mouseleave', () => itemDesc.innerHTML = 'アイテムをホバーで詳細表示');
+            elItem.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', item.id); setTimeout(() => elItem.style.opacity = '0.5', 0); });
+            elItem.addEventListener('dragend', () => elItem.style.opacity = '1');
+            targetCell.appendChild(elItem);
+        }
+    });
+}
+function moveItemToCell(itemId, newCellId) {
+    const itemIndex = GameState.inventory.findIndex(i => i.id === itemId);
+    if (itemIndex > -1 && document.getElementById(newCellId).children.length === 0) { GameState.inventory[itemIndex].cellId = newCellId; renderShelf(); }
+}
+
+
+// === ゲーム共通ロジック ===
+
+// ★動的レーン数の設定
+const LANE_HEIGHT = 80;
+let currentRowCount = 1;
+
+function getLaneY(row, cvsHeight, rowCount) {
+    const totalHeight = rowCount * LANE_HEIGHT;
+    const startY = (cvsHeight / 2) - (totalHeight / 2) + (LANE_HEIGHT / 2);
+    return startY + row * LANE_HEIGHT;
+}
+
+function getRowFromY(my, cvsHeight, rowCount) {
+    const totalHeight = rowCount * LANE_HEIGHT;
+    const startY = (cvsHeight / 2) - (totalHeight / 2);
+    let row = Math.floor((my - startY) / LANE_HEIGHT);
+    return Math.max(0, Math.min(rowCount - 1, row));
+}
+
+function determineAttack(combo, key) {
+    let ad = null, dmgMult = 1.0, skillName = null, skillColor = null;
+    let resetCombo = false;
+    let cd = 0;
+
+    if (key === 'x') {
+        if (combo === 'zzx' && GameState.unlocks.combo2) {
+            const cRange = (150 + ((GameState.comboLevels.c2Rng - 1) * 30)) / 4;
+            ad = { type: 'wide', range: cRange, height: LANE_HEIGHT*3, color: 'rgba(250, 204, 21, 0.7)', maxDuration: 0.3, knockback: 10 };
+            dmgMult = 1.2 + ((GameState.comboLevels.c2Dmg - 1) * 0.2);
+            skillName = "グランド・クロス"; skillColor = "from-yellow-300 to-orange-500";
+            cd = 0.4;
+        } else if (combo === 'zx' && GameState.unlocks.combo1) {
+            const cRange = 250 + ((GameState.comboLevels.c1Rng - 1) * 60);
+            ad = { type: 'pierce', range: cRange, height: 60, color: 'rgba(56, 189, 248, 0.7)', maxDuration: 0.2, knockback: 15 };
+            dmgMult = 1.3 + ((GameState.comboLevels.c1Dmg - 1) * 0.25);
+            skillName = "ピアシング・レイ"; skillColor = "from-cyan-400 to-blue-600";
+            cd = 0.4;
+        } else if (GameState.unlocks.strong) {
+            const cRange = 120 + ((GameState.comboLevels.sRng - 1) * 30);
+            ad = { type: 'front-wide', range: cRange, height: LANE_HEIGHT*3, color: 'rgba(248, 113, 113, 0.6)', maxDuration: 0.3, knockback: 12 };
+            dmgMult = 1.5 + ((GameState.comboLevels.sDmg - 1) * 0.2);
+            skillName = "ワイド・スウィープ"; skillColor = "from-red-400 to-red-600";
+            cd = 1.2; 
+        }
+        resetCombo = true;
+    } else {
+        if (combo === 'z') {
+            ad = { type: 'normal', range: 100, height: 30, color: 'rgba(255, 255, 255, 0.5)', maxDuration: 0.1, knockback: 2 };
+            dmgMult = 1.0;
+            cd = 0.15;
+        } else if (combo === 'zz' && GameState.unlocks.weak2) {
+            ad = { type: 'normal', range: 120, height: 35, color: 'rgba(255, 255, 255, 0.6)', maxDuration: 0.1, knockback: 3 };
+            dmgMult = 1.2;
+            cd = 0.15;
+        } else if (combo === 'zzz' && GameState.unlocks.weak3) {
+            ad = { type: 'normal', range: 150, height: 40, color: 'rgba(255, 255, 255, 0.8)', maxDuration: 0.15, knockback: 5 };
+            dmgMult = 1.5;
+            resetCombo = true;
+            cd = 0.6; 
+        } else {
+            ad = { type: 'normal', range: 100, height: 30, color: 'rgba(255, 255, 255, 0.5)', maxDuration: 0.1, knockback: 2 };
+            dmgMult = 1.0;
+            resetCombo = 'z'; 
+            cd = 0.15;
+        }
+    }
+    return { ad, dmgMult, skillName, skillColor, resetCombo, cd };
+}
+
+// --- エンティティ ---
+class Player {
+    constructor() {
+        this.row = Math.floor(currentRowCount / 2); // ★初期位置を中央レーンに
+        this.facing = 1; this.size = 24; this.color = '#3b82f6';
+        this.comboHistory = []; this.comboTimer = 0; this.attackCooldown = 0; this.lastMaxCooldown = 0;
+        this.isAttacking = false; this.attackData = null;
+    }
+    // ★移動制限を動的レーン数に対応
+    move(dirRow) { if (!this.isAttacking) this.row = Math.max(0, Math.min(currentRowCount - 1, this.row + dirRow)); }
+    turn(dir) { if (!this.isAttacking) this.facing = dir; }
+    update(dt, onComboReset) {
+        if (this.attackCooldown > 0) this.attackCooldown -= dt;
+        if (this.comboTimer > 0) {
+            this.comboTimer -= dt;
+            if (this.comboTimer <= 0) { this.comboHistory = []; if(onComboReset) onComboReset(); }
+        }
+        if (this.isAttacking && this.attackData) {
+            this.attackData.duration -= dt;
+            if (this.attackData.duration <= 0) this.isAttacking = false;
+        }
+    }
+    draw(ctx, w, h) {
+        const x = w / 2;
+        const y = getLaneY(this.row, h, currentRowCount);
+        
+        ctx.save();
+        
+        // 影
+        ctx.fillStyle = 'rgba(0,0,0,0.3)';
+        ctx.beginPath();
+        ctx.ellipse(x, y + 16, 12, 4, 0, 0, Math.PI*2);
+        ctx.fill();
+
+        // プレイヤーの体の向きに合わせて反転
+        if (this.facing === -1) {
+            ctx.translate(x, y);
+            ctx.scale(-1, 1);
+            ctx.translate(-x, -y);
+        }
+
+        // 足
+        ctx.fillStyle = '#1e3a8a';
+        ctx.fillRect(x - 6, y + 6, 4, 10);
+        ctx.fillRect(x + 2, y + 6, 4, 10);
+        
+        // 胴体 (防具)
+        ctx.fillStyle = this.color;
+        ctx.fillRect(x - 8, y - 8, 16, 16);
+        ctx.fillStyle = '#60a5fa';
+        ctx.fillRect(x - 4, y - 4, 8, 10); 
+
+        // 頭 (兜)
+        ctx.fillStyle = '#cbd5e1';
+        ctx.fillRect(x - 6, y - 20, 12, 12);
+        // バイザー
+        ctx.fillStyle = '#38bdf8';
+        ctx.fillRect(x + 2, y - 16, 6, 4);
+
+        // 腕と剣
+        ctx.fillStyle = '#94a3b8'; // 腕
+        ctx.fillRect(x - 4, y - 6, 12, 4);
+        
+        // 剣
+        let swordAngle = 0;
+        let swordX = x + 6;
+        let swordY = y - 4;
+        
+        if (this.isAttacking && this.attackData) {
+            let t = 1 - (this.attackData.duration / this.attackData.maxDuration);
+            swordAngle = (Math.PI / 4) + (t * Math.PI); // 振り下ろし
+            swordX += 4;
+        } else {
+            swordAngle = -Math.PI / 6; // 構え
+        }
+
+        ctx.translate(swordX, swordY);
+        ctx.rotate(swordAngle);
+        ctx.fillStyle = '#b45309'; // 柄
+        ctx.fillRect(-2, -2, 4, 8);
+        ctx.fillStyle = '#fbbf24'; // 鍔
+        ctx.fillRect(-6, -4, 12, 2);
+        ctx.fillStyle = '#e2e8f0'; // 刃
+        ctx.beginPath();
+        ctx.moveTo(-3, -4); ctx.lineTo(-2, -30); ctx.lineTo(0, -34); ctx.lineTo(2, -30); ctx.lineTo(3, -4);
+        ctx.fill();
+        ctx.rotate(-swordAngle);
+        ctx.translate(-swordX, -swordY);
+        
+        ctx.restore();
+
+        // 攻撃エフェクト
+        if (this.isAttacking && this.attackData) {
+            const ad = this.attackData;
+            ctx.fillStyle = ad.color;
+            ctx.globalAlpha = Math.max(0, ad.duration / ad.maxDuration);
+            
+            const fx = this.facing;
+            
+            if (ad.type === 'normal') {
+                ctx.beginPath();
+                ctx.arc(x + (10 * fx), y, ad.range, -Math.PI/3, Math.PI/3, fx===-1);
+                ctx.lineTo(x + (10 * fx), y);
+                ctx.fill();
+            } else if (ad.type === 'pierce') {
+                ctx.fillRect(x + (16 * fx), y - ad.height/2, ad.range * fx, ad.height);
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(x + (16 * fx), y - 2, ad.range * fx, 4);
+            } else if (ad.type === 'wide' || ad.type === 'front-wide') {
+                // ★ワイド系攻撃のエフェクト描画も動的レーンに対応
+                const minRow = Math.max(0, this.row - 1);
+                const maxRow = Math.min(currentRowCount - 1, this.row + 1);
+                const topY = getLaneY(minRow, h, currentRowCount);
+                const bottomY = getLaneY(maxRow, h, currentRowCount);
+                const rectH = (bottomY - topY) + LANE_HEIGHT;
+                
+                if (ad.type === 'wide') {
+                    ctx.fillRect(x - 25, y - LANE_HEIGHT/2, (ad.range + 25) * fx, LANE_HEIGHT);
+                    ctx.fillRect(x + (ad.range/2 * fx) - LANE_HEIGHT/2, topY - LANE_HEIGHT/2, LANE_HEIGHT, rectH);
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(x + (10 * fx), y, ad.range, -Math.PI/1.5, Math.PI/1.5, fx===-1);
+                    ctx.lineTo(x + (10 * fx), y);
+                    ctx.fill();
+                }
+            }
+            ctx.globalAlpha = 1.0;
+        }
+
+        // 硬直ゲージ
+        if (this.attackCooldown > 0 && this.lastMaxCooldown > 0) {
+            const ratio = Math.max(0, this.attackCooldown / this.lastMaxCooldown);
+            const barW = 40;
+            ctx.fillStyle = 'rgba(0,0,0,0.7)';
+            ctx.fillRect(x - barW/2, y + 25, barW, 6);
+            ctx.fillStyle = this.attackCooldown > 0.4 ? 'rgba(255, 100, 100, 0.9)' : 'rgba(255, 200, 0, 0.9)';
+            ctx.fillRect(x - barW/2, y + 25, barW * ratio, 6);
+        }
+    }
+}
+
+class Enemy {
+    constructor(row, side, waveMult, isTough) {
+        this.row = row; this.side = side; this.size = isTough ? 18 : 12;
+        this.speed = (isTough ? 30 : 45 + Math.random() * 20) * (1 + (waveMult - 1) * 0.2);
+        this.x = 0; 
+        this.y = 0; 
+        this.maxHp = (isTough ? 60 : 20) * waveMult; this.hp = this.maxHp;
+        this.color = isTough ? '#b91c1c' : '#ef4444';
+        this.damage = (isTough ? 20 : 10) * waveMult;
+        this.value = Math.max(1, Math.floor((isTough ? 7.5 : 1.5) * Math.sqrt(waveMult))); 
+        this.knockback = 0;
+    }
+    update(dt, w) {
+        const cx = w / 2;
+        if (this.knockback > 0) {
+            this.x -= this.side * this.knockback * dt * 10;
+            this.knockback -= dt * 20;
+        } else {
+            this.x += this.side * this.speed * dt;
+            if (this.side === 1 && this.x > cx - 35) this.x = cx - 35;
+            if (this.side === -1 && this.x < cx + 35) this.x = cx + 35;
+        }
+    }
+    draw(ctx) {
+        ctx.save();
+        
+        ctx.fillStyle = 'rgba(0,0,0,0.3)';
+        ctx.beginPath();
+        ctx.ellipse(this.x, this.y + this.size, this.size*0.8, 4, 0, 0, Math.PI*2);
+        ctx.fill();
+
+        if (this.side === -1) {
+            ctx.translate(this.x, this.y);
+            ctx.scale(-1, 1);
+            ctx.translate(-this.x, -this.y);
+        }
+
+        ctx.fillStyle = this.color;
+        
+        if (this.maxHp >= 60) {
+            ctx.fillRect(this.x - this.size, this.y - this.size, this.size*2, this.size*2);
+            ctx.fillStyle = '#450a0a';
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y - this.size);
+            ctx.lineTo(this.x + 8, this.y - this.size - 12);
+            ctx.lineTo(this.x + 12, this.y - this.size);
+            ctx.fill();
+            ctx.fillStyle = '#fef08a';
+            ctx.fillRect(this.x + 4, this.y - 4, 8, 4);
+            ctx.fillStyle = '#334155';
+            ctx.fillRect(this.x - this.size - 2, this.y + this.size - 4, this.size*2 + 4, 6);
+        } else {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.arc(this.x + this.size*0.4, this.y - 2, this.size/3, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#000';
+            ctx.beginPath();
+            ctx.arc(this.x + this.size*0.5, this.y - 2, this.size/6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#94a3b8';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.ellipse(this.x, this.y + this.size*0.5, this.size*1.2, this.size*0.4, 0, 0, Math.PI*2);
+            ctx.stroke();
+        }
+
+        ctx.restore();
+
+        if (this.hp < this.maxHp) {
+            ctx.fillStyle = 'red'; ctx.fillRect(this.x - 10, this.y - this.size - 10, 20, 3);
+            ctx.fillStyle = 'lightgreen'; ctx.fillRect(this.x - 10, this.y - this.size - 10, 20 * (this.hp / this.maxHp), 3);
+        }
+    }
+}
+
+class Particle {
+    constructor(x, y, vx, vy, life, color, size) { this.x=x; this.y=y; this.vx=vx; this.vy=vy; this.maxLife=life; this.life=life; this.color=color; this.size=size; }
+    update(dt) { this.x+=this.vx*dt; this.y+=this.vy*dt; this.life-=dt; }
+    draw(ctx) { ctx.fillStyle=this.color; ctx.globalAlpha=Math.max(0,this.life/this.maxLife); ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); ctx.globalAlpha=1.0; }
+}
+
+class DamageText {
+    constructor(x, y, text, isCritical) {
+        this.x = x + (Math.random() * 20 - 10); this.y = y - 10;
+        this.text = Math.floor(text).toString();
+        this.life = 0.8; this.maxLife = 0.8; this.vy = -40; this.isCritical = isCritical;
+    }
+    update(dt) { this.y += this.vy * dt; this.life -= dt; }
+    draw(ctx) {
+        ctx.save(); ctx.globalAlpha = Math.max(0, this.life / this.maxLife);
+        ctx.font = this.isCritical ? "900 24px sans-serif" : "bold 16px sans-serif";
+        ctx.fillStyle = this.isCritical ? "#fbbf24" : "#ffffff"; ctx.textAlign = "center";
+        ctx.strokeStyle = "#000000"; ctx.lineWidth = this.isCritical ? 4 : 3;
+        ctx.strokeText(this.text, this.x, this.y); ctx.fillText(this.text, this.x, this.y); ctx.restore();
+    }
+}
+
+
+// === 操作ハンドラ ===
+function triggerAction(key, isPractice) {
+    if (key === 'z') GameState.stats.zCount++;
+    if (key === 'x') GameState.stats.xCount++;
+
+    if (isPractice) {
+        doPlayerAction(pPlayer, key, true);
+    } else if (isWaveActive) {
+        doPlayerAction(player, key, false);
+    }
+    checkAchievements();
+}
+
+window.tryMove = function(dir) {
+    if (screens['battle'].classList.contains('active') && isWaveActive) player.move(dir);
+    else if (screens['base'].classList.contains('active') && document.getElementById('tab-status').classList.contains('block')) pPlayer.move(dir);
+};
+window.tryTurn = function(dir) {
+    if (screens['battle'].classList.contains('active') && isWaveActive) player.turn(dir);
+    else if (screens['base'].classList.contains('active') && document.getElementById('tab-status').classList.contains('block')) pPlayer.turn(dir);
+};
+
+window.addEventListener('keydown', e => {
+    const k = e.key.toLowerCase();
+    let btnId = null;
+    let isPrac = screens['base'].classList.contains('active') && document.getElementById('tab-status').classList.contains('block');
+    let isBat = screens['battle'].classList.contains('active') && isWaveActive;
+    if (!isPrac && !isBat) return;
+
+    if (k === 'w' || e.key === 'ArrowUp') { window.tryMove(-1); btnId = 'vbtn-up'; }
+    if (k === 's' || e.key === 'ArrowDown') { window.tryMove(1); btnId = 'vbtn-down'; }
+    if (k === 'a' || e.key === 'ArrowLeft') { window.tryTurn(-1); btnId = 'vbtn-left'; }
+    if (k === 'd' || e.key === 'ArrowRight') { window.tryTurn(1); btnId = 'vbtn-right'; }
+    
+    if (k === 'z' || k === 'j') { triggerAction('z', isPrac); btnId = 'vbtn-z'; }
+    if (k === 'x' || k === 'k') { triggerAction('x', isPrac); btnId = 'vbtn-x'; }
+
+    if (btnId && isBat) {
+        const btn = document.getElementById(btnId);
+        if (btn) btn.classList.add('key-active');
+    }
+});
+
+window.addEventListener('keyup', e => {
+    const k = e.key.toLowerCase();
+    let btnId = null;
+    if (k === 'w' || e.key === 'ArrowUp') btnId = 'vbtn-up';
+    if (k === 's' || e.key === 'ArrowDown') btnId = 'vbtn-down';
+    if (k === 'a' || e.key === 'ArrowLeft') btnId = 'vbtn-left';
+    if (k === 'd' || e.key === 'ArrowRight') btnId = 'vbtn-right';
+    if (k === 'z' || k === 'j') btnId = 'vbtn-z';
+    if (k === 'x' || k === 'k') btnId = 'vbtn-x';
+
+    if (btnId && screens['battle'].classList.contains('active')) {
+        const btn = document.getElementById(btnId);
+        if (btn) btn.classList.remove('key-active');
+    }
+});
+
+canvas.addEventListener('mousemove', e => {
+    if (!isWaveActive || !player || player.isAttacking) return;
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left; const my = e.clientY - rect.top;
+    const cx = canvas.width / 2;
+    player.turn(mx < cx ? -1 : 1);
+    // ★マウスY座標から動的レーンを計算
+    player.row = getRowFromY(my, canvas.height, currentRowCount);
+});
+canvas.addEventListener('mousedown', e => {
+    if (!isWaveActive) return;
+    e.preventDefault();
+    if (player && !player.isAttacking) {
+        const rect = canvas.getBoundingClientRect();
+        player.turn((e.clientX - rect.left) < canvas.width/2 ? -1 : 1);
+    }
+    if (e.button === 0) triggerAction('z', false);
+    else if (e.button === 2) triggerAction('x', false);
+});
+canvas.addEventListener('contextmenu', e => e.preventDefault());
+
+// ★練習キャンバスでもマウス移動でレーンを切り替えられるように
+pCanvas.addEventListener('mousemove', e => {
+    if (!screens['base'].classList.contains('active') || !document.getElementById('tab-status').classList.contains('block')) return;
+    if (!pPlayer || pPlayer.isAttacking) return;
+    const rect = pCanvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left; const my = e.clientY - rect.top;
+    const cx = pCanvas.width / 2;
+    pPlayer.turn(mx < cx ? -1 : 1);
+    pPlayer.row = getRowFromY(my, pCanvas.height, currentRowCount);
+});
+pCanvas.addEventListener('mousedown', e => {
+    if (!screens['base'].classList.contains('active') || !document.getElementById('tab-status').classList.contains('block')) return;
+    e.preventDefault();
+    if (pPlayer && !pPlayer.isAttacking) {
+        const rect = pCanvas.getBoundingClientRect();
+        pPlayer.turn((e.clientX - rect.left) < pCanvas.width/2 ? -1 : 1);
+    }
+    if (e.button === 0) triggerAction('z', true);
+    else if (e.button === 2) triggerAction('x', true);
+});
+pCanvas.addEventListener('contextmenu', e => e.preventDefault());
+
+
+// === ロジックコア ===
+function doPlayerAction(targetPlayer, key, isPractice) {
+    if (targetPlayer.attackCooldown > 0) return;
+
+    if (!isPractice && GameState.unlocks.autoAim) {
+        let cx = canvas.width / 2;
+        let threat = enemies.find(e => e.row === targetPlayer.row && Math.abs(e.x - cx) <= 50);
+        if (threat) targetPlayer.turn(threat.x < cx ? -1 : 1);
+    }
+
+    targetPlayer.comboHistory.push(key);
+    targetPlayer.comboTimer = 1.0;
+    const combo = targetPlayer.comboHistory.join('');
+    
+    const atkDef = determineAttack(combo, key);
+
+    if (atkDef.resetCombo === true) targetPlayer.comboHistory = [];
+    else if (atkDef.resetCombo === 'z') targetPlayer.comboHistory = ['z'];
+    
+    if (atkDef.ad) { 
+        targetPlayer.attackCooldown = atkDef.cd;
+        targetPlayer.lastMaxCooldown = atkDef.cd;
+    }
+
+    updateComboGuideUI(targetPlayer.comboHistory, isPractice);
+    if (atkDef.skillName) showSkillAnim(atkDef.skillName, atkDef.skillColor, isPractice);
+
+    if (atkDef.ad) {
+        executeHitCheck(targetPlayer, atkDef.ad, atkDef.dmgMult, isPractice);
+    }
+}
+
+function updateComboGuideUI(history, isPractice) {
+    const guideId = isPractice ? 'prac-guide-container' : 'battle-guide-container';
+    const guideEl = document.getElementById(guideId);
+    if (!guideEl) return;
+    
+    const comboStr = history.join('');
+    let zText = "", zColor = "bg-blue-600", zDisabled = false;
+    let xText = "", xColor = "bg-red-600", xDisabled = false;
+
+    if (comboStr === '') {
+        zText = "弱攻撃 (1段目)";
+        if(GameState.unlocks.strong) { xText = "ワイド・スウィープ"; } else { xText = "未解放"; xDisabled = true; }
+    } else if (comboStr === 'z') {
+        if(GameState.unlocks.weak2) { zText = "弱攻撃 (2段目)"; } else { zText = "未解放"; zDisabled = true; }
+        if(GameState.unlocks.combo1) { xText = "ピアシング・レイ"; } else { xText = "未解放"; xDisabled = true; }
+    } else if (comboStr === 'zz') {
+        if(GameState.unlocks.weak3) { zText = "弱攻撃 (3段目)"; } else { zText = "未解放"; zDisabled = true; }
+        if(GameState.unlocks.combo2) { xText = "グランド・クロス"; } else { xText = "未解放"; xDisabled = true; }
+    } else {
+        guideEl.innerHTML = `<div class="text-gray-400 text-sm font-bold py-2 px-4 text-center">--- 硬直中 ---</div>`;
+        return;
+    }
+
+    guideEl.innerHTML = `
+        <div class="flex flex-col md:flex-row gap-2 md:gap-4 w-full justify-center">
+            <div class="flex items-center gap-2 text-white text-xs md:text-sm font-bold bg-gray-800 p-2 rounded border border-gray-600 ${zDisabled ? 'opacity-40' : ''}">
+                <span class="${zColor} text-[10px] md:text-xs px-2 py-1 rounded w-10 text-center border border-blue-400">弱</span>
+                <span>${zText}</span>
+            </div>
+            <div class="flex items-center gap-2 text-white text-xs md:text-sm font-bold bg-gray-800 p-2 rounded border border-gray-600 ${xDisabled ? 'opacity-40' : ''}">
+                <span class="${xColor} text-[10px] md:text-xs px-2 py-1 rounded w-10 text-center border border-red-400">強</span>
+                <span>${xText}</span>
+            </div>
+        </div>
+    `;
+}
+
+function showSkillAnim(name, colorClass, isPractice) {
+    const el = isPractice ? pracHudSkill : hudSkillName;
+    if(!el) return;
+    el.innerText = name;
+    el.className = `text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r ${colorClass} drop-shadow-[0_4px_4px_rgba(0,0,0,1)] tracking-widest transition-all duration-300 opacity-100 transform scale-100 mt-1 md:mt-4 italic absolute top-10 whitespace-nowrap`;
+    setTimeout(() => { el.style.opacity = '0'; el.style.transform = 'scale(1.5)'; }, 800);
+}
+
+function executeHitCheck(tPlayer, ad, dmgMult, isPractice) {
+    tPlayer.isAttacking = true;
+    ad.duration = ad.maxDuration;
+    tPlayer.attackData = ad;
+
+    let baseDamage = GameState.playerStats.atk * dmgMult;
+    const isCritical = Math.random() < 0.0025;
+    const cvsW = isPractice ? pCanvas.width : canvas.width;
+    const cvsH = isPractice ? pCanvas.height : canvas.height;
+    const cx = cvsW / 2;
+    
+    let partsArr = isPractice ? pParticles : particles;
+    let dmgTxtArr = isPractice ? pDamageTexts : damageTexts;
+    let enemyArr = isPractice ? pEnemies : enemies;
+
+    if (isCritical) {
+        GameState.stats.critCount++; 
+        baseDamage *= 10;
+        ad.range = cvsW; ad.color = 'rgba(255, 0, 0, 0.8)';
+        if(ad.type==='normal') ad.type = 'wide';
+        showSkillAnim("CRITICAL!", "from-red-500 to-yellow-500", isPractice);
+        for(let i=0; i<30; i++) partsArr.push(new Particle(cx, getLaneY(tPlayer.row, cvsH, currentRowCount), (Math.random()-0.5)*1000, (Math.random()-0.5)*1000, 0.5, '#fbbf24', Math.random()*10+5));
+    }
+
+    const hitEnemies = [];
+    
+    enemyArr.forEach(e => {
+        let hit = false;
+        let eLeft, eRight;
+        if (tPlayer.facing === 1) { eLeft = cx; eRight = cx + ad.range; }
+        else { eRight = cx; eLeft = cx - ad.range; }
+        
+        if (ad.type === 'wide') {
+            let bLeft, bRight;
+            if (tPlayer.facing === 1) { bRight = cx; bLeft = cx - 25; }
+            else { bLeft = cx; bRight = cx + 25; }
+            if (Math.abs(e.row - tPlayer.row) <= 1) {
+                if ((e.x + e.size >= eLeft && e.x - e.size <= eRight) || (e.x + e.size >= bLeft && e.x - e.size <= bRight)) hit = true;
+            }
+        } else if (ad.type === 'front-wide') {
+            if (Math.abs(e.row - tPlayer.row) <= 1) {
+                if (e.x + e.size >= eLeft && e.x - e.size <= eRight) hit = true;
+            }
+        } else {
+            if (e.row === tPlayer.row) {
+                if (e.x + e.size >= eLeft && e.x - e.size <= eRight) hit = true;
+            }
+        }
+
+        if (hit) {
+            hitEnemies.push(e);
+            e.hp -= baseDamage;
+            e.knockback = ad.knockback;
+            dmgTxtArr.push(new DamageText(e.x, e.y - e.size, baseDamage, isCritical));
+            for(let i=0; i<3; i++) partsArr.push(new Particle(e.x, e.y, (Math.random()-0.5)*300, (Math.random()-0.5)*300, 0.2, '#fff', 3));
+        }
+    });
+
+    if (!isPractice) {
+        hitEnemies.forEach(e => {
+            if (e.hp <= 0) {
+                GameState.sessionMoney += e.value;
+                GameState.stats.kills++;
+                for(let i=0; i<8; i++) partsArr.push(new Particle(e.x, e.y, (Math.random()-0.5)*400, (Math.random()-0.5)*400, 0.4, e.color, Math.random()*4+2));
+                enemies.splice(enemies.indexOf(e), 1);
+            }
+        });
+        updateHUD();
+        checkWaveEnd();
+    } else {
+        hitEnemies.forEach(e => { e.hp = e.maxHp; });
+    }
+}
+
+
+// === 練習キャンバスロジック ===
+let pPlayer;
+let pEnemies = [];
+let pParticles = [];
+let pDamageTexts = [];
+
+function initPractice() {
+    pCanvas.width = pCanvas.parentElement.clientWidth;
+    pCanvas.height = pCanvas.parentElement.clientHeight;
+    
+    // ★拠点画面で選択中のWaveに合わせてレーン数を更新
+    currentRowCount = Math.min(5, GameState.selectedWave);
+    
+    pPlayer = new Player();
+    pEnemies = [];
+    
+    // ★レーン数に合わせて敵を配置
+    for(let i=0; i<currentRowCount; i++) {
+        let e = new Enemy(i, -1, 1, i===Math.floor(currentRowCount/2));
+        e.speed = 0; e.hp = 9999; e.maxHp = 9999;
+        e.x = (pCanvas.width / 2) + 120;
+        e.y = getLaneY(i, pCanvas.height, currentRowCount) + (Math.random()*10-5);
+        pEnemies.push(e);
+        
+        let e2 = new Enemy(i, 1, 1, false); 
+        e2.speed = 0; e2.hp = 9999; e2.maxHp = 9999;
+        e2.x = (pCanvas.width / 2) - 120;
+        e2.y = getLaneY(i, pCanvas.height, currentRowCount) + (Math.random()*10-5);
+        pEnemies.push(e2);
+    }
+    updateComboGuideUI([], true);
+}
+
+
+// === メインバトルロジック ===
+
+function commitSessionRewards() {
+    GameState.money += GameState.sessionMoney;
+    
+    let newArchivesCount = 0;
+    GameState.sessionDrops.forEach(dropItem => {
+        if (dropItem.storyTitle && !GameState.inventory.some(i => i.id === dropItem.id)) {
+            newArchivesCount++;
+        }
+        let emptyId = null;
+        for (let i=0; i<40; i++) { if (!GameState.inventory.some(item => item.cellId === `cell_${i}`)) { emptyId = `cell_${i}`; break; } }
+        if (emptyId) { dropItem.cellId = emptyId; GameState.inventory.push(dropItem); }
+    });
+
+    if (newArchivesCount > 0) {
+        const buffAtk = newArchivesCount * 2;
+        const buffHp = newArchivesCount * 20;
+        GameState.playerStats.atk += buffAtk;
+        GameState.playerStats.maxHp += buffHp;
+        setTimeout(() => showMessageToast("文明の復元ボーナス", `基礎攻撃力+${buffAtk} / 最大HP+${buffHp}`, "bg-yellow-700"), 500);
+    }
+    
+    GameState.sessionMoney = 0;
+    GameState.sessionDrops = [];
+}
+
+function startBattleSession() {
+    GameState.sessionMoney = 0; GameState.sessionDrops = []; GameState.playerStats.hp = GameState.playerStats.maxHp;
+    
+    // ★出撃するWaveに合わせてレーン数を更新
+    currentRowCount = Math.min(5, GameState.currentWave);
+    
+    player = new Player();
+    startWave(GameState.currentWave);
+    updateComboGuideUI([], false);
+}
+
+function startWave(waveNum) {
+    waveModal.classList.add('hidden'); enemies = []; particles = []; damageTexts = []; isWaveActive = true;
+    hudWave.innerText = waveNum;
+    enemiesToSpawn = 15 + waveNum * 10; 
+    spawnTimer = 0;
+    currentWaveMult = 1 + ((waveNum - 1) * 0.2); 
+    updateHUD();
+}
+
+function updateHUD() {
+    hudBaseMoney.innerText = GameState.money;
+    hudSessionMoney.innerText = GameState.sessionMoney;
+    hudHpVal.innerText = Math.max(0, Math.floor(GameState.playerStats.hp));
+    hudMaxHpVal.innerText = GameState.playerStats.maxHp;
+    hudEnemies.innerText = enemies.length + enemiesToSpawn;
+    const hpPercent = Math.max(0, GameState.playerStats.hp / GameState.playerStats.maxHp) * 100;
+    hudHpBar.style.width = hpPercent + '%';
+    hudHpBar.className = `h-full w-full transition-all duration-200 ${hpPercent < 30 ? 'bg-red-500' : 'bg-green-500'}`;
+}
+
+function checkWaveEnd() {
+    if (enemiesToSpawn <= 0 && enemies.length === 0 && isWaveActive) { 
+        isWaveActive = false; 
+        if (GameState.currentWave >= GameState.maxWave) GameState.maxWave = GameState.currentWave + 1;
+        showWaveModal(); 
+    }
+}
+
+function checkBaseDamage(dt) {
+    const cx = canvas.width / 2;
+    enemies.forEach(e => {
+        if (Math.abs(e.x - cx) <= 40) {
+            GameState.playerStats.hp -= e.damage * dt;
+            ctx.fillStyle = 'rgba(255,0,0,0.1)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+            if (GameState.playerStats.hp <= 0) {
+                isWaveActive = false;
+                GameState.sessionMoney = Math.floor(GameState.sessionMoney / 2);
+                GameState.sessionDrops = []; 
+                GameState.money += GameState.sessionMoney; 
+                GameState.sessionMoney = 0;
+                deathModal.classList.remove('hidden');
+            }
+        }
+    });
+    updateHUD();
+}
+
+// ★動的レーン描画に対応
+function drawCommonBg(c_ctx, w, h, rowCount) {
+    c_ctx.strokeStyle = '#334155'; c_ctx.lineWidth = 2;
+    for (let i = 0; i < rowCount; i++) {
+        const y = getLaneY(i, h, rowCount);
+        c_ctx.beginPath(); c_ctx.moveTo(0, y); c_ctx.lineTo(w, y); c_ctx.stroke();
+        c_ctx.strokeStyle = '#1e293b'; 
+        c_ctx.beginPath(); c_ctx.moveTo(0, y - LANE_HEIGHT/2); c_ctx.lineTo(w, y - LANE_HEIGHT/2); c_ctx.stroke();
+        c_ctx.strokeStyle = '#334155';
+    }
+    // 一番下のレーンの下枠も描画
+    const bottomY = getLaneY(rowCount - 1, h, rowCount) + LANE_HEIGHT/2;
+    c_ctx.strokeStyle = '#1e293b'; 
+    c_ctx.beginPath(); c_ctx.moveTo(0, bottomY); c_ctx.lineTo(w, bottomY); c_ctx.stroke();
+
+    const cx = w/2;
+    c_ctx.fillStyle = 'rgba(59, 130, 246, 0.1)'; c_ctx.fillRect(cx - 40, 0, 80, h);
+    c_ctx.strokeStyle = '#3b82f6';
+    c_ctx.beginPath(); c_ctx.moveTo(cx - 40, 0); c_ctx.lineTo(cx - 40, h); c_ctx.stroke();
+    c_ctx.beginPath(); c_ctx.moveTo(cx + 40, 0); c_ctx.lineTo(cx + 40, h); c_ctx.stroke();
+}
+
+
+// === 統合ゲームループ ===
+function gameLoop(timestamp) {
+    const dt = Math.min((timestamp - lastTime) / 1000, 0.1);
+    lastTime = timestamp;
+
+    if (screens['battle'].classList.contains('active')) {
+        // Battle Loop
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawCommonBg(ctx, canvas.width, canvas.height, currentRowCount);
+
+        if (isWaveActive) {
+            if (enemiesToSpawn > 0) {
+                spawnTimer -= dt;
+                if (spawnTimer <= 0) {
+                    let maxSpawn = GameState.currentWave === 1 ? 1 : (GameState.currentWave === 2 ? 2 : 3);
+                    let spawnCount = Math.floor(Math.random() * maxSpawn) + 1;
+                    for (let i = 0; i < spawnCount && enemiesToSpawn > 0; i++) {
+                        const row = Math.floor(Math.random() * currentRowCount); // ★動的レーン数からスポーン
+                        const side = Math.random() > 0.5 ? 1 : -1;
+                        const isTough = Math.random() < Math.min(0.4, GameState.currentWave * 0.08);
+                        let e = new Enemy(row, side, currentWaveMult, isTough);
+                        e.x = side === 1 ? -50 : canvas.width + 50;
+                        e.y = getLaneY(row, canvas.height, currentRowCount) + (Math.random()*20-10);
+                        enemies.push(e);
+                        enemiesToSpawn--;
+                    }
+                    spawnTimer = 0.4 + Math.random() * 0.6;
+                    updateHUD();
+                }
+            }
+
+            player.update(dt, () => updateComboGuideUI([], false));
+            enemies.forEach(e => e.update(dt, canvas.width));
+            checkBaseDamage(dt);
+            enemies.forEach(e => e.draw(ctx));
+            player.draw(ctx, canvas.width, canvas.height);
+        } else if (player && GameState.playerStats.hp > 0) {
+            player.draw(ctx, canvas.width, canvas.height);
+        }
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i]; p.update(dt); p.draw(ctx);
+            if (p.life <= 0) particles.splice(i, 1);
+        }
+        for (let i = damageTexts.length - 1; i >= 0; i--) {
+            const dtObj = damageTexts[i]; dtObj.update(dt); dtObj.draw(ctx);
+            if (dtObj.life <= 0) damageTexts.splice(i, 1);
+        }
+    } else if (screens['base'].classList.contains('active') && document.getElementById('tab-status').classList.contains('block')) {
+        // Practice Loop
+        pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+        drawCommonBg(pCtx, pCanvas.width, pCanvas.height, currentRowCount);
+
+        if (pPlayer) {
+            pPlayer.update(dt, () => updateComboGuideUI([], true));
+            pEnemies.forEach(e => {
+                if (e.knockback > 0) {
+                    e.x -= e.side * e.knockback * dt * 10;
+                    e.knockback -= dt * 20;
+                } else {
+                    let targetX = (pCanvas.width/2) + (e.side * -120);
+                    e.x += (targetX - e.x) * dt * 5;
+                }
+                e.draw(pCtx);
+            });
+            pPlayer.draw(pCtx, pCanvas.width, pCanvas.height);
+        }
+
+        for (let i = pParticles.length - 1; i >= 0; i--) {
+            const p = pParticles[i]; p.update(dt); p.draw(pCtx);
+            if (p.life <= 0) pParticles.splice(i, 1);
+        }
+        for (let i = pDamageTexts.length - 1; i >= 0; i--) {
+            const dtObj = pDamageTexts[i]; dtObj.update(dt); dtObj.draw(pCtx);
+            if (dtObj.life <= 0) pDamageTexts.splice(i, 1);
+        }
+    }
+
+    requestAnimationFrame(gameLoop);
+}
+
+// === モーダルボタン処理 ===
+function showWaveModal() {
+    modalMoney.innerText = GameState.sessionMoney;
+    
+    let droppedItem = null;
+    const specialArchive = ArchiveDB.find(a => a.targetWave === GameState.currentWave && !GameState.inventory.some(i => i.id === a.id));
+    
+    if (specialArchive) {
+        droppedItem = Object.assign({}, specialArchive);
+    } else {
+        const dropChance = Math.min(0.8, 0.2 + (GameState.currentWave * 0.1));
+        if (Math.random() < dropChance) {
+            droppedItem = Object.assign({ id: 'junk_' + Date.now() }, GameState.itemDB[Math.floor(Math.random() * GameState.itemDB.length)]);
+        }
+    }
+
+    if (droppedItem) {
+        GameState.sessionDrops.push(droppedItem);
+        dropItemIcon.innerText = droppedItem.icon;
+        dropItemName.innerText = droppedItem.name;
+        dropTitle.innerText = droppedItem.storyTitle ? "★ 遺物を回収" : "ジャンク品を回収";
+        dropNotification.classList.remove('hidden');
+    } else { 
+        dropNotification.classList.add('hidden'); 
+    }
+    
+    waveModal.classList.remove('hidden');
+}
+
+btnNextWave.addEventListener('click', () => { 
+    commitSessionRewards(); 
+    GameState.currentWave++; GameState.selectedWave = GameState.currentWave;
+    startWave(GameState.currentWave); 
+});
+
+btnReturn.addEventListener('click', () => {
+    commitSessionRewards(); 
+    waveModal.classList.add('hidden'); isWaveActive = false;
+    GameState.selectedWave = Math.max(1, GameState.maxWave - 1);
+    showScreen('base');
+});
+
+btnDeathReturn.addEventListener('click', () => { 
+    deathModal.classList.add('hidden'); isWaveActive = false;
+    GameState.selectedWave = Math.max(1, GameState.maxWave - 1);
+    showScreen('base'); 
+});
+
+
+// === 初期化 ===
+    resizeCanvas();
+    showScreen('base');
+    lastTime = performance.now();
+    requestAnimationFrame(gameLoop);
+
+window.addEventListener('resize', resizeCanvas);
+
+window.tryMove = tryMove;
+window.tryTurn = tryTurn;
+window.triggerAction = triggerAction;
+
+});
+</script> </main>  </body></html>
