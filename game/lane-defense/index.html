@@ -1372,12 +1372,17 @@ function gameLoop(timestamp) {
     const dt = Math.min((timestamp - lastTime) / 1000, 0.1);
     lastTime = timestamp;
 
-    if (screens['battle'].classList.contains('active')) {
+    if (screens.battle && screens.battle.classList.contains('active')) {
         // Battle Loop
         const container = document.getElementById('canvas-container');
         if (container && (canvas.width !== container.clientWidth || canvas.height !== container.clientHeight)) {
             canvas.width = container.clientWidth;
             canvas.height = container.clientHeight;
+        }
+        // canvasやctxがnullでないことを確認
+        if (!ctx) {
+            requestAnimationFrame(gameLoop);
+            return;
         }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawCommonBg(ctx, canvas.width, canvas.height, currentRowCount);
@@ -1403,11 +1408,11 @@ function gameLoop(timestamp) {
                 }
             }
 
-            player.update(dt, () => updateComboGuideUI([], false));
+            if (player) player.update(dt, () => updateComboGuideUI([], false));
             enemies.forEach(e => e.update(dt, canvas.width));
             checkBaseDamage(dt);
             enemies.forEach(e => e.draw(ctx));
-            player.draw(ctx, canvas.width, canvas.height);
+            if (player) player.draw(ctx, canvas.width, canvas.height);
         } else if (player && GameState.playerStats.hp > 0) {
             player.draw(ctx, canvas.width, canvas.height);
         }
@@ -1420,44 +1425,52 @@ function gameLoop(timestamp) {
             const dtObj = damageTexts[i]; dtObj.update(dt); dtObj.draw(ctx);
             if (dtObj.life <= 0) damageTexts.splice(i, 1);
         }
-    } else if (screens['base'].classList.contains('active') && !document.getElementById('tab-status').classList.contains('hidden')) {
-        // Practice Loop
-        const pContainer = pCanvas.parentElement;
-        if (pContainer && (pCanvas.width !== pContainer.clientWidth || pCanvas.height !== pContainer.clientHeight)) {
-            pCanvas.width = pContainer.clientWidth;
-            pCanvas.height = pContainer.clientHeight;
-        }
-        pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
-        drawCommonBg(pCtx, pCanvas.width, pCanvas.height, currentRowCount);
+    } else if (screens.base && screens.base.classList.contains('active')) {
+        const tabStatus = document.getElementById('tab-status');
+        if (tabStatus && !tabStatus.classList.contains('hidden')) {
+            // Practice Loop
+            const pContainer = pCanvas ? pCanvas.parentElement : null;
+            if (pContainer && pCanvas && (pCanvas.width !== pContainer.clientWidth || pCanvas.height !== pContainer.clientHeight)) {
+                pCanvas.width = pContainer.clientWidth;
+                pCanvas.height = pContainer.clientHeight;
+            }
+             // pCanvasやpCtxがnullでないことを確認
+            if (!pCanvas || !pCtx) {
+                requestAnimationFrame(gameLoop);
+                return;
+            }
+            pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+            drawCommonBg(pCtx, pCanvas.width, pCanvas.height, currentRowCount);
 
-        if (pPlayer) {
-            pPlayer.update(dt, () => updateComboGuideUI([], true));
-            pEnemies.forEach(e => {
-                if (e.knockback > 0) {
-                    e.x -= e.side * e.knockback * dt * 10;
-                    e.knockback -= dt * 20;
-                } else {
-                    let targetX = (pCanvas.width/2) + (e.side * -120);
-                    e.x += (targetX - e.x) * dt * 5;
-                }
-                e.draw(pCtx);
-            });
-            pPlayer.draw(pCtx, pCanvas.width, pCanvas.height);
-        }
+            if (pPlayer) {
+                pPlayer.update(dt, () => updateComboGuideUI([], true));
+                pEnemies.forEach(e => {
+                    if (e.knockback > 0) {
+                        e.x -= e.side * e.knockback * dt * 10;
+                        e.knockback -= dt * 20;
+                    } else {
+                        let targetX = (pCanvas.width/2) + (e.side * -120);
+                        e.x += (targetX - e.x) * dt * 5;
+                    }
+                    e.draw(pCtx);
+                });
+                pPlayer.draw(pCtx, pCanvas.width, pCanvas.height);
+            }
 
-        for (let i = pParticles.length - 1; i >= 0; i--) {
-            const p = pParticles[i]; p.update(dt); p.draw(pCtx);
-            if (p.life <= 0) pParticles.splice(i, 1);
-        }
-        for (let i = pDamageTexts.length - 1; i >= 0; i--) {
-            const dtObj = pDamageTexts[i]; dtObj.update(dt); dtObj.draw(pCtx);
-            if (dtObj.life <= 0) pDamageTexts.splice(i, 1);
+            for (let i = pParticles.length - 1; i >= 0; i--) {
+                const p = pParticles[i]; p.update(dt); p.draw(pCtx);
+                if (p.life <= 0) pParticles.splice(i, 1);
+            }
+            for (let i = pDamageTexts.length - 1; i >= 0; i--) {
+                const dtObj = pDamageTexts[i]; dtObj.update(dt); dtObj.draw(pCtx);
+                if (dtObj.life <= 0) pDamageTexts.splice(i, 1);
+            }
         }
     }
 
     const timerEl = document.getElementById('ui-combo-timer');
     if (timerEl) {
-        let activePlayer = screens['battle'].classList.contains('active') ? player : pPlayer;
+        let activePlayer = (screens.battle && screens.battle.classList.contains('active')) ? player : pPlayer;
         if (activePlayer && activePlayer.comboTimer > 0) {
             let ratio = Math.max(0, activePlayer.comboTimer / 1.0);
             timerEl.style.width = (ratio * 100) + '%';
