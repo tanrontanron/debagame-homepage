@@ -982,17 +982,35 @@ function _drawLimb(ctx, x, y, angle, isArm, isBack, attackType, attackPhase, C, 
     ctx.fillRect(-lw/2, 0, lw, ll);
 
     if (isArm && !isBack && wpnCfg) {
-        ctx.translate(0, ll);
-        const wLen = wpnCfg.armLen * s;
-        const wGrad = ctx.createLinearGradient(0, 0, wpnCfg.armW*s, 0);
-        wGrad.addColorStop(0, wpnCfg.cArm); wGrad.addColorStop(0.5, adjustColor(wpnCfg.cArm, 40)); wGrad.addColorStop(1, wpnCfg.cArm);
-        ctx.fillStyle = wGrad;
-        ctx.fillRect(-wpnCfg.armW/2 * s, 0, wpnCfg.armW * s, wLen);
-        ctx.translate(0, wLen);
-        ctx.fillStyle = wpnCfg.cTip;
-        if (wpnCfg.tipShape === 0) ctx.fillRect(-wpnCfg.tipSize*s/2, -wpnCfg.tipSize*s/2, wpnCfg.tipSize*s, wpnCfg.tipSize*s);
-        else if (wpnCfg.tipShape === 1) { ctx.beginPath(); ctx.arc(0,0,wpnCfg.tipSize*s/2,0,Math.PI*2); ctx.fill(); }
-        else { ctx.beginPath(); ctx.moveTo(0,wpnCfg.tipSize*s/2); ctx.lineTo(-wpnCfg.tipSize*s/2,-wpnCfg.tipSize*s/2); ctx.lineTo(wpnCfg.tipSize*s/2,-wpnCfg.tipSize*s/2); ctx.fill(); }
+        ctx.save();
+        ctx.translate(0, ll - 2*s);
+        ctx.rotate(-jointAngle - 0.2);
+        
+        // 柄
+        ctx.fillStyle = wpnCfg.cGrip || '#475569';
+        ctx.fillRect(-wpnCfg.armW/2 * s, 0, wpnCfg.armW * s, 4*s);
+        
+        // 刃の根本からの光沢グラデーション
+        const baseBlade = wpnCfg.cBlade || '#94a3b8';
+        const bladeW = wpnCfg.tipSize * s; // tipSizeを刃の幅(あるいはサイズ感)として利用
+        const bladeGrad = ctx.createLinearGradient(-bladeW/2, 0, bladeW/2, 0);
+        bladeGrad.addColorStop(0, adjustColor(baseBlade, -20));
+        bladeGrad.addColorStop(0.5, '#ffffff'); // ハイライト
+        bladeGrad.addColorStop(1, baseBlade);
+        ctx.fillStyle = bladeGrad;
+        
+        // 剣身の描画
+        ctx.beginPath();
+        const bBaseY = 4*s; // 柄の先
+        const bLenY = (wpnCfg.armLen + 10) * s;
+        const bTipY = (wpnCfg.armLen + 15) * s;
+        ctx.moveTo(-bladeW/2, bBaseY);
+        ctx.lineTo(bladeW/2, bBaseY);
+        ctx.lineTo(bladeW/4, bLenY);
+        ctx.lineTo(0, bTipY); // 尖端
+        ctx.lineTo(-bladeW/4, bLenY);
+        ctx.fill();
+        ctx.restore();
     }
     ctx.restore();
 }
