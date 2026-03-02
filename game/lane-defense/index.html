@@ -24,7 +24,7 @@
 アイテムをタップ（またはホバー）して詳細を表示
 </div> <div class="overflow-y-auto max-h-80 pb-4"> <div id="shelf-container" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 content-start bg-gray-900 p-3 rounded-xl border border-gray-700 min-h-[160px] shadow-inner"></div> </div> </div> </div> <!-- TAB CONTENT: [Settings] - Main --> <div id="tab-settings-main" class="tab-content hidden space-y-6"> <div class="bg-gray-800 p-5 rounded-lg shadow-lg border border-gray-700"> <h2 class="text-lg font-bold mb-4 border-b border-gray-600 pb-2 flex items-center gap-2"> <span class="w-2 h-6 bg-gray-500 rounded-full"></span>
 ゲーム設定
-</h2> <div class="space-y-4"> <div class="p-4 bg-red-950/30 rounded-xl border border-red-800/50"> <h3 class="font-bold text-red-400 mb-2">⚠️ データリセット</h3> <p class="text-xs text-gray-400 mb-3">すべての進行状況をリセットし、最初からやり直します。<br>この操作は取り消せません。</p> <button id="btn-new-game" class="w-full bg-red-700 hover:bg-red-600 active:scale-95 text-white px-4 py-3 rounded-lg font-black transition-all text-sm border-b-4 border-red-900 shadow-lg">🔄 ニューゲーム</button> </div> </div> </div> </div> <!-- TAB CONTENT: [Settings] - Help --> <div id="tab-help" class="tab-content hidden space-y-6"> <div class="bg-gray-800 p-5 rounded-lg shadow-lg border border-gray-700"> <h2 class="text-lg font-bold mb-4 border-b border-gray-600 pb-2">ゲーム仕様・ヘルプ</h2> <div class="space-y-4 text-gray-300"> <section> <h3 class="text-sm font-bold text-blue-400 mb-2">◆ 基本操作とコンボ</h3> <ul class="list-disc ml-5 space-y-1 text-xs"> <li><strong>移動/向き:</strong> W/S/A/D または十字ボタン</li> <li><strong>攻撃:</strong> Z/J (弱)、X/K (強) またはアクションボタン</li> <li>画面下部にコンボガイドが表示されます。</li> </ul> </section> <section> <h3 class="text-sm font-bold text-yellow-400 mb-2">◆ ウェーブ進行</h3> <ul class="list-disc ml-5 space-y-1 text-xs"> <li>WAVEが進むとレーン数が最大5まで増加</li> <li>敵の数・強さ・速度がWAVEに応じて上昇</li> </ul> </section> <section> <h3 class="text-sm font-bold text-purple-400 mb-2">◆ スキルと成長</h3> <ul class="list-disc ml-5 space-y-1 text-xs"> <li>スキルはツリー形式で解放</li> <li>強攻撃関連の技は解放後に威力と射程を強化可能</li> <li>迎撃サポートAIで自動照準が可能</li> </ul> </section> <section> <h3 class="text-sm font-bold text-emerald-400 mb-2">◆ シナリオと遺物</h3> <ul class="list-disc ml-5 space-y-1 text-xs"> <li>強化を行うと手記が解放されます</li> <li>特定WAVEクリアで遺物を入手→ステータスボーナス</li> </ul> </section> </div> </div> </div> </div> <!-- Footer Navigation Menu (Fixed Bottom) --> <nav id="footer-menu" class="fixed bottom-0 left-0 w-full bg-gray-800/95 backdrop-blur-md border-t border-gray-700 flex justify-around items-center h-20 px-2 pb-safe z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]"> <button class="footer-btn relative flex flex-col items-center justify-center w-1/4 h-full text-blue-400 active-menu border-r border-gray-700" onclick="switchMenu('base')"> <div class="text-2xl mb-1">🏠</div> <span class="text-[10px] font-black tracking-tighter">拠点</span> <span id="badge-menu-base" class="badge-dot hidden"></span> </button> <button class="footer-btn relative flex flex-col items-center justify-center w-1/4 h-full text-gray-500 border-r border-gray-700" onclick="switchMenu('upgrade')"> <div class="text-2xl mb-1">⚡</div> <span class="text-[10px] font-black tracking-tighter">強化</span> <span id="badge-menu-upgrade" class="badge-dot hidden"></span> </button> <button class="footer-btn relative flex flex-col items-center justify-center w-1/4 h-full text-gray-500 border-r border-gray-700" onclick="switchMenu('archive')"> <div class="text-2xl mb-1">📂</div> <span class="text-[10px] font-black tracking-tighter">記録</span> </button> <button class="footer-btn relative flex flex-col items-center justify-center w-1/4 h-full text-gray-500" onclick="switchMenu('settings')"> <div class="text-2xl mb-1">⚙️</div> <span class="text-[10px] font-black tracking-tighter">設定</span> </button> </nav> </div> <!-- ================= 戦闘画面 ================= --> <div id="screen-battle" class="screen"> <div id="canvas-container"> <canvas id="game-canvas"></canvas> <div class="overlay-ui top-0 left-0 w-full p-4 flex justify-between items-start pointer-events-none"> <div> <div class="text-xl font-bold text-white mb-1 shadow-black drop-shadow-md">Wave: <span id="hud-wave">1</span></div> <div class="w-48 h-6 bg-gray-800 border-2 border-gray-600 rounded overflow-hidden"> <div id="hud-hp-bar" class="h-full bg-green-500 w-full transition-all duration-200"></div> </div> <div class="text-sm font-bold shadow-black drop-shadow-md mt-1 text-white">拠点HP: <span id="hud-hp-val">100</span> / <span id="hud-max-hp-val">100</span></div> </div> <!-- ★資金表示 --> <div class="text-right flex flex-col items-end pointer-events-none"> <div class="text-xs font-bold text-gray-300 drop-shadow-md mb-1">確定済: <span id="hud-base-money">0</span> G</div> <div class="text-2xl font-bold text-yellow-400 drop-shadow-md border-b-2 border-yellow-600/50 pb-1 mb-1">+ <span id="hud-session-money">0</span> G</div> <div class="text-sm font-bold drop-shadow-md text-gray-200">残敵: <span id="hud-enemies">0</span></div> </div> </div> <!-- スキル発動名表示 (画面上部中央) --> <div class="overlay-ui top-20 left-0 w-full flex justify-center pointer-events-none z-10 flex-col items-center"> <div id="hud-skill-name" class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 drop-shadow-[0_4px_4px_rgba(0,0,0,1)] tracking-widest transition-all duration-300 opacity-0 transform scale-50 mt-4 italic"></div> </div> <!-- バトル用 動的コンボガイド --> <div class="overlay-ui bottom-8 left-0 w-full flex justify-center pointer-events-none z-0 transition-opacity duration-200"> <div id="battle-guide-container"> <!-- JSで動的に生成 --> </div> </div> <div id="wave-modal" class="overlay-ui top-0 left-0 w-full h-full flex items-center justify-center bg-black/80 hidden pointer-events-auto z-50"> <div class="bg-gray-800 p-8 rounded-lg text-center shadow-2xl border border-gray-600 max-w-md w-11/12"> <h2 class="text-3xl font-bold text-white mb-2">Wave クリア！</h2> <p class="text-gray-300 mb-6">WAVE獲得資金: <span id="modal-money" class="text-yellow-400 font-bold text-2xl">0</span> G</p> <div id="drop-notification" class="mb-6 hidden"> <div class="p-4 bg-gray-900 rounded border border-gray-700 relative overflow-hidden"> <!-- 背景エフェクト風 --> <div class="absolute inset-0 bg-gradient-to-t from-purple-900/30 to-transparent pointer-events-none"></div> <p id="drop-title" class="text-sm text-purple-400 font-bold mb-2 relative z-10">ジャンク品を回収</p> <div id="drop-item-icon" class="text-5xl mb-2 relative z-10 drop-shadow-lg">💎</div> <p id="drop-item-name" class="font-bold text-white relative z-10">名称</p> </div> </div> <p class="text-sm text-gray-400 mb-6 border-t border-gray-600 pt-4">進めば敵は強くなる。帰還すれば安全だ。<br><span class="text-yellow-300 font-bold">※ここまでの報酬は確定されました</span></p> <div class="flex space-x-4 justify-center"> <button id="btn-return" class="bg-gray-600 hover:bg-gray-500 text-white px-6 py-3 rounded font-bold transition flex-1 border border-gray-500">帰還する</button> <button id="btn-next-wave" class="bg-red-600 hover:bg-red-500 text-white px-6 py-3 rounded font-bold transition shadow-lg shadow-red-900/50 flex-1 border border-red-500">次へ進む</button> </div> </div> </div> <div id="death-modal" class="overlay-ui top-0 left-0 w-full h-full flex items-center justify-center bg-red-900/90 hidden pointer-events-auto z-50 backdrop-blur-sm"> <div class="bg-gray-900 p-8 rounded-lg text-center border border-red-500 w-11/12 max-w-md shadow-2xl"> <h2 class="text-4xl font-black text-red-500 mb-4 tracking-widest drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]">拠点壊滅</h2> <p class="text-xl text-gray-200 mb-2 font-bold">拠点が破壊された...</p> <div class="bg-red-950/50 p-4 rounded my-6 border border-red-800"> <p class="text-red-300 font-bold">直前のWAVE獲得資金 半減</p> <p class="text-gray-400 text-sm mt-1">未確定のドロップ品はすべてロスト</p> </div> <button id="btn-death-return" class="bg-gray-700 hover:bg-gray-600 text-white px-8 py-4 rounded font-bold transition w-full text-lg shadow-lg">拠点に戻る</button> </div> </div> </div> </div> <!-- ================= ヘルプモーダル ================= --> <div id="help-modal" class="overlay-ui top-0 left-0 w-full h-full flex items-center justify-center bg-black/80 hidden pointer-events-auto z-50"> <div class="bg-gray-800 p-8 rounded-lg shadow-2xl border border-gray-600 max-w-2xl w-11/12 max-h-[90vh] overflow-y-auto relative text-gray-300"> <button onclick="document.getElementById('help-modal').classList.add('hidden')" class="absolute top-4 right-4 bg-gray-600 hover:bg-gray-500 text-white w-8 h-8 rounded-full font-bold">×</button> <h2 class="text-2xl font-bold text-white mb-6 border-b border-gray-600 pb-2">ゲーム仕様・ヘルプ</h2> <div class="space-y-6"> <section> <h3 class="text-lg font-bold text-blue-400 mb-2">◆ 基本操作とコンボ</h3> <ul class="list-disc ml-5 space-y-1 text-sm"> <li><strong>移動/向き:</strong> W/S/A/D または 左下の十字ボタン</li> <li><strong>攻撃:</strong> Z/J (弱)、X/K (強) または 右下のアクションボタン</li> <li>戦闘画面下部の中央に、現在入力中のルートから派生できる技のガイドが表示されます。</li> <li>攻撃の硬直中は、機体の足元にゲージが表示され、ゲージが消えるまで次の行動ができません。</li> </ul> </section> <section> <h3 class="text-lg font-bold text-yellow-400 mb-2">◆ ウェーブ進行ロジック</h3> <ul class="list-disc ml-5 space-y-1 text-sm"> <li><strong>戦場の拡大:</strong> WAVEの進行に合わせて、敵が侵攻してくるレーン数が<strong class="text-white">最大5レーン</strong>まで段階的に増えていきます。</li> <li><strong>敵の出現数:</strong> <code class="bg-gray-900 px-1 rounded">15体 + (ウェーブ数 × 10)体</code> が出現します。</li> <li><strong>ウェーブ倍率:</strong> <code class="bg-gray-900 px-1 rounded">1.0 + ((ウェーブ数 - 1) × 0.2)</code> の倍率がかかります。(Wave2で1.2倍、Wave5で1.8倍)</li> <li><strong>敵の強さ:</strong> ベースHP(通常20/タフ60)と攻撃力(通常10/タフ20)に、上記の<strong>ウェーブ倍率</strong>が乗算されます。また、移動速度も少しずつ上昇します。</li> <li><strong>獲得資金:</strong> ベース額(通常1.5G/タフ7.5G)に、<code class="bg-gray-900 px-1 rounded">√(ウェーブ倍率)</code> をかけた額がドロップします。</li> <li><strong>スポーン間隔:</strong> 序盤は1体ずつゆっくり湧きますが、Waveが進むにつれて一度に2〜3体まとめて連続で押し寄せるようになります。</li> </ul> </section> <section> <h3 class="text-lg font-bold text-purple-400 mb-2">◆ スキルと成長</h3> <ul class="list-disc ml-5 space-y-1 text-sm"> <li>スキルはツリー形式で解放されます。まずは弱攻撃のコンボを伸ばし、強攻撃をアンロックしてください。</li> <li>強攻撃が絡む技（ワイド・スウィープ、ピアシング・レイ、グランド・クロス）は、解放後に資金で威力と射程を強化できます。</li> <li><strong>迎撃サポートAI</strong>を解放すると、拠点に張り付かれた際のパニック時でも、同レーンで攻撃ボタンを押すだけで自動的に敵側を向いて迎撃してくれます。</li> <li>攻撃ヒット時、ごく稀に全てを薙ぎ払う「クリティカル」が発生します。</li> </ul> </section> <section> <h3 class="text-lg font-bold text-emerald-400 mb-2">◆ シナリオと遺物収集</h3> <ul class="list-disc ml-5 space-y-1 text-sm"> <li><strong>手記:</strong> 拠点での強化やスキル解放を一定回数行うと、過去の記憶が紐解かれます。</li> <li><strong>アーカイブ遺物:</strong> Wave 5, 10, 15 などの節目をクリアすると、世界の謎が記された特殊な遺物を回収できます。</li> <li>アーカイブ遺物を拠点に持ち帰るごとに、<strong>恒久的なステータスボーナス（攻撃力・HP）</strong>が付与されます。</li> </ul> </section> <div class="mt-8 text-center border-t border-gray-600 pt-6"> <button onclick="document.getElementById('help-modal').classList.add('hidden')" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-full font-bold transition shadow-lg w-full max-w-xs">閉じる</button> </div> </div> </div> </div> </div> <!-- 💾 セーブ機能のためにCDN版supabase-jsを読み込む。ビルドツールの制約？知らんな！ --> <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script> <script>
+</h2> <div class="space-y-4"> <div class="p-4 bg-red-950/30 rounded-xl border border-red-800/50"> <h3 class="font-bold text-red-400 mb-2">⚠️ データリセット</h3> <p class="text-xs text-gray-400 mb-3">すべての進行状況をリセットし、最初からやり直します。<br>この操作は取り消せません。</p> <button id="btn-new-game" class="w-full bg-red-700 hover:bg-red-600 active:scale-95 text-white px-4 py-3 rounded-lg font-black transition-all text-sm border-b-4 border-red-900 shadow-lg">🔄 ニューゲーム</button> </div> </div> </div> </div> <!-- TAB CONTENT: [Settings] - Help --> <div id="tab-help" class="tab-content hidden space-y-6"> <div class="bg-gray-800 p-5 rounded-lg shadow-lg border border-gray-700"> <h2 class="text-lg font-bold mb-4 border-b border-gray-600 pb-2">ゲーム仕様・ヘルプ</h2> <div class="space-y-4 text-gray-300"> <section> <h3 class="text-sm font-bold text-blue-400 mb-2">◆ 基本操作とコンボ</h3> <ul class="list-disc ml-5 space-y-1 text-xs"> <li><strong>移動/向き:</strong> W/S/A/D または十字ボタン</li> <li><strong>攻撃:</strong> Z/J (弱)、X/K (強) またはアクションボタン</li> <li>画面下部にコンボガイドが表示されます。</li> </ul> </section> <section> <h3 class="text-sm font-bold text-yellow-400 mb-2">◆ ウェーブ進行と連戦ボーナス</h3> <ul class="list-disc ml-5 space-y-1 text-xs"> <li>WAVEが進むとレーン数が最大5まで増加</li> <li><strong>敵の強化:</strong> WAVEが1進むごとに敵のHPと攻撃力が <span class="text-red-400 font-bold">20%</span> 上昇（現在の敵倍率: x<span id="help-wave-mult" class="text-red-400 font-bold">1.0</span>）</li> <li><strong>連戦ボーナス:</strong> 拠点へ帰還せず「次へ進む」を選択し続けると、獲得資金ボーナスが上昇（最大 x2.0）</li> <li>現在のボーナス倍率: <span id="help-chain-bonus" class="text-green-400 font-bold">x1.0</span></li> </ul> </section> <section> <h3 class="text-sm font-bold text-purple-400 mb-2">◆ スキルと成長</h3> <ul class="list-disc ml-5 space-y-1 text-xs"> <li>スキルはツリー形式で解放</li> <li>強攻撃関連の技は解放後に威力と射程を強化可能</li> <li>迎撃サポートAIで自動照準が可能</li> </ul> </section> <section> <h3 class="text-sm font-bold text-emerald-400 mb-2">◆ シナリオと遺物</h3> <ul class="list-disc ml-5 space-y-1 text-xs"> <li>強化を行うと手記が解放されます</li> <li>特定WAVEクリアで遺物を入手→ステータスボーナス</li> </ul> </section> </div> </div> </div> </div> <!-- Footer Navigation Menu (Fixed Bottom) --> <nav id="footer-menu" class="fixed bottom-0 left-0 w-full bg-gray-800/95 backdrop-blur-md border-t border-gray-700 flex justify-around items-center h-20 px-2 pb-safe z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]"> <button class="footer-btn relative flex flex-col items-center justify-center w-1/4 h-full text-blue-400 active-menu border-r border-gray-700" onclick="switchMenu('base')"> <div class="text-2xl mb-1">🏠</div> <span class="text-[10px] font-black tracking-tighter">拠点</span> <span id="badge-menu-base" class="badge-dot hidden"></span> </button> <button class="footer-btn relative flex flex-col items-center justify-center w-1/4 h-full text-gray-500 border-r border-gray-700" onclick="switchMenu('upgrade')"> <div class="text-2xl mb-1">⚡</div> <span class="text-[10px] font-black tracking-tighter">強化</span> <span id="badge-menu-upgrade" class="badge-dot hidden"></span> </button> <button class="footer-btn relative flex flex-col items-center justify-center w-1/4 h-full text-gray-500 border-r border-gray-700" onclick="switchMenu('archive')"> <div class="text-2xl mb-1">📂</div> <span class="text-[10px] font-black tracking-tighter">記録</span> </button> <button class="footer-btn relative flex flex-col items-center justify-center w-1/4 h-full text-gray-500" onclick="switchMenu('settings')"> <div class="text-2xl mb-1">⚙️</div> <span class="text-[10px] font-black tracking-tighter">設定</span> </button> </nav> </div> <!-- ================= 戦闘画面 ================= --> <div id="screen-battle" class="screen"> <div id="canvas-container"> <canvas id="game-canvas"></canvas> <div class="overlay-ui top-0 left-0 w-full p-4 flex justify-between items-start pointer-events-none"> <div> <div class="text-xl font-bold text-white mb-1 shadow-black drop-shadow-md">Wave: <span id="hud-wave">1</span></div> <div class="w-48 h-6 bg-gray-800 border-2 border-gray-600 rounded overflow-hidden"> <div id="hud-hp-bar" class="h-full bg-green-500 w-full transition-all duration-200"></div> </div> <div class="text-sm font-bold shadow-black drop-shadow-md mt-1 text-white">拠点HP: <span id="hud-hp-val">100</span> / <span id="hud-max-hp-val">100</span></div> </div> <!-- ★資金表示 --> <div class="text-right flex flex-col items-end pointer-events-none"> <div class="text-xs font-bold text-gray-300 drop-shadow-md mb-1">確定済: <span id="hud-base-money">0</span> G</div> <div class="text-2xl font-bold text-yellow-400 drop-shadow-md border-b-2 border-yellow-600/50 pb-1 mb-1">+ <span id="hud-session-money">0</span> G</div> <div class="text-sm font-bold drop-shadow-md text-gray-200">残敵: <span id="hud-enemies">0</span></div> </div> </div> <!-- スキル発動名表示 (画面上部中央) --> <div class="overlay-ui top-20 left-0 w-full flex justify-center pointer-events-none z-10 flex-col items-center"> <div id="hud-skill-name" class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 drop-shadow-[0_4px_4px_rgba(0,0,0,1)] tracking-widest transition-all duration-300 opacity-0 transform scale-50 mt-4 italic"></div> </div> <!-- バトル用 動的コンボガイド --> <div class="overlay-ui bottom-8 left-0 w-full flex justify-center pointer-events-none z-0 transition-opacity duration-200"> <div id="battle-guide-container"> <!-- JSで動的に生成 --> </div> </div> <div id="wave-modal" class="overlay-ui top-0 left-0 w-full h-full flex items-center justify-center bg-black/80 hidden pointer-events-auto z-50"> <div class="bg-gray-800 p-8 rounded-lg text-center shadow-2xl border border-gray-600 max-w-md w-11/12"> <h2 class="text-3xl font-bold text-white mb-2">Wave クリア！</h2> <p class="text-gray-300 mb-6">WAVE獲得資金: <span id="modal-money" class="text-yellow-400 font-bold text-2xl">0</span> G</p> <div id="drop-notification" class="mb-6 hidden"> <div class="p-4 bg-gray-900 rounded border border-gray-700 relative overflow-hidden"> <!-- 背景エフェクト風 --> <div class="absolute inset-0 bg-gradient-to-t from-purple-900/30 to-transparent pointer-events-none"></div> <p id="drop-title" class="text-sm text-purple-400 font-bold mb-2 relative z-10">ジャンク品を回収</p> <div id="drop-item-icon" class="text-5xl mb-2 relative z-10 drop-shadow-lg">💎</div> <p id="drop-item-name" class="font-bold text-white relative z-10">名称</p> </div> </div> <p class="text-sm text-gray-400 mb-6 border-t border-gray-600 pt-4">進めば敵は強くなる。帰還すれば安全だ。<br><span class="text-yellow-300 font-bold">※ここまでの報酬は確定されました</span></p> <div class="flex space-x-4 justify-center"> <button id="btn-return" class="bg-gray-600 hover:bg-gray-500 text-white px-6 py-3 rounded font-bold transition flex-1 border border-gray-500">帰還する</button> <button id="btn-next-wave" class="bg-red-600 hover:bg-red-500 text-white px-6 py-3 rounded font-bold transition shadow-lg shadow-red-900/50 flex-1 border border-red-500">次へ進む</button> </div> </div> </div> <div id="death-modal" class="overlay-ui top-0 left-0 w-full h-full flex items-center justify-center bg-red-900/90 hidden pointer-events-auto z-50 backdrop-blur-sm"> <div class="bg-gray-900 p-8 rounded-lg text-center border border-red-500 w-11/12 max-w-md shadow-2xl"> <h2 class="text-4xl font-black text-red-500 mb-4 tracking-widest drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]">拠点壊滅</h2> <p class="text-xl text-gray-200 mb-2 font-bold">拠点が破壊された...</p> <div class="bg-red-950/50 p-4 rounded my-6 border border-red-800"> <p class="text-red-300 font-bold">直前のWAVE獲得資金 半減</p> <p class="text-gray-400 text-sm mt-1">未確定のドロップ品はすべてロスト</p> </div> <button id="btn-death-return" class="bg-gray-700 hover:bg-gray-600 text-white px-8 py-4 rounded font-bold transition w-full text-lg shadow-lg">拠点に戻る</button> </div> </div> </div> </div> <!-- ================= ヘルプモーダル ================= --> <div id="help-modal" class="overlay-ui top-0 left-0 w-full h-full flex items-center justify-center bg-black/80 hidden pointer-events-auto z-50"> <div class="bg-gray-800 p-8 rounded-lg shadow-2xl border border-gray-600 max-w-2xl w-11/12 max-h-[90vh] overflow-y-auto relative text-gray-300"> <button onclick="document.getElementById('help-modal').classList.add('hidden')" class="absolute top-4 right-4 bg-gray-600 hover:bg-gray-500 text-white w-8 h-8 rounded-full font-bold">×</button> <h2 class="text-2xl font-bold text-white mb-6 border-b border-gray-600 pb-2">ゲーム仕様・ヘルプ</h2> <div class="space-y-6"> <section> <h3 class="text-lg font-bold text-blue-400 mb-2">◆ 基本操作とコンボ</h3> <ul class="list-disc ml-5 space-y-1 text-sm"> <li><strong>移動/向き:</strong> W/S/A/D または 左下の十字ボタン</li> <li><strong>攻撃:</strong> Z/J (弱)、X/K (強) または 右下のアクションボタン</li> <li>戦闘画面下部の中央に、現在入力中のルートから派生できる技のガイドが表示されます。</li> <li>攻撃の硬直中は、機体の足元にゲージが表示され、ゲージが消えるまで次の行動ができません。</li> </ul> </section> <section> <h3 class="text-lg font-bold text-yellow-400 mb-2">◆ ウェーブ進行ロジック</h3> <ul class="list-disc ml-5 space-y-1 text-sm"> <li><strong>戦場の拡大:</strong> WAVEの進行に合わせて、敵が侵攻してくるレーン数が<strong class="text-white">最大5レーン</strong>まで段階的に増えていきます。</li> <li><strong>敵の出現数:</strong> <code class="bg-gray-900 px-1 rounded">15体 + (ウェーブ数 × 10)体</code> が出現します。</li> <li><strong>ウェーブ倍率:</strong> <code class="bg-gray-900 px-1 rounded">1.0 + ((ウェーブ数 - 1) × 0.2)</code> の倍率がかかります。(Wave2で1.2倍、Wave5で1.8倍)</li> <li><strong>敵の強さ:</strong> ベースHP(通常20/タフ60)と攻撃力(通常10/タフ20)に、上記の<strong>ウェーブ倍率</strong>が乗算されます。また、移動速度も少しずつ上昇します。</li> <li><strong>獲得資金:</strong> ベース額(通常1.5G/タフ7.5G)に、<code class="bg-gray-900 px-1 rounded">√(ウェーブ倍率)</code> をかけた額がドロップします。</li> <li><strong>スポーン間隔:</strong> 序盤は1体ずつゆっくり湧きますが、Waveが進むにつれて一度に2〜3体まとめて連続で押し寄せるようになります。</li> </ul> </section> <section> <h3 class="text-lg font-bold text-purple-400 mb-2">◆ スキルと成長</h3> <ul class="list-disc ml-5 space-y-1 text-sm"> <li>スキルはツリー形式で解放されます。まずは弱攻撃のコンボを伸ばし、強攻撃をアンロックしてください。</li> <li>強攻撃が絡む技（ワイド・スウィープ、ピアシング・レイ、グランド・クロス）は、解放後に資金で威力と射程を強化できます。</li> <li><strong>迎撃サポートAI</strong>を解放すると、拠点に張り付かれた際のパニック時でも、同レーンで攻撃ボタンを押すだけで自動的に敵側を向いて迎撃してくれます。</li> <li>攻撃ヒット時、ごく稀に全てを薙ぎ払う「クリティカル」が発生します。</li> </ul> </section> <section> <h3 class="text-lg font-bold text-emerald-400 mb-2">◆ シナリオと遺物収集</h3> <ul class="list-disc ml-5 space-y-1 text-sm"> <li><strong>手記:</strong> 拠点での強化やスキル解放を一定回数行うと、過去の記憶が紐解かれます。</li> <li><strong>アーカイブ遺物:</strong> Wave 5, 10, 15 などの節目をクリアすると、世界の謎が記された特殊な遺物を回収できます。</li> <li>アーカイブ遺物を拠点に持ち帰るごとに、<strong>恒久的なステータスボーナス（攻撃力・HP）</strong>が付与されます。</li> </ul> </section> <div class="mt-8 text-center border-t border-gray-600 pt-6"> <button onclick="document.getElementById('help-modal').classList.add('hidden')" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-full font-bold transition shadow-lg w-full max-w-xs">閉じる</button> </div> </div> </div> </div> </div> <!-- 💾 セーブ機能のためにCDN版supabase-jsを読み込む。ビルドツールの制約？知らんな！ --> <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script> <script>
 window.onerror = function(msg, url, line, col, error) {
     const errObj = document.createElement('div');
     errObj.style.position = 'fixed'; errObj.style.top = '0'; errObj.style.left = '0'; errObj.style.zIndex = '9999';
@@ -62,6 +62,7 @@ const GameState = {
     stats: { zCount: 0, xCount: 0, kills: 0, critCount: 0, upgradeCount: 0 }, 
     inventory: [],
     currentWave: 1, maxWave: 1, selectedWave: 1, sessionMoney: 0, sessionDrops: [],
+    sessionChain: 0, // 連戦ボーナス用カウンター
     
     // 一般ドロップ用ジャンク品
     itemDB: [
@@ -819,9 +820,17 @@ let _charConfig = { ..._charConfigDefault };
 const _weaponConfigDefault = { armLen: 11, armW: 13, tipSize: 6, tipShape: 0, cArm: '#475569', cTip: '#2d8f39' };
 let _weaponConfig = { ..._weaponConfigDefault };
 
-const _enemy1Default = { size: 12, color: '#ef4444', shape: 'circle', shadowAlpha: 0.3, cBody: '#ef4444' };
-const _enemy2Default = { size: 18, color: '#b91c1c', shape: 'rect', shadowAlpha: 0.3, cBody: '#b91c1c' };
-const _bossDefault = { ..._charConfigDefault, cBody: '#ef4444', cHead: '#7f1d1d', cEye: '#facc15' };
+const _enemy1Default = { scale: 1.0, size: 12, color: '#ef4444', shape: 'circle', shadowAlpha: 0.3, cBody: '#ef4444', cHead: '#fff' };
+const _enemy2Default = { scale: 1.0, size: 18, color: '#b91c1c', shape: 'rect', shadowAlpha: 0.3, cBody: '#b91c1c', cHead: '#fef08a' };
+const _bossDefault = {
+    scale: 2.0, headW: 24, headH: 22, torsoW: 32, torsoH: 36,
+    upperArmW: 6, upperArmLen: 14, lowerArmW: 6, lowerArmLen: 12,
+    upperLegW: 6, upperLegLen: 14, lowerLegW: 6, lowerLegLen: 12,
+    shoulderX: 18, shoulderY: -12, hipX: 10, hipY: 12,
+    elbowAngle: 0.3, kneeAngle: 0.3, 
+    cBody: '#ef4444', cHead: '#7f1d1d', cEye: '#facc15', cArms: '#991b1b', cLegs: '#7f1d1d', shadowAlpha: 0.4,
+    walkSpeed: 400, breathSpeed: 250
+};
 
 let _enemy1Config = { ..._enemy1Default };
 let _enemy2Config = { ..._enemy2Default };
@@ -1046,9 +1055,9 @@ class Player {
         if (fx === -1) ctx.scale(-1, 1);
 
         // モーション計算
-        let ap = 0, at = null, bounce = 0, breath = 0, walkShiftX = 0;
+        let ap = 0, at = null, bounce = 0, breath = 0, walkShiftX = 0, torsoSquash = 0;
         let legFront = 0, legBack = 0, armFront = 0, armBack = 0;
-        let kneeBend = null, elbowBend = null;
+        let kneeBend = null, elbowBend = null, kneeBendBack = null, elbowBendBack = null;
 
         if (this.isAttacking && this.attackData) {
             at = this.attackData.type;
@@ -1059,32 +1068,81 @@ class Player {
             walkShiftX = Math.sin(rawP * Math.PI) * 15 * s;
         }
 
-        if (isWaveActive && !this.isAttacking) {
-            // walkSpeed = 周期(ms)。値が大きいほどゆっくり
-            const phase = (time * 2 * Math.PI / C.walkSpeed);
-            const wave = Math.sin(phase);
-            legFront = -wave * 0.8;
-            legBack = wave * 0.8;
-            armFront = wave * 0.8;
-            armBack = -wave * 0.8;
-            bounce = Math.abs(wave) * 4 * s;
-        } else if (!this.isAttacking) {
-            // 待機: 膝を落として構えながら呼吸（戦闘構えのリズム）
-            const idlePhase = time / C.breathSpeed;
-            const breathWave = Math.sin(idlePhase);
-            bounce = breathWave * 2.5 * s; // 身体全体が上下
-            breath = 0; // translateでまとめて適用
+        if (!this.isAttacking) {
+            // --- 待機: 臨戦態勢の構え (前傾姿勢と小刻みで鋭い呼吸) ---
+            const idlePhase = time / (C.breathSpeed || 350);
+            const amt = 0.8; 
             
-            // 呼吸時に足裏を接地させるための追加屈伸
-            kneeBend = C.kneeAngle + breathWave * 0.15;
-            legFront = 0; legBack = 0;
+            // 呼吸の波。少し鋭くするためにべき乗を使う
+            const breathWave = Math.pow((Math.sin(idlePhase) + 1) / 2, 2);
             
-            // 武器を構える
-            armFront = -0.5 + breathWave * 0.05; // 構え
-            armBack = 0.5 - breathWave * 0.05;
-            elbowBend = C.elbowAngle + 0.2;
+            // 臨戦態勢の基本姿勢
+            const baseKneeBend = C.kneeAngle + 0.3; 
+            const baseElbowBend = C.elbowAngle + 0.4;
+            
+            // 胸を張る/すくめる動き (肩の沈み込み)
+            torsoSquash = breathWave * amt * 0.8 * s; 
+            
+            // 脚のスタンス (臨戦態勢は前後に足を開く)
+            legFront = -0.3; // 手前の足は前に
+            legBack = 0.4;   // 奥の足は後ろに
+            
+            const uL = (C.upperLegLen || 12);
+            const lL = (C.lowerLegLen || 12);
+            
+            // 基準姿勢での各足のY距離
+            const baseFrontFootY = uL * Math.cos(legFront) + lL * Math.cos(legFront + baseKneeBend);
+            const baseBackFootY  = uL * Math.cos(legBack) + lL * Math.cos(legBack + baseKneeBend);
+            
+            // 沈み込み距離 (IK用)
+            const dropAmount = breathWave * amt * 1.5; 
+            bounce = dropAmount * s; 
+            breath = 0;
+            
+            // 足裏を固定するためのIK
+            const getBend = (dy, a) => {
+                let cv = (dy - uL * Math.cos(a)) / lL;
+                return Math.acos(Math.max(-1, Math.min(1, cv))) - a;
+            };
+            
+            // 沈んだ分だけ膝を曲げる
+            kneeBend = getBend(baseFrontFootY - dropAmount, legFront);
+            kneeBendBack = getBend(baseBackFootY - dropAmount, legBack);
+            
+            // 武器の構え (常に身体の前に構え、呼吸でほんの少しだけ動く)
+            armFront = -0.9 + (breathWave * amt * 0.05); 
+            armBack = 0.6 - (breathWave * amt * 0.05);
+
+            elbowBend = baseElbowBend - (breathWave * amt * 0.1);
+            elbowBendBack = elbowBend;
         }
         ctx.translate(walkShiftX, 0);
+        
+        // ── 影 (Ground Shadow) と 接地判定 ──
+        let groundY = 0;
+        let shadowW = 20 * s;
+        // プレイヤーは人型なのでクラシック判定は省略
+        const uL_ = C.upperLegLen || 12;
+        const lL_ = C.lowerLegLen || 12;
+        const baseKnee_ = C.kneeAngle + 0.3;
+        // 基準スタンスの足裏高さを算出
+        const baseFootY = uL_ * Math.cos(-0.3) + lL_ * Math.cos(-0.3 + baseKnee_);
+        groundY = (C.hipY + baseFootY) * s;
+        
+        let actualKneeF = kneeBend !== null ? kneeBend : C.kneeAngle;
+        let actualKneeB = kneeBendBack !== null ? kneeBendBack : actualKneeF;
+        let currFrontY = uL_ * Math.cos(legFront) + lL_ * Math.cos(legFront + actualKneeF);
+        let currBackY  = uL_ * Math.cos(legBack) + lL_ * Math.cos(legBack + actualKneeB);
+        let maxFootY = Math.max(currFrontY, currBackY);
+        
+        const maxAllowedBounce = (baseFootY - maxFootY) * s;
+        bounce = Math.min(bounce, maxAllowedBounce);
+
+        // 影の描画 (位置固定、沈み込みで幅が変わる)
+        ctx.fillStyle = `rgba(0,0,0,${(C.shadowAlpha || 0.3) * 0.8})`;
+        ctx.beginPath();
+        ctx.ellipse(0, groundY, shadowW + (Math.max(0, bounce) * 0.5), 4*s, 0, 0, Math.PI * 2);
+        ctx.fill();
 
         // --- ここからキャラクター群を描画 (全体Bounceを一括適用) ---
         ctx.save();
@@ -1092,36 +1150,46 @@ class Player {
 
         // 1. 奥の腕・足
         ctx.globalAlpha = 0.6;
-        _drawLimb(ctx, -C.shoulderX*s, C.shoulderY*s, armBack, true, true, at, ap, C, _weaponConfig, elbowBend);
-        _drawLimb(ctx, -C.hipX*s, C.hipY*s, legBack, false, true, null, 0, C, null, kneeBend);
+        _drawLimb(ctx, -C.shoulderX*s, C.shoulderY*s + torsoSquash, armBack, true, true, at, ap, C, _weaponConfig, elbowBendBack !== null ? elbowBendBack : elbowBend);
+        _drawLimb(ctx, -C.hipX*s, C.hipY*s, legBack, false, true, null, 0, C, null, kneeBendBack !== null ? kneeBendBack : kneeBend);
         ctx.globalAlpha = 1.0;
 
         // 2. 胴体
+        ctx.save();
+        if (!this.isAttacking) ctx.rotate(0.15); // 待機時はつねに前傾（胴体）
+        
         const bodyGrad = ctx.createLinearGradient(-C.torsoW/2*s, 0, C.torsoW/2*s, 0);
         bodyGrad.addColorStop(0, adjustColor(C.cBody, -15)); bodyGrad.addColorStop(0.5, C.cBody); bodyGrad.addColorStop(1, adjustColor(C.cBody, -25));
         ctx.fillStyle = bodyGrad;
-        const tx = -C.torsoW/2 * s, ty = -C.torsoH/2 * s, tw = C.torsoW * s, th = C.torsoH * s;
+        const tx = -C.torsoW/2 * s, ty = -C.torsoH/2 * s + torsoSquash, tw = C.torsoW * s, th = C.torsoH * s - torsoSquash;
         ctx.fillRect(tx, ty, tw, th);
         ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 1*s; ctx.strokeRect(tx+1*s, ty+1*s, tw-2*s, th-2*s);
 
         // 3. 頭部
         ctx.save();
-        ctx.translate(0, ty); ctx.rotate(0); // 頭の回転は不要
+        ctx.translate(0, ty);
+        if (!this.isAttacking) {
+            ctx.rotate(-0.15); // 待機時はつねに前傾に合わせて顔を下げる
+        }
+        
         const headGrad = ctx.createLinearGradient(0, -C.headH*s, 0, 0);
-        headGrad.addColorStop(0, adjustColor(C.cHead,10)); headGrad.addColorStop(1,C.cHead);
+        headGrad.addColorStop(0, adjustColor(C.cHead, 10)); headGrad.addColorStop(1, C.cHead);
         ctx.fillStyle = headGrad;
-        const hx = -C.headW/2*s, hy = -C.headH*s, hw = C.headW*s, hh = C.headH*s;
+        const hx = -C.headW/2 * s, hy = -C.headH * s, hw = C.headW * s, hh = C.headH * s;
         ctx.fillRect(hx, hy, hw, hh);
+        
         ctx.fillStyle = C.cEye || '#38bdf8';
-        ctx.fillRect(C.headW/2*s - 7*s, hy+6*s, 6*s, 2*s);
-        ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.fillRect(C.headW/2*s - 6*s, hy+6.5*s, 1.5*s, 0.5*s);
+        const ex = C.headW/2 * s - 7*s, ey = hy + 6*s, ew = 6*s, eh = 2*s;
+        ctx.fillRect(ex, ey, ew, eh);
+        ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.fillRect(ex+1*s, ey+0.5*s, 1.5*s, 0.5*s);
+        ctx.restore();
         ctx.restore();
 
         // 4. 手前の足
         _drawLimb(ctx, C.hipX*s, C.hipY*s, legFront, false, false, null, 0, C, null, kneeBend);
         
-        // 5. 手前の腕(武器を保持、足より前面に来る)
-        _drawLimb(ctx, C.shoulderX*s, C.shoulderY*s, armFront, true, false, at, ap, C, _weaponConfig, elbowBend);
+        // 5. 手前の腕(武器を保持)
+        _drawLimb(ctx, C.shoulderX*s, C.shoulderY*s + torsoSquash, armFront, true, false, at, ap, C, _weaponConfig, elbowBend);
 
         ctx.restore(); // キャラ全体のbounce/breathを閉じる
 
@@ -1208,8 +1276,9 @@ class Player {
 }
 
 class Enemy {
-    constructor(row, side, waveMult, isTough) {
+    constructor(row, side, waveMult, isTough, isBoss = false) {
         this.row = row; this.side = side; this.size = isTough ? 18 : 12;
+        this.isBoss = isBoss;
         this.speed = (isTough ? 30 : 45 + Math.random() * 20) * (1 + (waveMult - 1) * 0.2);
         this.x = 0; 
         this.y = 0; 
@@ -1233,30 +1302,80 @@ class Enemy {
     draw(ctx, w, h) {
         const time = performance.now();
         const x = this.x, y = this.y;
-        const isBoss = (this.maxHp >= 200); 
+        const isBoss = this.isBoss === true; 
 
         if (isBoss) {
             const C = _bossConfig, s = C.scale;
             const fx = this.side === -1 ? 1 : -1;
-            const phase = (time * 2 * Math.PI / (C.walkSpeed || 500));
+            const phase = (time * 2 * Math.PI / C.walkSpeed);
             const wave = Math.sin(phase);
             
-            // 歩行の振りをプレイヤーと同等に
-            const legFront = -wave * 1.0;
-            const legBack = wave * 1.0;
-            const armFront = wave * 0.8;
-            const armBack = -wave * 0.8;
-            
-            const bounce = Math.abs(wave) * 4 * s;
-            const breath = Math.sin(time / C.breathSpeed) * 1.5 * s;
+            // 呼吸の波。少し鋭くするためにべき乗を使う
+            const idlePhase = time / C.breathSpeed;
+            const amt = 0.8;
+            const breathWave = Math.pow((Math.sin(idlePhase) + 1) / 2, 2);
+
+            let legFront = 0, legBack = 0, armFront = 0, armBack = 0;
+            let bounce = 0, breath = 0, torsoSquash = 0;
+            let kneeBend = C.kneeAngle, elbowBend = C.elbowAngle;
+            let kneeBendBack = C.kneeAngle, elbowBendBack = C.elbowAngle;
+
+            // 臨戦態勢の基本姿勢
+            const baseKneeBend = C.kneeAngle + 0.3; 
+            const baseElbowBend = C.elbowAngle + 0.4;
+
+            if (this.knockback > 0 || Math.abs(this.x - (w/2)) > 35) { 
+                // 歩行中 または ノックバック中
+                legFront = -wave * 1.0;
+                legBack = wave * 1.0;
+                armFront = wave * 0.8;
+                armBack = -wave * 0.8;
+                bounce = Math.abs(wave) * 4 * s;
+            } else {
+                // 待機中 (攻撃範囲内)
+                // 胸を張る/すくめる動き (肩の沈み込み)
+                torsoSquash = breathWave * amt * 0.8 * s; 
+                
+                // 脚のスタンス (臨戦態勢は前後に足を開く)
+                legFront = -0.3; // 手前の足は前に
+                legBack = 0.4;   // 奥の足は後ろに
+                
+                const uL = C.upperLegLen, lL = C.lowerLegLen;
+                
+                // 基準姿勢での各足のY距離
+                const baseFrontFootY = uL * Math.cos(legFront) + lL * Math.cos(legFront + baseKneeBend);
+                const baseBackFootY  = uL * Math.cos(legBack) + lL * Math.cos(legBack + baseKneeBend);
+                
+                // 沈み込み距離 (IK用)
+                const dropAmount = breathWave * amt * 1.5; 
+                bounce = dropAmount * s; 
+                breath = 0;
+                
+                // 足裏を固定するためのIK
+                const getBend = (dy, a) => {
+                    let cv = (dy - uL * Math.cos(a)) / lL;
+                    return Math.acos(Math.max(-1, Math.min(1, cv))) - a;
+                };
+                
+                // 沈んだ分だけ膝を曲げる
+                kneeBend = getBend(baseFrontFootY - dropAmount, legFront);
+                kneeBendBack = getBend(baseBackFootY - dropAmount, legBack);
+                
+                // 武器の構え (常に身体の前に構え、呼吸でほんの少しだけ動く)
+                armFront = -0.9 + (breathWave * amt * 0.05); 
+                armBack = 0.6 - (breathWave * amt * 0.05);
+
+                elbowBend = baseElbowBend - (breathWave * amt * 0.1);
+                elbowBendBack = elbowBend;
+            }
 
             ctx.save();
             ctx.translate(x, y);
             if (fx === -1) ctx.scale(-1, 1);
 
-            // 影
+            // 影 (groundYに相当する固定位置を簡略化)
             ctx.fillStyle = `rgba(0,0,0,${C.shadowAlpha})`;
-            ctx.beginPath(); ctx.ellipse(0, C.torsoH*s + 4, 25*s, 5*s, 0, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.ellipse(0, (C.hipY + C.upperLegLen + C.lowerLegLen) * s, 25*s + (bounce*0.5), 5*s, 0, 0, Math.PI*2); ctx.fill();
 
             // 全体Bounce
             ctx.save();
@@ -1264,20 +1383,23 @@ class Enemy {
 
             // 1. 奥の手足
             ctx.globalAlpha = 0.6;
-            _drawLimb(ctx, -C.shoulderX*s, C.shoulderY*s, armBack, true, true, null, 0, C);
-            _drawLimb(ctx, -C.hipX*s, C.hipY*s, legBack, false, true, null, 0, C);
+            _drawLimb(ctx, -C.shoulderX*s, C.shoulderY*s + torsoSquash, armBack, true, true, null, 0, C, null, elbowBendBack);
+            _drawLimb(ctx, -C.hipX*s, C.hipY*s, legBack, false, true, null, 0, C, null, kneeBendBack);
             ctx.globalAlpha = 1.0;
 
             // 2. 胴体
+            ctx.save();
+            if (legFront === -0.3 && legBack === 0.4) ctx.rotate(0.15); // 待機時は前傾
             const bodyGrad = ctx.createLinearGradient(-C.torsoW/2*s, 0, C.torsoW/2*s, 0);
             bodyGrad.addColorStop(0, adjustColor(C.cBody,-15)); bodyGrad.addColorStop(0.5,C.cBody); bodyGrad.addColorStop(1,adjustColor(C.cBody,-25));
             ctx.fillStyle = bodyGrad;
-            const tx = -C.torsoW/2*s, ty = -C.torsoH/2*s, tw = C.torsoW*s, th = C.torsoH*s;
+            const tx = -C.torsoW/2*s, ty = -C.torsoH/2*s + torsoSquash, tw = C.torsoW*s, th = C.torsoH*s - torsoSquash;
             ctx.fillRect(tx, ty, tw, th);
             ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.strokeRect(tx+1*s, ty+1*s, tw-2*s, th-2*s);
 
             // 3. 頭
-            ctx.save(); ctx.translate(0, ty); ctx.rotate(0);
+            ctx.save(); ctx.translate(0, ty);
+            if (legFront === -0.3 && legBack === 0.4) ctx.rotate(-0.15); else ctx.rotate(Math.sin(phase)*0.1);
             const headGrad = ctx.createLinearGradient(0, -C.headH*s, 0, 0);
             headGrad.addColorStop(0, adjustColor(C.cHead,10)); headGrad.addColorStop(1,C.cHead);
             ctx.fillStyle = headGrad;
@@ -1285,63 +1407,68 @@ class Enemy {
             ctx.fillRect(hx, hy, hw, hh);
             ctx.fillStyle = C.cEye; ctx.fillRect(C.headW/2*s - 7*s, hy+6*s, 6*s, 2*s);
             ctx.restore();
+            ctx.restore();
 
             // 4. 手前足
-            _drawLimb(ctx, C.hipX*s, C.hipY*s, legFront, false, false, null, 0, C);
+            _drawLimb(ctx, C.hipX*s, C.hipY*s, legFront, false, false, null, 0, C, null, kneeBend);
             // 5. 手前腕
-            _drawLimb(ctx, C.shoulderX*s, C.shoulderY*s, armFront, true, false, null, 0, C);
+            let bossWpn = { armLen: 30, armW: 6, tipSize: 12, cGrip: '#451a03', cBlade: '#dc2626' };
+            _drawLimb(ctx, C.shoulderX*s, C.shoulderY*s + torsoSquash, armFront, true, false, null, 0, C, bossWpn, elbowBend);
             
             ctx.restore(); // bounce + breath 閉じる
             ctx.restore(); // Enemy 基準座標閉じる
 
-        } else if (this.maxHp >= 60) {
-            // 大型敵 (Rectangle Rich)
-            const s = this.size;
+        } else if (this.size >= 18) {
+            // ENEMY2 (Rectangle Rich / isTough)
+            const C = _enemy2Config;
+            const s = C.size * C.scale;
             const phase = time * 0.01;
-            const walkCycle = Math.sin(phase) * 5;
-            const breath = Math.sin(time * 0.005) * 2;
+            const walkCycle = Math.sin(phase) * 5 * C.scale;
+            const breath = Math.sin(time * 0.005) * 2 * C.scale;
 
             ctx.save();
             ctx.translate(x, y + walkCycle);
             if (this.side === -1) ctx.scale(-1, 1);
 
-            ctx.fillStyle = 'rgba(0,0,0,0.3)';
+            ctx.fillStyle = `rgba(0,0,0,${C.shadowAlpha})`;
             ctx.beginPath(); ctx.ellipse(0, s + 10 - walkCycle, s * 0.8, 4, 0, 0, Math.PI * 2); ctx.fill();
 
             const grad = ctx.createLinearGradient(-s, -s, s, s);
-            grad.addColorStop(0, adjustColor(this.color, 20)); grad.addColorStop(1, adjustColor(this.color, -20));
+            grad.addColorStop(0, adjustColor(C.cBody, 20)); grad.addColorStop(1, adjustColor(C.cBody, -20));
             ctx.fillStyle = grad;
             ctx.fillRect(-s, -s + breath, s * 2, s * 2);
             ctx.strokeStyle = 'rgba(0,0,0,0.2)'; ctx.lineWidth = 1.5; ctx.strokeRect(-s, -s + breath, s * 2, s * 2);
 
-            ctx.fillStyle = adjustColor(this.color, -40);
+            ctx.fillStyle = adjustColor(C.cBody, -40);
             ctx.beginPath(); ctx.moveTo(-s, -s + breath); ctx.lineTo(-s-6, -s-12 + breath); ctx.lineTo(-s+10, -s + breath); ctx.fill();
             ctx.beginPath(); ctx.moveTo(s, -s + breath); ctx.lineTo(s+6, -s-12 + breath); ctx.lineTo(s-10, -s + breath); ctx.fill();
 
-            ctx.fillStyle = '#fff';
+            ctx.fillStyle = C.cHead; // ENEMY2の目のように光る部分
             ctx.fillRect(s - 12, -s + 6 + breath, 6, 6);
             ctx.restore();
 
         } else {
-            // 通常敵 (Circle Rich)
-            const s = this.size;
-            const bounce = Math.abs(Math.sin(time * 0.01)) * 8;
+            // ENEMY1 (Circle Rich)
+            const C = _enemy1Config;
+            const s = C.size * C.scale;
+            const bounce = Math.abs(Math.sin(time * 0.01)) * 8 * C.scale;
             const squash = 1 + Math.sin(time * 0.01) * 0.1;
 
             ctx.save();
             ctx.translate(x, y - bounce);
             if (this.side === -1) ctx.scale(-1, 1);
 
-            ctx.fillStyle = 'rgba(0,0,0,0.3)';
+            ctx.fillStyle = `rgba(0,0,0,${C.shadowAlpha})`;
             ctx.beginPath(); ctx.ellipse(0, s + bounce, s * 0.8 / squash, 4, 0, 0, Math.PI * 2); ctx.fill();
 
             const grad = ctx.createRadialGradient(-s*0.3, -s*0.3, s*0.1, 0, 0, s);
-            grad.addColorStop(0, adjustColor(this.color, 40)); grad.addColorStop(1, this.color);
+            grad.addColorStop(0, adjustColor(C.cBody, 40)); grad.addColorStop(1, C.cBody);
             ctx.fillStyle = grad;
             ctx.beginPath(); ctx.arc(0, 0, s * squash, 0, Math.PI * 2); ctx.fill();
             ctx.strokeStyle = 'rgba(0,0,0,0.2)'; ctx.lineWidth = 1.5; ctx.stroke();
 
-            ctx.fillStyle = '#fff';
+            // ENEMY1の目
+            ctx.fillStyle = C.cHead;
             ctx.beginPath(); ctx.arc(s * 0.4, -s * 0.2, s * 0.3, 0, Math.PI * 2); ctx.fill();
             ctx.fillStyle = '#000';
             ctx.beginPath(); ctx.arc(s * 0.5, -s * 0.2, s * 0.15, 0, Math.PI * 2); ctx.fill();
@@ -1820,34 +1947,36 @@ function initPractice() {
     pCanvas.width = pCanvas.parentElement.clientWidth;
     pCanvas.height = pCanvas.parentElement.clientHeight;
     
-    // ★拠点画面で選択中のWaveに合わせてレーン数を更新
-    currentRowCount = Math.min(5, GameState.selectedWave);
+    // ★練習用は常に中央1レーン扱い
+    currentRowCount = 1;
     
     pPlayer = new Player();
+    pPlayer.row = 0;
     pEnemies = [];
     
-    // ★レーン数に合わせて敵を配置（練習用に近めに配置＆中央に密集）
-    for(let i=0; i<currentRowCount; i++) {
-        let e = new Enemy(i, -1, 1, i===Math.floor(currentRowCount/2));
-        e.speed = 0; e.hp = 9999; e.maxHp = 9999;
-        e.x = (pCanvas.width / 2) + 80; // 近づける
-        e.y = getLaneY(i, pCanvas.height, currentRowCount);
-        pEnemies.push(e);
-        
-        let e2 = new Enemy(i, 1, 1, false); 
-        e2.speed = 0; e2.hp = 9999; e2.maxHp = 9999;
-        e2.x = (pCanvas.width / 2) - 80; // 近づける
-        e2.y = getLaneY(i, pCanvas.height, currentRowCount);
-        pEnemies.push(e2);
-    }
+    // 練習場はENEMY1（isTough=false）を1体のみ配置
+    let e = new Enemy(0, -1, 1, false);
+    e.speed = 0; e.hp = 9999; e.maxHp = 9999;
+    e.x = (pCanvas.width / 2) + 80;
+    e.y = getLaneY(0, pCanvas.height, currentRowCount);
+    pEnemies.push(e);
+    
     updateComboGuideUI([], true);
 }
 
 
 // === メインバトルロジック ===
 
+function getChainMultiplier(chain) {
+    // 例: 連戦数 0=1.0x, 1=1.1x, 2=1.2x ... 最大2.0x
+    return Math.min(2.0, 1.0 + (chain * 0.1));
+}
+
 function commitSessionRewards() {
-    GameState.money += GameState.sessionMoney;
+    // 連戦倍率を適用して資金を獲得
+    const multiplier = getChainMultiplier(GameState.sessionChain);
+    const finalReward = Math.floor(GameState.sessionMoney * multiplier);
+    GameState.money += finalReward;
     
     let newArchivesCount = 0;
     GameState.sessionDrops.forEach(dropItem => {
@@ -1900,6 +2029,17 @@ function updateHUD() {
     const hpPercent = Math.max(0, GameState.playerStats.hp / GameState.playerStats.maxHp) * 100;
     hudHpBar.style.width = hpPercent + '%';
     hudHpBar.className = `h-full w-full transition-all duration-200 ${hpPercent < 30 ? 'bg-red-500' : 'bg-green-500'}`;
+
+    // ヘルプ用テキストの動的更新
+    const elWaveMult = document.getElementById('help-wave-mult');
+    const elChainBonus = document.getElementById('help-chain-bonus');
+    if (elWaveMult) elWaveMult.innerText = currentWaveMult.toFixed(1);
+    
+    // 現在のWAVEの連戦ボーナスを計算
+    if (elChainBonus) {
+        const bonusMult = getChainMultiplier(GameState.sessionChain);
+        elChainBonus.innerText = bonusMult.toFixed(1);
+    }
 }
 
 function checkWaveEnd() {
@@ -1918,10 +2058,12 @@ function checkBaseDamage(dt) {
             ctx.fillStyle = 'rgba(255,0,0,0.1)'; ctx.fillRect(0,0,canvas.width,canvas.height);
             if (GameState.playerStats.hp <= 0) {
                 isWaveActive = false;
+                // 敗北時は連戦ボーナス無効で半額回収
                 GameState.sessionMoney = Math.floor(GameState.sessionMoney / 2);
                 GameState.sessionDrops = []; 
                 GameState.money += GameState.sessionMoney; 
                 GameState.sessionMoney = 0;
+                GameState.sessionChain = 0; // 敗北でチェーンリセット
                 deathModal.classList.remove('hidden');
             }
         }
@@ -1981,10 +2123,40 @@ function gameLoop(timestamp) {
                 if (spawnTimer <= 0) {
                     let maxSpawn = GameState.currentWave === 1 ? 1 : (GameState.currentWave === 2 ? 2 : 3);
                     let spawnCount = Math.floor(Math.random() * maxSpawn) + 1;
+                    
+                    // WAVEによる出現レーンと方向の段階的解放ロジック
+                    const wv = GameState.currentWave;
+                    
                     for (let i = 0; i < spawnCount && enemiesToSpawn > 0; i++) {
-                        const row = Math.floor(Math.random() * currentRowCount); // ★動的レーン数からスポーン
-                        const side = Math.random() > 0.5 ? 1 : -1;
-                        const isTough = Math.random() < Math.min(0.4, GameState.currentWave * 0.08);
+                        let row = 0;
+                        let side = 1;
+
+                        if (wv === 1) {
+                            // WAVE 1: 中央レーン x 片側のみ (右から)
+                            row = Math.floor(currentRowCount / 2);
+                            side = -1;
+                        } else if (wv === 2) {
+                            // WAVE 2: 中央レーン x 両側
+                            row = Math.floor(currentRowCount / 2);
+                            side = Math.random() > 0.5 ? 1 : -1;
+                        } else if (wv === 3) {
+                            // WAVE 3: 2レーン使用 (中央と下) x 両側
+                            const availableRows = [Math.floor(currentRowCount / 2), Math.floor(currentRowCount / 2) + 1].filter(r => r < currentRowCount);
+                            row = availableRows[Math.floor(Math.random() * availableRows.length)];
+                            side = Math.random() > 0.5 ? 1 : -1;
+                        } else if (wv === 4) {
+                            // WAVE 4: 3レーン使用 (中央、上、下) x 両側
+                            const mid = Math.floor(currentRowCount / 2);
+                            const availableRows = [mid, mid - 1, mid + 1].filter(r => r >= 0 && r < currentRowCount);
+                            row = availableRows[Math.floor(Math.random() * availableRows.length)];
+                            side = Math.random() > 0.5 ? 1 : -1;
+                        } else {
+                            // WAVE 5以降: 全レーンランダム x 両側
+                            row = Math.floor(Math.random() * currentRowCount);
+                            side = Math.random() > 0.5 ? 1 : -1;
+                        }
+
+                        const isTough = Math.random() < Math.min(0.4, wv * 0.08);
                         let e = new Enemy(row, side, currentWaveMult, isTough);
                         e.x = side === 1 ? -50 : canvas.width + 50;
                         e.y = getLaneY(row, canvas.height, currentRowCount) + (Math.random()*20-10);
@@ -2025,7 +2197,14 @@ function gameLoop(timestamp) {
             }
             const _pCtx = pCanvas.getContext('2d');
             _pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
-            drawCommonBg(_pCtx, pCanvas.width, pCanvas.height, currentRowCount);
+            
+            // 練習場はデザイナー風の無機質な背景
+            _pCtx.fillStyle = '#0f172a'; // bg-slate-900系
+            _pCtx.fillRect(0, 0, pCanvas.width, pCanvas.height);
+            // 床の中央線
+            _pCtx.strokeStyle = '#334155'; _pCtx.lineWidth = 1;
+            const cy = pCanvas.height / 2;
+            _pCtx.beginPath(); _pCtx.moveTo(0, cy); _pCtx.lineTo(pCanvas.width, cy); _pCtx.stroke();
 
             if (pPlayer) {
                 pPlayer.update(dt, () => updateComboGuideUI([], true));
@@ -2063,7 +2242,10 @@ function gameLoop(timestamp) {
 
 // === モーダルボタン処理 ===
 function showWaveModal() {
-    modalMoney.innerText = GameState.sessionMoney;
+    // 獲得資金と連戦ボーナスの表示
+    const chainMult = getChainMultiplier(GameState.sessionChain);
+    const bonusText = GameState.sessionChain > 0 ? `<br><span class="text-[10px] text-green-400">連戦ボーナス: x${chainMult.toFixed(1)}</span>` : '';
+    modalMoney.innerHTML = `${GameState.sessionMoney}${bonusText}`;
     
     let droppedItem = null;
     const specialArchive = ArchiveDB.find(a => a.targetWave === GameState.currentWave && !GameState.inventory.some(i => i.id === a.id));
@@ -2093,6 +2275,8 @@ function showWaveModal() {
 btnNextWave.addEventListener('click', () => { 
     commitSessionRewards(); 
     GameState.currentWave++; GameState.selectedWave = GameState.currentWave;
+    GameState.sessionChain++; // 次のWAVEに進むとチェーン加算
+    
     // ★レーン数も次のWAVEに合わせて更新（これがないと増えないまま！）
     currentRowCount = Math.min(5, GameState.currentWave);
     player.row = Math.min(player.row, currentRowCount - 1);
@@ -2104,6 +2288,7 @@ btnReturn.addEventListener('click', () => {
     commitSessionRewards(); 
     waveModal.classList.add('hidden'); isWaveActive = false;
     GameState.selectedWave = Math.max(1, GameState.maxWave - 1);
+    GameState.sessionChain = 0; // 帰還でチェーンリセット
     saveGame(); // 💾 帰還＝セーブポイント。RPGの鉄則。
     showScreen('base');
 });

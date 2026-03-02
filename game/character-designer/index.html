@@ -37,7 +37,7 @@ const DEFAULTS = {
         shadowAlpha: 0.3,
         cBody: '#3b82f6', cHead: '#1e3a5f', cEye: '#38bdf8', cArms: '#2563eb', cLegs: '#1e40af',
         motions: {
-            idle: { breathSpeed: 100, breathAmount: 0 },
+            idle: { breathSpeed: 350, breathAmount: 0.8 },
             walk: { walkSpeed: 800, walkAmplitude: 0.5 },
             attack: { speed: 0.5, weak1Arc: 2.0, weak2Arc: 1.8, weak3Arc: 2.5, grandGlow: 20 },
             weapon: { armLen: 11, armW: 13, tipSize: 6, cGrip: '#475569', cBlade: '#2d8f39' }
@@ -132,7 +132,8 @@ function drawEntity(ctx, x, y, target, motion, time, ad) {
     
     let legFront = 0, legBack = 0, armFront = 0, armBack = 0;
     let kneeBend = null, elbowBend = null;
-    let bounce = 0, breath = 0, walkCycle = 0;
+    let kneeBendBack = null, elbowBendBack = null;
+    let bounce = 0, breath = 0, walkCycle = 0, torsoSquash = 0;
     
     if (motion === 'walk' && !isAttacking) {
         // 歩行 (右歩き時、waveが正なら右足(奥)を前へ、左足(手前)を後ろへ振るのが自然)
@@ -145,29 +146,83 @@ function drawEntity(ctx, x, y, target, motion, time, ad) {
         armBack = -wave * 0.8;
         bounce = Math.abs(wave) * 4 * s;
     } else if (!isAttacking) {
-        // 待機: 武器を構えて沈み込みと伸びの繰り返し
+        // 待機: 臨戦態勢の構え (前傾姿勢と小刻みで鋭い呼吸)
         const idlePhase = time / (m.idle.breathSpeed || 350);
-        const breathWave = Math.sin(idlePhase);
+        const amt = (m.idle.breathAmount !== undefined ? m.idle.breathAmount : 0.8);
         
-        bounce = breathWave * 2.5 * s; // 身体全体が上下
-        breath = 0; // translateでまとめて適用
+        // 呼吸の波。少し鋭くするためにべき乗を使う
+        const breathWave = Math.pow((Math.sin(idlePhase) + 1) / 2, 2);
         
-        // 呼吸時に足裏を接地させるための追加屈伸
-        kneeBend = C.kneeAngle + breathWave * 0.15;
-        legFront = 0; legBack = 0;
+        // --- 臨戦態勢の基本姿勢 ---
+        const baseKneeBend = C.kneeAngle + 0.3; 
+        const baseElbowBend = C.elbowAngle + 0.4;
         
-        // 武器を構える
-        armFront = -0.5 + breathWave * 0.05; // 構え
-        armBack = 0.5 - breathWave * 0.05;
+        // 胸を張る/すくめる動き (肩の沈み込み)
+        torsoSquash = breathWave * amt * 0.8 * s; 
+        
+        // 脚のスタンス (臨戦態勢は前後に足を開く)
+        legFront = -0.3; // 手前の足は前に
+        legBack = 0.4;   // 奥の足は後ろに
+        
+        const uL = (C.upperLegLen || 12);
+        const lL = (C.lowerLegLen || 12);
+        
+        // 基準姿勢での各足のY距離
+        const baseFrontFootY = uL * Math.cos(legFront) + lL * Math.cos(legFront + baseKneeBend);
+        const baseBackFootY  = uL * Math.cos(legBack) + lL * Math.cos(legBack + baseKneeBend);
+        
+        // 沈み込み距離 (IK用)
+        const dropAmount = breathWave * amt * 1.5; 
+        bounce = dropAmount * s; 
+        breath = 0;
+        
+        // 足裏を固定するためのIK
+        const getBend = (dy, a) => {
+            let cv = (dy - uL * Math.cos(a)) / lL;
+            return Math.acos(Math.max(-1, Math.min(1, cv))) - a;
+        };
+        
+        // 沈んだ分だけ膝を曲げる
+        kneeBend = getBend(baseFrontFootY - dropAmount, legFront);
+        kneeBendBack = getBend(baseBackFootY - dropAmount, legBack);
+        
+        // 武器の構え (常に身体の前に構え、呼吸でほんの少しだけ動く)
+        armFront = -0.9 + (breathWave * amt * 0.05); 
+        armBack = 0.6 - (breathWave * amt * 0.05);
 
-        elbowBend = C.elbowAngle + 0.2;
+        elbowBend = baseElbowBend - (breathWave * amt * 0.1);
+        elbowBendBack = elbowBend;
     }
 
-    // 影 (Ground Shadow)
+    // 影 (Ground Shadow) と 接地判定
+    let groundY = 0;
+    let shadowW = 20 * s;
+    if (C.shape === 'circle' || C.shape === 'rect') {
+        groundY = 0;
+        shadowW = (C.size * 1.5) * s;
+    } else {
+        const uL_ = C.upperLegLen || 12;
+        const lL_ = C.lowerLegLen || 12;
+        const baseKnee_ = C.kneeAngle + 0.3;
+        // 基準スタンスの足裏高さを算出
+        const baseFootY = uL_ * Math.cos(-0.3) + lL_ * Math.cos(-0.3 + baseKnee_);
+        groundY = (C.hipY + baseFootY) * s;
+        
+        // いかなるモーション・攻撃中でも絶対に地面にめり込まないための強制的Y座標補正
+        let actualKneeF = kneeBend !== null ? kneeBend : C.kneeAngle;
+        let actualKneeB = kneeBendBack !== null ? kneeBendBack : actualKneeF;
+        let currFrontY = uL_ * Math.cos(legFront) + lL_ * Math.cos(legFront + actualKneeF);
+        let currBackY  = uL_ * Math.cos(legBack) + lL_ * Math.cos(legBack + actualKneeB);
+        let maxFootY = Math.max(currFrontY, currBackY);
+        
+        const maxAllowedBounce = (baseFootY - maxFootY) * s;
+        bounce = Math.min(bounce, maxAllowedBounce);
+    }
+    
     ctx.fillStyle = `rgba(0,0,0,${(C.shadowAlpha || 0.3) * 0.8})`;
     ctx.beginPath();
-    const torsoH = (C.torsoH || C.size) * s;
-    ctx.ellipse(0, torsoH + 4 - bounce, (20 + (bounce/s)) * s, 4*s, 0, 0, Math.PI * 2);
+    // 沈み込み(bounce)に応じて影の幅が広がる(位置は固定)
+    ctx.ellipse(0, groundY, shadowW + (Math.max(0, bounce) * 0.5), 4*s, 0, 0, Math.PI * 2);
     ctx.fill();
 
     if (C.shape === 'circle' || C.shape === 'rect') {
@@ -235,21 +290,32 @@ function drawEntity(ctx, x, y, target, motion, time, ad) {
 
         // 1. 奥の腕・足
         ctx.globalAlpha = 0.6;
-        drawLimb(ctx, -C.shoulderX*s, C.shoulderY*s, armBack, true, true, at, ap, C, s, weapon, wpnCfg, m.attack, elbowBend);
-        drawLimb(ctx, -C.hipX*s, C.hipY*s, legBack, false, true, null, 0, C, s, null, null, null, kneeBend);
+        drawLimb(ctx, -C.shoulderX*s, C.shoulderY*s + torsoSquash, armBack, true, true, at, ap, C, s, weapon, wpnCfg, m.attack, elbowBendBack !== null ? elbowBendBack : elbowBend);
+        drawLimb(ctx, -C.hipX*s, C.hipY*s, legBack, false, true, null, 0, C, s, null, null, null, kneeBendBack !== null ? kneeBendBack : kneeBend);
         ctx.globalAlpha = 1.0;
 
         // 2. 胴体
+        ctx.save();
+        // 臨戦態勢: やや前傾姿勢
+        if(!isAttacking && motion !== 'walk') {
+            ctx.rotate(0.15);
+        }
         const bodyGrad = ctx.createLinearGradient(-C.torsoW/2*s, 0, C.torsoW/2*s, 0);
         bodyGrad.addColorStop(0, adjustColor(C.cBody, -15)); bodyGrad.addColorStop(0.5, C.cBody); bodyGrad.addColorStop(1, adjustColor(C.cBody, -25));
         ctx.fillStyle = bodyGrad;
-        const tx = -C.torsoW/2 * s, ty = -C.torsoH/2 * s, tw = C.torsoW * s, th = C.torsoH * s;
+        const tx = -C.torsoW/2 * s, ty = -C.torsoH/2 * s + torsoSquash, tw = C.torsoW * s, th = C.torsoH * s - torsoSquash;
         ctx.fillRect(tx, ty, tw, th);
         ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 1*s; ctx.strokeRect(tx+1*s, ty+1*s, tw-2*s, th-2*s);
 
         // 3. 頭部
         ctx.save();
-        ctx.translate(0, ty); ctx.rotate(walkCycle * 0.1);
+        ctx.translate(0, ty); 
+        // 頭のアニメーション (歩行時は少し揺れ、待機時は前傾を相殺して前を向く)
+        if (motion === 'walk' && !isAttacking) {
+            ctx.rotate(walkCycle * 0.1);
+        } else if (!isAttacking) {
+            ctx.rotate(-0.15); // 体が前傾しているので頭を起こす
+        }
         const headGrad = ctx.createLinearGradient(0, -C.headH*s, 0, 0);
         headGrad.addColorStop(0, adjustColor(C.cHead, 10)); headGrad.addColorStop(1, C.cHead);
         ctx.fillStyle = headGrad;
@@ -260,12 +326,13 @@ function drawEntity(ctx, x, y, target, motion, time, ad) {
         ctx.fillRect(ex, ey, ew, eh);
         ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.fillRect(ex+1*s, ey+0.5*s, 1.5*s, 0.5*s);
         ctx.restore();
+        ctx.restore(); // 胴体の回転を戻す
 
         // 4. 手前の足
         drawLimb(ctx, C.hipX*s, C.hipY*s, legFront, false, false, null, 0, C, s, null, null, null, kneeBend);
         
         // 5. 手前の腕(武器を保持、足より前面に来る)
-        drawLimb(ctx, C.shoulderX*s, C.shoulderY*s, armFront, true, false, at, ap, C, s, weapon, wpnCfg, m.attack, elbowBend);
+        drawLimb(ctx, C.shoulderX*s, C.shoulderY*s + torsoSquash, armFront, true, false, at, ap, C, s, weapon, wpnCfg, m.attack, elbowBend);
 
         ctx.restore(); // キャラ全体のbounce/breathを閉じる
 
