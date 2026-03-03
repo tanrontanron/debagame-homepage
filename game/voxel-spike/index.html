@@ -1,0 +1,343 @@
+<!DOCTYPE html><html lang="ja" data-astro-cid-4cemo7tf> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"><title>Voxel Part Editor & Simulator</title><link rel="stylesheet" href="/debagame-homepage/_astro/index.RMg1h-sA.css">
+<style>body{margin:0;overflow:hidden;background-color:#0f172a;font-family:sans-serif;color:#fff}canvas[data-astro-cid-4cemo7tf]{display:block}#ui-left[data-astro-cid-4cemo7tf]{position:absolute;top:10px;left:10px;background:#000000b3;padding:15px;border-radius:8px;pointer-events:auto;max-width:250px;max-height:90vh;overflow-y:auto}#ui-right[data-astro-cid-4cemo7tf]{position:absolute;top:10px;right:10px;background:#000c;padding:15px;border-radius:8px;pointer-events:auto;width:300px;max-height:90vh;overflow-y:auto}h3[data-astro-cid-4cemo7tf]{margin-top:0;border-bottom:1px solid #334155;padding-bottom:5px;font-size:16px}.color-box[data-astro-cid-4cemo7tf]{display:inline-block;width:15px;height:15px;border:1px solid white;vertical-align:middle;margin-right:5px}.editor-row[data-astro-cid-4cemo7tf]{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:14px}.editor-row[data-astro-cid-4cemo7tf] label[data-astro-cid-4cemo7tf]{width:30px;font-size:12px}.editor-row[data-astro-cid-4cemo7tf] input[data-astro-cid-4cemo7tf][type=range]{flex:1;margin:0 10px}.editor-row[data-astro-cid-4cemo7tf] span[data-astro-cid-4cemo7tf]{width:40px;text-align:right;font-family:monospace;font-size:12px}select[data-astro-cid-4cemo7tf]{width:100%;padding:5px;margin-bottom:15px;background:#1e293b;color:#fff;border:1px solid #475569}button[data-astro-cid-4cemo7tf]{background:#3b82f6;color:#fff;border:none;padding:10px;width:100%;border-radius:5px;cursor:pointer;font-weight:700;margin-top:10px;font-size:12px}button[data-astro-cid-4cemo7tf]:hover{background:#2563eb}button[data-astro-cid-4cemo7tf].action-btn{background:#10b981;margin-top:5px}button[data-astro-cid-4cemo7tf].action-btn:hover{background:#059669}button[data-astro-cid-4cemo7tf].combo-btn{background:#ef4444}button[data-astro-cid-4cemo7tf].combo-btn:hover{background:#dc2626}.compass-info[data-astro-cid-4cemo7tf]{font-size:12px;color:#a1a1aa;margin-top:10px}
+</style></head> <body data-astro-cid-4cemo7tf> <div id="ui-left" data-astro-cid-4cemo7tf> <h3 data-astro-cid-4cemo7tf>部位（Debug View）</h3> <div data-astro-cid-4cemo7tf><span class="color-box" style="background:#EF4444;" data-astro-cid-4cemo7tf></span> 左腕 (Arm L)</div> <div data-astro-cid-4cemo7tf><span class="color-box" style="background:#3B82F6;" data-astro-cid-4cemo7tf></span> 右腕 (Arm R)</div> <div data-astro-cid-4cemo7tf><span class="color-box" style="background:#22C55E;" data-astro-cid-4cemo7tf></span> 左足 (Leg L)</div> <div data-astro-cid-4cemo7tf><span class="color-box" style="background:#EAB308;" data-astro-cid-4cemo7tf></span> 右足 (Leg R)</div> <div data-astro-cid-4cemo7tf><span class="color-box" style="background:#94A3B8;" data-astro-cid-4cemo7tf></span> 胴体 (Torso)</div> <div data-astro-cid-4cemo7tf><span class="color-box" style="background:#FFFFFF;" data-astro-cid-4cemo7tf></span> 頭部 (Head)</div> <div style="font-size:11px; margin-top:10px;" data-astro-cid-4cemo7tf>※顔（目/口）がある側がZ(+)正面です</div> <div class="compass-info" data-astro-cid-4cemo7tf> <b data-astro-cid-4cemo7tf>方角 (地面マーカー)</b><br data-astro-cid-4cemo7tf>
+赤(北) / 青(南) / 緑(東) / 黄(西)
+</div> <button onclick="window.location.href='/debagame-homepage/game/lane-defense'" style="background:#475569; margin-top: 20px;" data-astro-cid-4cemo7tf>ゲームに戻る</button> </div> <div id="ui-right" data-astro-cid-4cemo7tf> <h3 data-astro-cid-4cemo7tf>パーツエディター</h3> <select id="part-select" data-astro-cid-4cemo7tf> <option value="Torso" data-astro-cid-4cemo7tf>胴体 (Torso)</option> <option value="Head" data-astro-cid-4cemo7tf>頭部 (Head)</option> <option value="ArmL" data-astro-cid-4cemo7tf>左腕 (Arm L - 赤)</option> <option value="ArmR" data-astro-cid-4cemo7tf>右腕 (Arm R - 青)</option> <option value="LegL" data-astro-cid-4cemo7tf>左足 (Leg L - 緑)</option> <option value="LegR" data-astro-cid-4cemo7tf>右足 (Leg R - 黄)</option> <option value="Weapon" data-astro-cid-4cemo7tf>武器 (Weapon)</option> </select> <div id="sliders" data-astro-cid-4cemo7tf></div> <button onclick="toggleWeaponHand()" id="btn-weapon" style="background:#8b5cf6;" data-astro-cid-4cemo7tf>武器の持ち手を切り替え (現在: 左手)</button> <button onclick="exportConfig()" data-astro-cid-4cemo7tf>現在のベース座標を出力 (コピー)</button> <textarea id="output-area" style="width:100%; height: 80px; margin-top:10px; background:#1e293b; color:#a1a1aa; font-family:monospace; border:none; display:none;" data-astro-cid-4cemo7tf></textarea> <h3 style="margin-top: 20px;" data-astro-cid-4cemo7tf>モーション検証</h3> <div style="font-size: 11px; color: #fbbf24; margin-bottom: 5px;" data-astro-cid-4cemo7tf>※上のベースポーズを基準にして動きます。</div> <button class="action-btn" onclick="playAnim('weak1')" data-astro-cid-4cemo7tf>1段目 (始動)</button> <button class="action-btn" onclick="playAnim('weak2')" data-astro-cid-4cemo7tf>2段目 (繋ぎ)</button> <button class="action-btn" onclick="playAnim('weak3')" data-astro-cid-4cemo7tf>3段目 (大上段)</button> <button class="action-btn combo-btn" onclick="playAnim('combo')" data-astro-cid-4cemo7tf>定石コンボ (1→2→3)</button> </div> <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script> <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // ユーザー提供のベース初期値 (スケール sx,sy,sz を追加対応)
+        const userPlacements = {
+          "Torso": { "px": 0.5, "py": 10, "pz": 0, "rx": 0, "ry": 0, "rz": 0, "sx":1, "sy":1, "sz":1 },
+          "Head": { "px": 0, "py": 11.5, "pz": 0, "rx": 1, "ry": 0, "rz": 0, "sx":1, "sy":1, "sz":1 },
+          "ArmL": { "px": 13, "py": 8, "pz": 0, "rx": 0, "ry": 0, "rz": 0, "sx":1, "sy":1, "sz":1 },
+          "ArmR": { "px": -12.5, "py": 9, "pz": 0, "rx": 0, "ry": 0, "rz": 0, "sx":1, "sy":1, "sz":1 },
+          "LegL": { "px": 6, "py": 0, "pz": 0, "rx": 0, "ry": 0, "rz": 0, "sx":1, "sy":1, "sz":1 },
+          "LegR": { "px": -5, "py": 0, "pz": 0, "rx": 0, "ry": 0, "rz": 0, "sx":1, "sy":1, "sz":1 },
+          "Weapon": { "px": 0.5, "py": 1, "pz": 9, "rx": 39, "ry": 3, "rz": -3, "sx":1, "sy":1, "sz":1 },
+          "RootHip": { "py": 20 }
+        };
+
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color('#0f172a');
+        
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(-100, 100, 150);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.target.set(0, 50, 0);
+
+        const light = new THREE.DirectionalLight(0xffffff, 1.2);
+        light.position.set(100, 200, 100);
+        scene.add(light);
+        scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+
+        const ground = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshStandardMaterial({ color: '#1e293b' }));
+        ground.rotation.x = -Math.PI / 2;
+        scene.add(ground);
+        const gridHelper = new THREE.GridHelper(500, 50, '#334155', '#334155');
+        scene.add(gridHelper);
+
+        function createDirectionMarker(color, posVector) {
+            const mesh = new THREE.Mesh(new THREE.BoxGeometry(10, 2, 50), new THREE.MeshBasicMaterial({color: color}));
+            mesh.position.copy(posVector);
+            scene.add(mesh);
+            return mesh;
+        }
+        createDirectionMarker('#EF4444', new THREE.Vector3(0, 1, -100)); // N(奥)
+        createDirectionMarker('#3B82F6', new THREE.Vector3(0, 1, 100));  // S(手前)
+        createDirectionMarker('#22C55E', new THREE.Vector3(100, 1, 0)).rotation.y = Math.PI/2; // E(右)
+        createDirectionMarker('#EAB308', new THREE.Vector3(-100, 1, 0)).rotation.y = Math.PI/2;// W(左)
+
+        const colors = { 
+            torso: '#94A3B8', head: '#FFFFFF', face: '#000000', mouth: '#EF4444',
+            armL: '#EF4444', armR: '#3B82F6', legL: '#22C55E', legR: '#EAB308', weapon: '#06B6D4'
+        };
+
+        const parts = {};
+        const animState = {}; // アニメで加算中の「相対」な角度（ラジアン）を保持
+
+        function addOutline(mesh, geo) {
+            const edges = new THREE.EdgesGeometry(geo);
+            mesh.add(new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 2 })));
+        }
+
+        const playerRoot = new THREE.Group(); 
+        scene.add(playerRoot);
+        const hipRoot = new THREE.Group(); 
+        playerRoot.add(hipRoot);
+
+        // --- パーツ作成と初期配置 ---
+        // userPlacementsの初期値を反映（相対アニメーションのベースになる）
+        function applyBaseTransform(name, obj) {
+            const b = userPlacements[name];
+            obj.position.set(b.px, b.py, b.pz);
+            obj.rotation.set(b.rx * (Math.PI/180), b.ry * (Math.PI/180), b.rz * (Math.PI/180), 'YXZ');
+            obj.scale.set(b.sx||1, b.sy||1, b.sz||1);
+            animState[name] = { rx:0, ry:0, rz:0 }; // アニメ加算のリセット
+        }
+
+        const torsoGeo = new THREE.BoxGeometry(16, 20, 12);
+        const torso = new THREE.Mesh(torsoGeo, new THREE.MeshStandardMaterial({color: colors.torso}));
+        addOutline(torso, torsoGeo);
+        
+        const torsoPivot = new THREE.Group(); 
+        torsoPivot.add(torso);
+        hipRoot.add(torsoPivot);
+        parts.Torso = torsoPivot;
+
+        const headGeo = new THREE.BoxGeometry(18, 18, 18);
+        const head = new THREE.Mesh(headGeo, new THREE.MeshStandardMaterial({color: colors.head}));
+        addOutline(head, headGeo);
+        const eyeL = new THREE.Mesh(new THREE.BoxGeometry(4, 4, 1), new THREE.MeshBasicMaterial({color: colors.face})); eyeL.position.set(-4, 2, 9);
+        const eyeR = new THREE.Mesh(new THREE.BoxGeometry(4, 4, 1), new THREE.MeshBasicMaterial({color: colors.face})); eyeR.position.set(4, 2, 9);
+        const mouth = new THREE.Mesh(new THREE.BoxGeometry(6, 2, 1), new THREE.MeshBasicMaterial({color: colors.mouth})); mouth.position.set(0, -4, 9);
+        head.add(eyeL, eyeR, mouth);
+        
+        const headPivot = new THREE.Group();
+        headPivot.add(head);
+        torsoPivot.add(headPivot);
+        parts.Head = headPivot;
+
+        function createLimbBase(name, w, l, d, color, parent) {
+            const pivot = new THREE.Group();
+            const geo = new THREE.BoxGeometry(w, l, d);
+            const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({color: color}));
+            mesh.position.y = -l/2; 
+            addOutline(mesh, geo);
+            pivot.add(mesh);
+            parent.add(pivot);
+            parts[name] = pivot;
+            return pivot;
+        }
+
+        const armL = createLimbBase('ArmL', 6, 20, 6, colors.armL, torsoPivot);
+        const armR = createLimbBase('ArmR', 6, 20, 6, colors.armR, torsoPivot);
+        const legL = createLimbBase('LegL', 8, 20, 8, colors.legL, hipRoot);
+        const legR = createLimbBase('LegR', 8, 20, 8, colors.legR, hipRoot);
+
+        const weaponPivot = new THREE.Group();
+        const weaponGeo = new THREE.BoxGeometry(2, 40, 4);
+        const weapon = new THREE.Mesh(weaponGeo, new THREE.MeshStandardMaterial({color: colors.weapon}));
+        weapon.position.y = 15; 
+        addOutline(weapon, weaponGeo);
+        const edge = new THREE.Mesh(new THREE.BoxGeometry(2.1, 40, 1), new THREE.MeshBasicMaterial({color: '#ffffff'}));
+        edge.position.set(0, 15, 2); 
+        weaponPivot.add(weapon, edge);
+        parts.Weapon = weaponPivot;
+
+        let currentWeaponHand = 'ArmL';
+        armL.children[0].add(weaponPivot); 
+        
+        // デフォルト適用
+        Object.keys(parts).forEach(k => applyBaseTransform(k, parts[k]));
+        hipRoot.position.y = userPlacements.RootHip.py;
+
+        // --- エディタ UI構築 ---
+        window.toggleWeaponHand = function() {
+            const btn = document.getElementById('btn-weapon');
+            if(currentWeaponHand === 'ArmL') {
+                armR.children[0].add(weaponPivot);
+                currentWeaponHand = 'ArmR';
+                btn.innerText = "武器の持ち手を切り替え (現在: 右手, Arm R)";
+            } else {
+                armL.children[0].add(weaponPivot);
+                currentWeaponHand = 'ArmL';
+                btn.innerText = "武器の持ち手を切り替え (現在: 左手, Arm L)";
+            }
+        };
+
+        const slidersDiv = document.getElementById('sliders');
+        const selectBox = document.getElementById('part-select');
+        let currentTarget = parts[selectBox.value];
+
+        function createSlider(label, min, max, val, step, onChange) {
+            const row = document.createElement('div'); row.className = 'editor-row';
+            const lbl = document.createElement('label'); lbl.textContent = label;
+            const input = document.createElement('input'); input.type = 'range'; input.min = min; input.max = max; input.step = step; input.value = val;
+            const span = document.createElement('span'); span.textContent = parseFloat(val).toFixed(2);
+            input.addEventListener('input', (e) => {
+                span.textContent = parseFloat(e.target.value).toFixed(2);
+                onChange(parseFloat(e.target.value));
+                updateBaseFromUI(); // スライダー操作でJSON上書き
+            });
+            row.appendChild(lbl); row.appendChild(input); row.appendChild(span);
+            return { row, input, span };
+        }
+
+        const uiElements = {};
+        function buildSliders() {
+            slidersDiv.innerHTML = '';
+            // Position
+            const pX = createSlider('PX', -50, 50, currentTarget.position.x, 0.5, v => currentTarget.position.x = v);
+            const pY = createSlider('PY', -50, 50, currentTarget.position.y, 0.5, v => currentTarget.position.y = v);
+            const pZ = createSlider('PZ', -50, 50, currentTarget.position.z, 0.5, v => currentTarget.position.z = v);
+            slidersDiv.appendChild(pX.row); slidersDiv.appendChild(pY.row); slidersDiv.appendChild(pZ.row);
+            
+            // Rotation (Deg)
+            const rX = createSlider('RX', -180, 180, currentTarget.rotation.x * (180/Math.PI), 1, v => currentTarget.rotation.x = v * (Math.PI/180));
+            const rY = createSlider('RY', -180, 180, currentTarget.rotation.y * (180/Math.PI), 1, v => currentTarget.rotation.y = v * (Math.PI/180));
+            const rZ = createSlider('RZ', -180, 180, currentTarget.rotation.z * (180/Math.PI), 1, v => currentTarget.rotation.z = v * (Math.PI/180));
+            slidersDiv.appendChild(rX.row); slidersDiv.appendChild(rY.row); slidersDiv.appendChild(rZ.row);
+
+            // Scale (新追加)
+            const sX = createSlider('SX', 0.1, 5, currentTarget.scale.x, 0.1, v => currentTarget.scale.x = v);
+            const sY = createSlider('SY', 0.1, 5, currentTarget.scale.y, 0.1, v => currentTarget.scale.y = v);
+            const sZ = createSlider('SZ', 0.1, 5, currentTarget.scale.z, 0.1, v => currentTarget.scale.z = v);
+            slidersDiv.appendChild(sX.row); slidersDiv.appendChild(sY.row); slidersDiv.appendChild(sZ.row);
+            
+            uiElements.pX = pX.input; uiElements.pY = pY.input; uiElements.pZ = pZ.input;
+            uiElements.rX = rX.input; uiElements.rY = rY.input; uiElements.rZ = rZ.input;
+            uiElements.sX = sX.input; uiElements.sY = sY.input; uiElements.sZ = sZ.input;
+        }
+
+        function updateSliderValues() {
+            if(!uiElements.pX) return;
+            uiElements.pX.value = currentTarget.position.x; uiElements.pX.nextSibling.textContent = currentTarget.position.x.toFixed(2);
+            uiElements.pY.value = currentTarget.position.y; uiElements.pY.nextSibling.textContent = currentTarget.position.y.toFixed(2);
+            uiElements.pZ.value = currentTarget.position.z; uiElements.pZ.nextSibling.textContent = currentTarget.position.z.toFixed(2);
+            
+            uiElements.rX.value = currentTarget.rotation.x * (180/Math.PI); uiElements.rX.nextSibling.textContent = Number(uiElements.rX.value).toFixed(2);
+            uiElements.rY.value = currentTarget.rotation.y * (180/Math.PI); uiElements.rY.nextSibling.textContent = Number(uiElements.rY.value).toFixed(2);
+            uiElements.rZ.value = currentTarget.rotation.z * (180/Math.PI); uiElements.rZ.nextSibling.textContent = Number(uiElements.rZ.value).toFixed(2);
+
+            uiElements.sX.value = currentTarget.scale.x; uiElements.sX.nextSibling.textContent = currentTarget.scale.x.toFixed(2);
+            uiElements.sY.value = currentTarget.scale.y; uiElements.sY.nextSibling.textContent = currentTarget.scale.y.toFixed(2);
+            uiElements.sZ.value = currentTarget.scale.z; uiElements.sZ.nextSibling.textContent = currentTarget.scale.z.toFixed(2);
+        }
+
+        function updateBaseFromUI() {
+            const key = selectBox.value;
+            userPlacements[key].px = parseFloat(currentTarget.position.x);
+            userPlacements[key].py = parseFloat(currentTarget.position.y);
+            userPlacements[key].pz = parseFloat(currentTarget.position.z);
+            userPlacements[key].rx = parseFloat(currentTarget.rotation.x * (180/Math.PI));
+            userPlacements[key].ry = parseFloat(currentTarget.rotation.y * (180/Math.PI));
+            userPlacements[key].rz = parseFloat(currentTarget.rotation.z * (180/Math.PI));
+            userPlacements[key].sx = parseFloat(currentTarget.scale.x);
+            userPlacements[key].sy = parseFloat(currentTarget.scale.y);
+            userPlacements[key].sz = parseFloat(currentTarget.scale.z);
+        }
+
+        selectBox.addEventListener('change', (e) => {
+            currentTarget = parts[e.target.value];
+            updateSliderValues();
+        });
+        buildSliders();
+
+        window.exportConfig = function() {
+            const out = JSON.stringify(userPlacements, null, 2);
+            const area = document.getElementById('output-area');
+            area.style.display = 'block';
+            area.value = out;
+            navigator.clipboard.writeText(out).then(() => alert("クリップボードにコピーしました！"));
+        };
+
+        // --- モーション制御（ユーザーベースからの「差分・加算」で実装） ---
+        let currentAnim = null;
+        let animStart = 0;
+        let animDuration = 0;
+        let comboQueue = [];
+
+        window.playAnim = function(type) {
+            if (type === 'combo') {
+                comboQueue = ['weak1', 'weak2', 'weak3'];
+                playNextCombo();
+                return;
+            }
+            currentAnim = type;
+            animStart = performance.now();
+            if (type === 'weak1') animDuration = 300;
+            if (type === 'weak2') animDuration = 400;
+            if (type === 'weak3') animDuration = 700;
+        };
+
+        function playNextCombo() {
+            if (comboQueue.length > 0) {
+                let next = comboQueue.shift();
+                playAnim(next);
+                setTimeout(playNextCombo, animDuration - 50); 
+            }
+        }
+
+        const easeOut = t => 1 - Math.pow(1 - t, 3);
+        const lerp = (a, b, t) => a + (b - a) * t;
+
+        function animate() {
+            // アニメーションターゲットの初期化(0)
+            let activeAdd = { 
+                Torso: { rx:0, ry:0, rz:0 }, 
+                ArmL: { rx:0, ry:0, rz:0 }, 
+                ArmR: { rx:0, ry:0, rz:0 }, 
+                LegL: { rx:0, ry:0, rz:0 }
+            };
+
+            if (currentAnim) {
+                let time = performance.now();
+                let elapsed = time - animStart;
+                if (elapsed > animDuration) {
+                    currentAnim = null;
+                } else {
+                    let phase = Math.min(1, elapsed / animDuration);
+                    let wp = currentWeaponHand; // 武器を持ってる主腕
+
+                    if (currentAnim === 'weak1') {
+                        let t = easeOut(phase);
+                        activeAdd.Torso.ry = -t * 0.5; // 腰を捻る
+                        activeAdd[wp].rx = -t * 1.5;   // 振り下ろし
+                        activeAdd[wp].rz = t * 0.5;    // 袈裟角度
+                        activeAdd.LegL.rx = t * 0.3;   // 前足のアシスト
+                    } else if (currentAnim === 'weak2') {
+                        let t = Math.sin(phase * Math.PI); 
+                        activeAdd.Torso.ry = t * 0.5;
+                        activeAdd[wp].rx = -1.5 + phase * 2.0; // 下から上
+                        activeAdd[wp].rz = -t * 0.5;
+                    } else if (currentAnim === 'weak3') {
+                        let t = Math.sin(phase * Math.PI); // 簡単なタメ付与
+                        activeAdd.Torso.rx = t * 0.6; // 大きく前傾
+                        activeAdd[wp].rx = t * 3.0; // 振りかぶって叩きつける
+                    }
+                }
+            }
+
+            // Lerpと反映
+            let speed = 0.3;
+            for (let part in activeAdd) {
+                animState[part].rx = lerp(animState[part].rx, activeAdd[part].rx, speed);
+                animState[part].ry = lerp(animState[part].ry, activeAdd[part].ry, speed);
+                animState[part].rz = lerp(animState[part].rz, activeAdd[part].rz, speed);
+                
+                // 最終回転 = ベースポーズ(ラジアン) + モーション加算分(ラジアン)
+                let base = userPlacements[part];
+                parts[part].rotation.set(
+                    base.rx * (Math.PI/180) + animState[part].rx,
+                    base.ry * (Math.PI/180) + animState[part].ry,
+                    base.rz * (Math.PI/180) + animState[part].rz,
+                    'YXZ'
+                );
+            }
+
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script> </body> </html>
