@@ -75,12 +75,14 @@
         if (flipBlade) ctx.scale(-1, 1);
         drawBlock(ctx, -wpnCfg.armW / 2 * s, 0, wpnCfg.armW * s, bBaseY, wpnCfg.cGrip, s);
         const bLen = Math.floor(wpnCfg.armLen + 15), bw = wpnCfg.tipSize;
+        const curve = wpnCfg.curveAmount !== undefined ? wpnCfg.curveAmount : 0;
+        const taper = wpnCfg.taperAmount !== undefined ? wpnCfg.taperAmount : 0;
         for (let i = 0; i < bLen; i++) {
             let shiftX = 0, currentW = bw;
             if (i > bLen * 0.4) {
                 let ratio = (i - bLen * 0.4) / (bLen * 0.6);
-                shiftX = Math.floor(Math.pow(ratio, 2) * 5);
-                currentW = Math.max(2, bw - Math.floor(ratio * bw * 0.8));
+                shiftX = Math.floor(Math.pow(ratio, 2) * curve);
+                currentW = Math.max(2, bw - Math.floor(ratio * bw * taper));
             }
             let rx = (-bw / 2 + shiftX) * s, ry = bBaseY + i * s, rw = currentW * s;
             ctx.fillStyle = wpnCfg.cBlade; ctx.fillRect(rx, ry, rw, s);
@@ -241,11 +243,14 @@
             Object.assign(pose, interpolated);
         }
 
-        // ** モーションオーバーライド (右腕・武器スケール) **
+        // ** モーションオーバーライド (右腕・武器スケール・胴体角度) **
         if (window.MOTION_OVERRIDES && window.MOTION_OVERRIDES.enabled) {
+            if (window.MOTION_OVERRIDES.torsoRotation !== undefined) pose.torsoRotation = window.MOTION_OVERRIDES.torsoRotation;
             if (window.MOTION_OVERRIDES.armRight !== undefined) pose.armRight = window.MOTION_OVERRIDES.armRight;
             if (window.MOTION_OVERRIDES.elbowBendRight !== undefined) pose.elbowBendRight = window.MOTION_OVERRIDES.elbowBendRight;
             if (window.MOTION_OVERRIDES.wpnScale !== undefined) pose.wpnScale = window.MOTION_OVERRIDES.wpnScale;
+            if (window.MOTION_OVERRIDES.legRight !== undefined) pose.legRight = window.MOTION_OVERRIDES.legRight;
+            if (window.MOTION_OVERRIDES.legLeft !== undefined) pose.legLeft = window.MOTION_OVERRIDES.legLeft;
         }
 
         // 共通の足の屈伸計算 (浮き上がり防止)
@@ -327,9 +332,22 @@
 
         const drawBody = () => {
             ctx.save(); ctx.rotate(torsoRotation);
-            drawChamferedBlock(ctx, -tw / 2, ty, tw, th, C.cBody, s);
-            drawBlock(ctx, -tw / 2, ty, tw, th * 0.5, '#475569', s);
-            if (C.cArmorAcc) { ctx.fillStyle = C.cArmorAcc; ctx.fillRect(-tw / 2 + 2 * s, ty + th * 0.3, tw - 4 * s, 1.5 * s); }
+            const frontW = tw * 0.75;
+            const sideW = tw * 0.25;
+            // Side face (darker) on the left to give 45-degree angle illusion
+            drawChamferedBlock(ctx, -tw / 2, ty, sideW + s, th, adjustColor(C.cBody, -40), s);
+            // Front face
+            drawChamferedBlock(ctx, -tw / 2 + sideW, ty, frontW, th, C.cBody, s);
+
+            // Pants base
+            drawBlock(ctx, -tw / 2, ty, sideW + s, th * 0.5, adjustColor('#475569', -40), s);
+            drawBlock(ctx, -tw / 2 + sideW, ty, frontW, th * 0.5, '#475569', s);
+
+            // Armor accessory
+            if (C.cArmorAcc) {
+                ctx.fillStyle = C.cArmorAcc;
+                ctx.fillRect(-tw / 2 + sideW + 1 * s, ty + th * 0.3, frontW - 2 * s, 1.5 * s);
+            }
             ctx.restore();
         };
 
