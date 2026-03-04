@@ -526,34 +526,6 @@
         }
         ctx.restore(); // bounce + breath 復元
 
-        // ========= デバッグ用：向きを示す巨大な矢印 =========
-        ctx.save();
-        ctx.translate(0, -90 * s); // キャラクターの頭上に配置
-        ctx.fillStyle = 'rgba(239, 68, 68, 0.9)'; // 赤
-        ctx.beginPath();
-        ctx.moveTo(-30 * s, -10 * s);
-        ctx.lineTo(30 * s, -10 * s);
-        ctx.lineTo(30 * s, -25 * s);
-        ctx.lineTo(60 * s, 0);
-        ctx.lineTo(30 * s, 25 * s);
-        ctx.lineTo(30 * s, 10 * s);
-        ctx.lineTo(-30 * s, 10 * s);
-        ctx.closePath();
-        ctx.fill();
-        ctx.fillStyle = 'white';
-
-        ctx.save();
-        // テキストが反転しないよう、キャラが反転していればテキストも反転し返す
-        if (pose.facing === -1) ctx.scale(-1, 1);
-        ctx.font = 'bold ' + (14 * s) + 'px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('FRONT', 0, 0);
-        ctx.restore();
-
-        ctx.restore();
-        // ====================================================
-
         ctx.restore(); // pose.x, pose.y 復元
     };
 
