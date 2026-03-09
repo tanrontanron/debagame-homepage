@@ -1048,6 +1048,48 @@ class Player {
         
         drawEntity(ctx, x, y, 'player', currentAction, time, ad, window.CHARACTER_CONFIGS);
         
+        // ★ 当たり判定領域の可視化（攻撃持続時間中のみ表示）
+        if (this.isAttacking && this.attackData) {
+            ctx.save();
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.2)'; // 判定領域の塗り
+            ctx.strokeStyle = 'rgba(255, 0, 0, 0.8)'; // 判定枠
+            ctx.lineWidth = 2;
+
+            const adRaw = this.attackData;
+            let eLeft, eRight;
+            if (this.facing === 1) { eLeft = x; eRight = x + adRaw.range; }
+            else { eRight = x; eLeft = x - adRaw.range; }
+
+            if (adRaw.type === 'wide') {
+                let bLeft, bRight;
+                if (this.facing === 1) { bRight = x + adRaw.range; bLeft = x - 50; }
+                else { bLeft = x - adRaw.range; bRight = x + 50; }
+                
+                const topRow = Math.max(0, this.row - 1);
+                const bottomRow = Math.min(currentRowCount - 1, this.row + 1);
+                const topY = getLaneY(topRow, h, currentRowCount) - LANE_HEIGHT / 2;
+                const bottomY = getLaneY(bottomRow, h, currentRowCount) + LANE_HEIGHT / 2;
+                
+                ctx.fillRect(bLeft, topY, bRight - bLeft, bottomY - topY);
+                ctx.strokeRect(bLeft, topY, bRight - bLeft, bottomY - topY);
+            } else if (adRaw.type === 'front-wide') {
+                const topRow = Math.max(0, this.row - 1);
+                const bottomRow = Math.min(currentRowCount - 1, this.row + 1);
+                const topY = getLaneY(topRow, h, currentRowCount) - LANE_HEIGHT / 2;
+                const bottomY = getLaneY(bottomRow, h, currentRowCount) + LANE_HEIGHT / 2;
+                
+                ctx.fillRect(eLeft, topY, eRight - eLeft, bottomY - topY);
+                ctx.strokeRect(eLeft, topY, eRight - eLeft, bottomY - topY);
+            } else {
+                const topY = y - LANE_HEIGHT / 2;
+                const bottomY = y + LANE_HEIGHT / 2;
+                
+                ctx.fillRect(eLeft, topY, eRight - eLeft, bottomY - topY);
+                ctx.strokeRect(eLeft, topY, eRight - eLeft, bottomY - topY);
+            }
+            ctx.restore();
+        }
+        
         if (this.attackCooldown > 0 && this.lastMaxCooldown > 0) {
             const ratio = Math.max(0, this.attackCooldown / this.lastMaxCooldown);
             const barW = 40;
