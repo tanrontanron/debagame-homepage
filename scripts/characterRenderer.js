@@ -93,11 +93,10 @@
 
     const ANIMATION_DATA = {
         'idle': [
-            // 尺: 42フレーム (0.7秒) - 剣道の中段の構え
-            // 両腕を前方に伸ばし、奥の手（左手）もしっかりとグリップを握るように前へ位置させる
-            { frame: 0, poseParams: { bounce: 0, torsoSquash: 0, torsoRotation: 0.05, headRotation: 0, legRight: 0.5, legLeft: -0.5, armRight: -0.6, elbowBendRight: -1.0, armLeft: -0.6, elbowBendLeft: 1.0, wpnScale: 1.0 } },
-            { frame: 21, poseParams: { bounce: 1.5, torsoSquash: 0.64, torsoRotation: 0.05, headRotation: 0, legRight: 0.5, legLeft: -0.5, armRight: -0.55, elbowBendRight: -1.0, armLeft: -0.55, elbowBendLeft: 1.0, wpnScale: 1.0 } },
-            { frame: 42, poseParams: { bounce: 0, torsoSquash: 0, torsoRotation: 0.05, headRotation: 0, legRight: 0.5, legLeft: -0.5, armRight: -0.6, elbowBendRight: -1.0, armLeft: -0.6, elbowBendLeft: 1.0, wpnScale: 1.0 } }
+            // 尺: 42フレーム (0.7秒) - 待機モーション（呼吸でわずかに沈み込む）
+            { frame: 0, poseParams: { bounce: 0, torsoSquash: 0, torsoRotation: 0.00, headRotation: 0, armRight: -0.90, elbowBendRight: -0.30, armLeft: -0.15, elbowBendLeft: -1.20, legRight: 0.25, kneeBendRight: 0.25, legLeft: -0.50, kneeBendLeft: 0.45, wpnScale: 1.00, wpnRotationOffset: -0.45, disableIK: true, disableLegIK: true } },
+            { frame: 21, poseParams: { bounce: 0, torsoSquash: 1.5, torsoRotation: 0.00, headRotation: 0, armRight: -0.90, elbowBendRight: -0.30, armLeft: -0.15, elbowBendLeft: -1.20, legRight: 0.25, kneeBendRight: 0.25, legLeft: -0.50, kneeBendLeft: 0.45, wpnScale: 1.00, wpnRotationOffset: -0.45, disableIK: true, disableLegIK: true } },
+            { frame: 42, poseParams: { bounce: 0, torsoSquash: 0, torsoRotation: 0.00, headRotation: 0, armRight: -0.90, elbowBendRight: -0.30, armLeft: -0.15, elbowBendLeft: -1.20, legRight: 0.25, kneeBendRight: 0.25, legLeft: -0.50, kneeBendLeft: 0.45, wpnScale: 1.00, wpnRotationOffset: -0.45, disableIK: true, disableLegIK: true } }
         ],
         'walk': [
             { frame: 0, poseParams: { bounce: 0, walkShiftX: 0, torsoRotation: 0, armRight: -0.4, elbowBendRight: -1.2 } },
@@ -211,7 +210,7 @@
             armLeft: 0.6, elbowBendLeft: config.elbowAngle,
             legRight: -0.3, kneeBendRight: config.kneeAngle,
             legLeft: 0.4, kneeBendLeft: config.kneeAngle,
-            wpnScale: 1.0, wpnRotation: 0, walkShiftX: 0,
+            wpnScale: 1.0, wpnRotation: 0, wpnRotationOffset: 0, walkShiftX: 0,
             attackType: attackCooldown > 0 ? action : undefined,
             attackProgress: ap
         };
@@ -249,12 +248,13 @@
             if (window.MOTION_OVERRIDES.armRight !== undefined) pose.armRight = window.MOTION_OVERRIDES.armRight;
             if (window.MOTION_OVERRIDES.elbowBendRight !== undefined) pose.elbowBendRight = window.MOTION_OVERRIDES.elbowBendRight;
             if (window.MOTION_OVERRIDES.wpnScale !== undefined) pose.wpnScale = window.MOTION_OVERRIDES.wpnScale;
+            if (window.MOTION_OVERRIDES.wpnRotationOffset !== undefined) pose.wpnRotationOffset = window.MOTION_OVERRIDES.wpnRotationOffset;
             if (window.MOTION_OVERRIDES.legRight !== undefined) pose.legRight = window.MOTION_OVERRIDES.legRight;
             if (window.MOTION_OVERRIDES.legLeft !== undefined) pose.legLeft = window.MOTION_OVERRIDES.legLeft;
         }
 
         // 共通の足の屈伸計算 (浮き上がり防止)
-        if (action !== 'walk') {
+        if (action !== 'walk' && !pose.disableLegIK) {
             // 足の角度が小さい（より負の数＝前方に振り出している）方をフロントターゲットに割り当てる
             if (pose.legRight <= pose.legLeft) {
                 pose.kneeBendRight = getBend(baseFrontFootY - (pose.bounce / s), pose.legRight);
@@ -267,10 +267,10 @@
 
         // 武器の回転計算 (腕の角度に追従)
         const wTform = getWristTransform(config.shoulderX * s, config.shoulderY * s + pose.torsoSquash, pose.armRight, pose.elbowBendRight, config.upperArmLen * s, config.lowerArmLen * s, s);
-        pose.wpnRotation = wTform.angle - 0.2;
+        pose.wpnRotation = wTform.angle - 0.2 + (pose.wpnRotationOffset || 0);
 
         // IK for back arm (武器を持つ動き)
-        if (action !== 'walk') {
+        if (action !== 'walk' && !pose.disableIK) {
             const targetX = wTform.x - Math.sin(pose.wpnRotation) * 6 * s * pose.wpnScale, targetY = wTform.y + Math.cos(pose.wpnRotation) * -6 * s * pose.wpnScale;
             const ik = solveArmIK(-config.shoulderX * s, config.shoulderY * s + pose.torsoSquash, targetX, targetY, config.upperArmLen * s, config.lowerArmLen * s, true);
             pose.armLeft = ik.a1; pose.elbowBendLeft = ik.a2;

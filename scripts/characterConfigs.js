@@ -1,21 +1,21 @@
 window.CHARACTER_CONFIGS = {
     player: {
         "scale": 1.5,
-        "headW": 12,
-        "headH": 11,
-        "headY": -6,
-        "torsoW": 13,
+        "headW": 11,
+        "headH": 10,
+        "headY": -5,
+        "torsoW": 12,
         "torsoH": 20,
         "upperArmW": 6,
-        "upperArmLen": 12,
+        "upperArmLen": 13,
         "lowerArmW": 4,
-        "lowerArmLen": 7,
+        "lowerArmLen": 12,
         "upperLegW": 7,
         "upperLegLen": 12,
         "lowerLegW": 5,
         "lowerLegLen": 15,
-        "shoulderX": 5,
-        "shoulderY": -11,
+        "shoulderX": 6,
+        "shoulderY": -9,
         "hipX": 4,
         "hipY": 8,
         "elbowAngle": 0.5,
@@ -45,13 +45,13 @@ window.CHARACTER_CONFIGS = {
                 "grandGlow": 20
             },
             "weapon": {
-                "armLen": 15,
-                "armW": 5,
-                "tipSize": 4,
-                "cGrip": "#475569",
+                "armLen": 13,
+                "armW": 3,
+                "tipSize": 3,
+                "cGrip": "#0087db",
                 "cBlade": "#2d8f39",
-                "curveAmount": 0,
-                "taperAmount": 0
+                "curveAmount": 1,
+                "taperAmount": 0.5
             }
         },
         "hairType": "short"
