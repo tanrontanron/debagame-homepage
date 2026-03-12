@@ -1,0 +1,1 @@
+import{c as s}from"./index.ByPZWPtf.js";const i="https://wxblqinfkmodvnsnytwn.supabase.co",n="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4YmxxaW5ma21vZHZuc255dHduIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4OTU5OTksImV4cCI6MjA4MTQ3MTk5OX0.5F8NBBn__jSLvih_lykP3XPrcYlGLnxiFwphQOrOcAo",c=s(i,n);export{c as s};
