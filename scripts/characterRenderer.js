@@ -145,6 +145,32 @@
             { frame: 21, poseParams: { armRight: 1.0, elbowBendRight: -0.5, torsoRotation: 0.5, bounce: 3, walkShiftX: 0 } },
             { frame: 43, poseParams: { armRight: -3.0, elbowBendRight: -0.5, torsoRotation: -0.5, bounce: -2, walkShiftX: 20 } },
             { frame: 72, poseParams: { armRight: -0.4, elbowBendRight: -1.2, torsoRotation: 0.15, bounce: 0, walkShiftX: 0 } }
+        ],
+        'guard': [
+            { 
+                frame: 0, 
+                poseParams: { 
+                    torsoRotation: 0.20, armRight: -1.85, elbowBendRight: -0.80, armLeft: -0.65, elbowBendLeft: -0.90, 
+                    legRight: -0.15, kneeBendRight: 1.10, legLeft: -0.85, kneeBendLeft: 0.90, 
+                    wpnScale: 1.00, wpnRotationOffset: 2.25, torsoSquash: 0, disableIK: true, disableLegIK: true
+                } 
+            },
+            { 
+                frame: 21, 
+                poseParams: { 
+                    torsoRotation: 0.20, armRight: -1.85, elbowBendRight: -0.80, armLeft: -0.65, elbowBendLeft: -0.90, 
+                    legRight: -0.15, kneeBendRight: 1.10, legLeft: -0.85, kneeBendLeft: 0.90, 
+                    wpnScale: 1.00, wpnRotationOffset: 2.25, torsoSquash: 1.5, disableIK: true, disableLegIK: true
+                } 
+            },
+            { 
+                frame: 42, 
+                poseParams: { 
+                    torsoRotation: 0.20, armRight: -1.85, elbowBendRight: -0.80, armLeft: -0.65, elbowBendLeft: -0.90, 
+                    legRight: -0.15, kneeBendRight: 1.10, legLeft: -0.85, kneeBendLeft: 0.90, 
+                    wpnScale: 1.00, wpnRotationOffset: 2.25, torsoSquash: 0, disableIK: true, disableLegIK: true
+                } 
+            }
         ]
     };
     window.ANIMATION_DATA = ANIMATION_DATA;
