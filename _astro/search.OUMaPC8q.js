@@ -1,4 +1,4 @@
-import{c as e}from"./x.BXWug7OG.js";/**
+import{c as e}from"./createLucideIcon.BUt2FOTe.js";/**
  * @license lucide-react v0.561.0 - ISC
  *
  * This source code is licensed under the ISC license.
