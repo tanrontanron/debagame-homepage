@@ -171,6 +171,11 @@
                     wpnScale: 1.00, wpnRotationOffset: 2.25, torsoSquash: 0, disableIK: true, disableLegIK: true
                 } 
             }
+        ],
+        'hurt': [
+            { frame: 0, poseParams: { bounce: 0, torsoRotation: 0.3, headRotation: 0.2, armRight: 0.5, elbowBendRight: 0.5, armLeft: -0.5, elbowBendLeft: -0.5, walkShiftX: -10 } },
+            { frame: 10, poseParams: { bounce: 2, torsoRotation: 0.4, headRotation: 0.3, armRight: 0.8, elbowBendRight: 0.8, armLeft: -0.8, elbowBendLeft: -0.8, walkShiftX: -15 } },
+            { frame: 20, poseParams: { bounce: 0, torsoRotation: 0.3, headRotation: 0.2, armRight: 0.5, elbowBendRight: 0.5, armLeft: -0.5, elbowBendLeft: -0.5, walkShiftX: -10 } }
         ]
     };
     window.ANIMATION_DATA = ANIMATION_DATA;

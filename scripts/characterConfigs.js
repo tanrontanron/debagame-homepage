@@ -57,25 +57,34 @@ window.CHARACTER_CONFIGS = {
         "hairType": "short"
     },
     enemy1: {
-        scale: 1.0, size: 12, color: '#ef4444', shape: 'circle', shadowAlpha: 0.3,
-        cBody: '#ef4444', cHead: '#fff'
+        scale: 1.0, size: 12, color: '#ef4444', shadowAlpha: 0.3,
+        headW: 10, headH: 9, torsoW: 10, torsoH: 18,
+        upperArmW: 4, upperArmLen: 10, lowerArmW: 3, lowerArmLen: 10,
+        upperLegW: 4, upperLegLen: 10, lowerLegW: 3, lowerLegLen: 12,
+        shoulderX: 5, shoulderY: -8, hipX: 3, hipY: 6,
+        cBody: '#ef4444', cHead: '#fff', cSkin: '#fca5a5', cArms: '#991b1b', cLegs: '#7f1d1d'
     },
     enemy2: {
-        scale: 1.0, size: 18, color: '#b91c1c', shape: 'rect', shadowAlpha: 0.3,
-        cBody: '#b91c1c', cHead: '#fef08a'
+        scale: 1.2, size: 18, color: '#b91c1c', shadowAlpha: 0.3,
+        headW: 14, headH: 12, torsoW: 18, torsoH: 24,
+        upperArmW: 6, upperArmLen: 12, lowerArmW: 5, lowerArmLen: 12,
+        upperLegW: 6, upperLegLen: 12, lowerLegW: 5, lowerLegLen: 15,
+        shoulderX: 10, shoulderY: -10, hipX: 6, hipY: 10,
+        cBody: '#b91c1c', cHead: '#fef08a', cSkin: '#f87171', cArms: '#7f1d1d', cLegs: '#450a0a'
     },
     boss: {
-        scale: 2.0, headW: 24, headH: 22, torsoW: 32, torsoH: 36,
-        upperArmW: 6, upperArmLen: 14, lowerArmW: 6, lowerArmLen: 12,
-        upperLegW: 6, upperLegLen: 14, lowerLegW: 6, lowerLegLen: 12,
+        scale: 2.0, size: 30, color: '#7f1d1d', shadowAlpha: 0.4,
+        headW: 24, headH: 22, torsoW: 32, torsoH: 36,
+        upperArmW: 8, upperArmLen: 16, lowerArmW: 8, lowerArmLen: 14,
+        upperLegW: 8, upperLegLen: 16, lowerLegW: 8, lowerLegLen: 14,
         shoulderX: 18, shoulderY: -12, hipX: 10, hipY: 12,
         elbowAngle: 0.3, kneeAngle: 0.3,
-        cBody: '#ef4444', cHead: '#7f1d1d', cEye: '#facc15', cArms: '#991b1b', cLegs: '#7f1d1d', shadowAlpha: 0.4,
+        cBody: '#ef4444', cHead: '#7f1d1d', cEye: '#facc15', cArms: '#991b1b', cLegs: '#7f1d1d',
         motions: {
             idle: { breathSpeed: 250, breathAmount: 0.8 },
             walk: { walkSpeed: 400, walkAmplitude: 1.0 },
             attack: { speed: 0.8, weakArc: 1.5, grandGlow: 30 },
-            weapon: { armLen: 30, armW: 6, tipSize: 12, cGrip: '#451a03', cBlade: '#dc2626', curveAmount: 0, taperAmount: 0 }
+            weapon: { armLen: 35, armW: 8, tipSize: 14, cGrip: '#451a03', cBlade: '#dc2626', curveAmount: 0, taperAmount: 0 }
         }
     }
 };
