@@ -324,11 +324,21 @@
         const C = config; const s = C.scale || 1.5;
         const wpnCfg = C.motions?.weapon || { armLen: 18, armW: 6, tipSize: 6, cGrip: '#1e293b', cBlade: '#f8fafc' };
 
-        ctx.save(); ctx.translate(pose.x, pose.y); if (pose.facing === -1) ctx.scale(-1, 1);
+        ctx.save();
+        ctx.translate(pose.x, pose.y);
+        if (pose.facing === -1) ctx.scale(-1, 1);
+
+        // 🚀 【接地基準への統一】キャラクターの原点（腰）から足元までの垂直距離を計算
+        const kneeA = C.kneeAngle ?? 0.2;
+        const baseFrontFootY_calc = C.upperLegLen * Math.cos(-0.3) + C.lowerLegLen * Math.cos(-0.3 + kneeA + 0.3);
+        const distanceToGround = (C.hipY + baseFrontFootY_calc) * s;
+        
+        // 🚀 全体を上に持ち上げ、渡された pose.y が足元（接地線）になるようにする
+        ctx.translate(0, -distanceToGround);
 
         if (C.shape === 'circle' || C.shape === 'rect') {
             const bounceY = pose.bounce;
-            drawDotEllipse(ctx, 0, (C.size * 1.5) * s, (C.size * 1.5) * s, 4 * s, s, `rgba(0,0,0,0.3)`);
+            drawDotEllipse(ctx, 0, distanceToGround, (C.size * 1.5) * s, 4 * s, s, `rgba(0,0,0,0.3)`);
             ctx.fillStyle = C.cBody || '#ef4444';
             if (C.shape === 'circle') { ctx.beginPath(); ctx.arc(0, -C.size * s + bounceY, C.size * s, 0, Math.PI * 2); ctx.fill(); }
             else { ctx.fillRect(-C.size * s, -C.size * 2 * s + bounceY, C.size * 2 * s, C.size * 2 * s); }
@@ -338,8 +348,7 @@
         const { bounce, breath, torsoSquash, torsoRotation, headRotation, armRight, elbowBendRight, armLeft, elbowBendLeft, legRight, kneeBendRight, legLeft, kneeBendLeft, wpnScale, wpnRotation, walkShiftX } = pose;
         ctx.translate(walkShiftX, 0);
 
-        const baseFrontFootY = C.upperLegLen * Math.cos(-0.3) + C.lowerLegLen * Math.cos(-0.3 + C.kneeAngle + 0.3);
-        drawDotEllipse(ctx, 0, (C.hipY + baseFrontFootY) * s, 25 * s + (bounce * 0.5), 4 * s, s, `rgba(0,0,0,0.3)`);
+        drawDotEllipse(ctx, 0, distanceToGround, 25 * s + (bounce * 0.5), 4 * s, s, `rgba(0,0,0,0.3)`);
 
         // AI Mascot
         if (C.cBody === '#334155' || C.cBody === '#3b82f6') {
