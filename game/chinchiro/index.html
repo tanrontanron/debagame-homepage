@@ -2,7 +2,13 @@
 		  window.dataLayer = window.dataLayer || [];
 		  function gtag(){dataLayer.push(arguments);}
 		  gtag('js', new Date());
-		  gtag('config', 'G-H6LGRS379S');
+
+		  // 初回ロード時および Astro View Transitions でのページ遷移完了時に計測を実行
+		  document.addEventListener('astro:page-load', () => {
+		    gtag('config', 'G-H6LGRS379S', {
+		      page_path: window.location.pathname,
+		    });
+		  });
 		</script><link rel="stylesheet" href="/debagame-homepage/_astro/index.B6vQIakD.css">
 <style>@keyframes shake{0%{transform:rotate(0)}25%{transform:rotate(5deg)}50%{transform:rotate(0)}75%{transform:rotate(-5deg)}to{transform:rotate(0)}}@keyframes fadeIn{0%{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.die-face{width:3rem;height:3rem;background-color:#fff;border-radius:.75rem;box-shadow:0 4px 6px -1px #0000001a,0 2px 4px -1px #0000000f;position:relative;flex-shrink:0;border:1px solid #e7e5e4;background:linear-gradient(145deg,#fff,#e6e6e6);box-shadow:2px 2px 5px #bebebe,-2px -2px 5px #fff}.dot{position:absolute;width:.625rem;height:.625rem;background-color:#292524;border-radius:9999px;transform:translate(-50%,-50%);box-shadow:inset 0 2px 4px #0000000f}.dot-red{background-color:#dc2626;width:1rem;height:1rem}.dot-tl{top:25%;left:25%}.dot-tr{top:25%;left:75%}.dot-ml{top:50%;left:25%}.dot-mr{top:50%;left:75%}.dot-bl{top:75%;left:25%}.dot-br{top:75%;left:75%}.dot-cc{top:50%;left:50%}.animate-shake{animation:shake .2s infinite}.animate-fadeIn{animation:fadeIn .5s ease-out forwards}.drop-shadow-glow-gold{filter:drop-shadow(0 0 10px rgba(251,191,36,.8))}.drop-shadow-glow-red{filter:drop-shadow(0 0 10px rgba(220,38,38,.8))}.mask-gradient-bottom{-webkit-mask-image:linear-gradient(to bottom,black 80%,transparent 100%);mask-image:linear-gradient(to bottom,black 80%,transparent 100%)}.shadow-inner-xl{box-shadow:inset 0 4px 8px #0006}
 .astro-route-announcer{position:absolute;left:0;top:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;width:1px;height:1px}:root{--font-size: 16px;--background: #ffffff;--foreground: #030213;--card: #ffffff;--card-foreground: #030213;--primary: #030213;--primary-foreground: #ffffff;--secondary: #ececf0;--secondary-foreground: #030213;--muted: #ececf0;--muted-foreground: #717182;--accent: #e9ebef;--accent-foreground: #030213;--border: rgba(0, 0, 0, .1);--radius: .625rem;--accent-old: 136, 58, 234;--accent-light: 224, 204, 250;--accent-dark: 49, 10, 101}.dark{--background: #030213;--foreground: #ffffff;--card: #030213;--card-foreground: #ffffff;--primary: #ffffff;--primary-foreground: #030213;--border: rgba(255, 255, 255, .1)}

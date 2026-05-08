@@ -2,7 +2,13 @@
 		  window.dataLayer = window.dataLayer || [];
 		  function gtag(){dataLayer.push(arguments);}
 		  gtag('js', new Date());
-		  gtag('config', 'G-H6LGRS379S');
+
+		  // 初回ロード時および Astro View Transitions でのページ遷移完了時に計測を実行
+		  document.addEventListener('astro:page-load', () => {
+		    gtag('config', 'G-H6LGRS379S', {
+		      page_path: window.location.pathname,
+		    });
+		  });
 		</script><link rel="stylesheet" href="/debagame-homepage/_astro/index.B6vQIakD.css">
 <style>input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}input[type=number]{-moz-appearance:textfield;-webkit-appearance:textfield;appearance:textfield}
 .astro-route-announcer{position:absolute;left:0;top:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;width:1px;height:1px}:root{--font-size: 16px;--background: #ffffff;--foreground: #030213;--card: #ffffff;--card-foreground: #030213;--primary: #030213;--primary-foreground: #ffffff;--secondary: #ececf0;--secondary-foreground: #030213;--muted: #ececf0;--muted-foreground: #717182;--accent: #e9ebef;--accent-foreground: #030213;--border: rgba(0, 0, 0, .1);--radius: .625rem;--accent-old: 136, 58, 234;--accent-light: 224, 204, 250;--accent-dark: 49, 10, 101}.dark{--background: #030213;--foreground: #ffffff;--card: #030213;--card-foreground: #ffffff;--primary: #ffffff;--primary-foreground: #030213;--border: rgba(255, 255, 255, .1)}
